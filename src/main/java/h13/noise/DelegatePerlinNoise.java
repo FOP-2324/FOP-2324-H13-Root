@@ -29,7 +29,7 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     /**
      * Constructs a DelegatePerlinNoise object with the specified underlying Perlin noise object.
      *
-     * @param noise The underlying Perlin noise object.
+     * @param noise the underlying Perlin noise object
      */
     public DelegatePerlinNoise(PerlinNoise noise) {
         this.noise = noise;
@@ -43,11 +43,6 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     @Override
     public int height() {
         return noise.height();
-    }
-
-    @Override
-    public double frequency() {
-        return noise.frequency();
     }
 
     @Override

@@ -14,11 +14,6 @@ import java.util.Random;
 public abstract class AbstractPerlinNoise implements PerlinNoise {
 
     /**
-     * The default frequency of the noise domain.
-     */
-    private static final double DEFAULT_FREQUENCY = 0.01;
-
-    /**
      * The random seed used for generating gradient vectors.
      */
     private final Random seed;
@@ -35,30 +30,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     private final int height;
 
     /**
-     * The frequency of the noise domain.
-     */
-    private final double frequency;
-
-    /**
      * The array of gradient vectors where each vector is associated with a grid cell.
      */
     private final Point2D[] gradients;
-
-    /**
-     * Constructs a AbstractPerlinNoise object with the specified parameters.
-     *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param frequency the frequency of the noise
-     * @param seed      the random seed for generating gradient vectors
-     */
-    public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
-        this.width = width;
-        this.height = height;
-        this.frequency = frequency;
-        this.seed = seed;
-        this.gradients = createGradients(width + 2, height + 2);
-    }
 
     /**
      * Constructs a AbstractPerlinNoise object with the specified parameters.
@@ -68,9 +42,11 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param seed   the random seed for generating gradient vectors
      */
     public AbstractPerlinNoise(int width, int height, Random seed) {
-        this(width, height, DEFAULT_FREQUENCY, seed);
+        this.width = width;
+        this.height = height;
+        this.seed = seed;
+        this.gradients = createGradients(width + 2, height + 2);
     }
-
 
     @Override
     public int width() {
@@ -80,11 +56,6 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @Override
     public int height() {
         return height;
-    }
-
-    @Override
-    public double frequency() {
-        return frequency;
     }
 
     @Override
@@ -145,14 +116,4 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         // Since the gradients array wrap around the noise domain, the size of the gradients array is equal to width + 2
         return gradients[(width + 2) * y + x];
     }
-
-    /**
-     * Computes the gradient noise value at the specified noise domain coordinates.
-     *
-     * @param x The x-coordinate in the noise domain.
-     * @param y The y-coordinate in the noise domain.
-     * @return the computed gradient noise value at the specified noise domain coordinates
-     */
-    public abstract double compute(double x, double y);
-
 }

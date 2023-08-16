@@ -14,18 +14,6 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     /**
      * Constructs a SimplePerlinNoise object with the specified parameters.
      *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param frequency the frequency of the noise
-     * @param seed      the random seed for generating gradient vectors
-     */
-    public SimplePerlinNoise(int width, int height, double frequency, Random seed) {
-        super(width, height, frequency, seed);
-    }
-
-    /**
-     * Constructs a SimplePerlinNoise object with the specified parameters.
-     *
      * @param width  the width of the noise domain
      * @param height the height of the noise domain
      * @param seed   the random seed for generating gradient vectors
@@ -34,12 +22,20 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
         super(width, height, seed);
     }
 
-    @Override
-    public double compute(int x, int y) {
-        double f = frequency();
-        return compute(x * f, y * f);
-    }
-
+    /**
+     * Computes the gradient noise value at the specified noise domain coordinates.
+     * It's recommended to multiply the coordinates by the frequency to achieve visible results.
+     * <p>
+     * If you use a lower frequency value (closer to 0), the noise pattern will have larger features and appear more
+     * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
+     * <p>
+     * If you use a higher frequency value (larger than 1), the noise pattern will have smaller and more frequent
+     * features. This can create more detailed and intricate variations in the noise, suitable for fine-grained textures or details.
+     *
+     * @param x The x-coordinate in the noise domain (scaled by frequency).
+     * @param y The y-coordinate in the noise domain (scaled by frequency).
+     * @return The computed gradient noise value at the specified noise domain coordinates.
+     */
     @Override
     public double compute(double x, double y) {
         // Compute the coordinates of the gradient vector grid cell

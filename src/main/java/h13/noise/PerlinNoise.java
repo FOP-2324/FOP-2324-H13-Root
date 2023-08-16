@@ -73,14 +73,6 @@ public interface PerlinNoise extends GradientNoise {
     double fade(double t);
 
     /**
-     * Returns the frequency of the Perlin noise. The frequency determines how quickly the noise values change across
-     * space, and it is related to the scaling factor used in noise generation.
-     *
-     * @return the frequency of the Perlin noise
-     */
-    double frequency();
-
-    /**
      * Performs an interpolation between two values based on a given alpha (weight) value which is typically in the
      * range [0, 1].
      *
