@@ -2,6 +2,8 @@ package h13.noise;
 
 import javafx.geometry.Point2D;
 
+import java.util.Random;
+
 /**
  * An abstract base class that delegates method calls to an underlying Perlin noise object.
  * This class simplifies the implementation of new Perlin noise variations by providing a basic structure
@@ -48,6 +50,10 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
         return noise.frequency();
     }
 
+    @Override
+    public Random seed() {
+        return noise.seed();
+    }
 
     @Override
     public Point2D[] gradients() {

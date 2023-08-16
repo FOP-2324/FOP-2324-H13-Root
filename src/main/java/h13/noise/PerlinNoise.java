@@ -2,6 +2,8 @@ package h13.noise;
 
 import javafx.geometry.Point2D;
 
+import java.util.Random;
+
 /**
  * This interface represents a gradient noise generator that used the Perlin noise algorithm to produce coherent noise
  * values based on grid coordinates.
@@ -23,6 +25,13 @@ public interface PerlinNoise extends GradientNoise {
     static PerlinNoise normalized(PerlinNoise noise) {
         return new NormalizedPerlinNoise(noise);
     }
+
+    /**
+     * Returns the seed used by this Perlin noise object.
+     *
+     * @return the seed used by this Perlin noise object
+     */
+    Random seed();
 
     /**
      * Returns the gradient vectors associated with the specified noise domain coordinates. Since the gradient vectors

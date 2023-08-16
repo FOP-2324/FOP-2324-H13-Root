@@ -87,6 +87,11 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         return frequency;
     }
 
+    @Override
+    public Random seed() {
+        return seed;
+    }
+
     /**
      * Generates a random 2D gradient vector within the unit circle.
      *
