@@ -20,7 +20,7 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
      * @param seed      the random seed for generating gradient vectors
      */
     public SimplePerlinNoise(int width, int height, double frequency, Random seed) {
-        super(width, height, seed);
+        super(width, height, frequency, seed);
     }
 
     /**

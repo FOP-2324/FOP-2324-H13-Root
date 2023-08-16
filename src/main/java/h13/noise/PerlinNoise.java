@@ -3,15 +3,6 @@ package h13.noise;
 import javafx.geometry.Point2D;
 
 /**
- * This interface represents a Perlin noise generator interface to generate Perlin noise using gradient vectors.
- * Perlin noise is a type of coherent noise that produces smooth and natural-looking patterns,
- * commonly used in procedural texture generation and terrain generation.
- *
- * @author Nhan Huynh
- * @see <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>
- */
-
-/**
  * This interface represents a gradient noise generator that used the Perlin noise algorithm to produce coherent noise
  * values based on grid coordinates.
  * <p>
