@@ -16,6 +16,16 @@ import java.util.Random;
 public interface PerlinNoise extends GradientNoise {
 
     /**
+     * Returns an improved version of the specified Perlin noise object.
+     *
+     * @param noise the Perlin noise object to improve
+     * @return an improved version of the specified Perlin noise object
+     */
+    static PerlinNoise improved(PerlinNoise noise) {
+        return new ImprovedPerlinNoise(noise);
+    }
+
+    /**
      * Returns a normalized version of the specified Perlin noise object. Normalization ensures that the noise values
      * are scaled to the range [0, 1] for better usability.
      *
@@ -25,6 +35,7 @@ public interface PerlinNoise extends GradientNoise {
     static PerlinNoise normalized(PerlinNoise noise) {
         return new NormalizedPerlinNoise(noise);
     }
+
 
     /**
      * Returns the seed used by this Perlin noise object.

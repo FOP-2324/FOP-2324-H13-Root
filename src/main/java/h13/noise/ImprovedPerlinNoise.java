@@ -22,53 +22,23 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     private final int[] permutation;
 
     /**
-     * Constructs a ImprovedPerlinNoise object with the specified parameters.
+     * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
      *
-     * @param width       the width of the noise domain
-     * @param height      the height of the noise domain
-     * @param frequency   the frequency of the noise
-     * @param seed        the random seed for generating gradient vectors
+     * @param noise       the underlying Perlin noise object
      * @param permutation the permutation array used for accessing the gradient vectors
      */
-    public ImprovedPerlinNoise(int width, int height, double frequency, Random seed, int[] permutation) {
-        super(width, height, frequency, seed);
+    public ImprovedPerlinNoise(PerlinNoise noise, int[] permutation) {
+        super(noise.width(), noise.height(), noise.frequency(), noise.seed());
         this.permutation = permutation;
     }
 
     /**
-     * Constructs a ImprovedPerlinNoise object with the specified parameters.
+     * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
      *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param frequency the frequency of the noise
-     * @param seed      the random seed for generating gradient vectors
+     * @param noise the underlying Perlin noise object
      */
-    public ImprovedPerlinNoise(int width, int height, double frequency, Random seed) {
-        this(width, height, frequency, seed, createPermutation(seed));
-    }
-
-    /**
-     * Constructs a ImprovedPerlinNoise object with the specified parameters.
-     *
-     * @param width       the width of the noise domain
-     * @param height      the height of the noise domain
-     * @param seed        the random seed for generating gradient vectors
-     * @param permutation the permutation array used for accessing the gradient vectors
-     */
-    public ImprovedPerlinNoise(int width, int height, Random seed, int[] permutation) {
-        super(width, height, seed);
-        this.permutation = permutation;
-    }
-
-    /**
-     * Constructs a ImprovedPerlinNoise object with the specified parameters.
-     *
-     * @param width  the width of the noise domain
-     * @param height the height of the noise domain
-     * @param seed   the random seed for generating gradient vectors
-     */
-    public ImprovedPerlinNoise(int width, int height, Random seed) {
-        this(width, height, seed, createPermutation(seed));
+    public ImprovedPerlinNoise(PerlinNoise noise) {
+        this(noise, createPermutation(noise.seed()));
     }
 
     /**
@@ -97,5 +67,4 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
         int index = permutation[(x + permutation[y & 255]) & 255];
         return gradients()[index];
     }
-
 }
