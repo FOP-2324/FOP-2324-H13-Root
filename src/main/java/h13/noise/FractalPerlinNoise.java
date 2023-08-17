@@ -25,19 +25,9 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     private static final double DEFAULT_AMPLITUDE = 1.0;
 
     /**
-     * The default frequency for the noise.
-     */
-    private static final double DEFAULT_FREQUENCY = 0.005;
-
-    /**
      * The amplitude of the noise, controlling the range of values for each octave.
      */
     private final double amplitude;
-
-    /**
-     * The frequency of the noise, controlling the scale of the noise.
-     */
-    private final double frequency;
 
     /**
      * The number of octaves to use in the fractal noise computation.
@@ -59,7 +49,6 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @param noise       the underlying Perlin noise object
      * @param amplitude   the amplitude of the noise, controlling the range of values for each octave
-     * @param frequency   the frequency of the noise, controlling the scale of the noise
      * @param octaves     the number of octaves, determining the number of noise layers to combine
      * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
      * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
@@ -67,14 +56,12 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     public FractalPerlinNoise(
         PerlinNoise noise,
         double amplitude,
-        double frequency,
         int octaves,
         double persistence,
         double lacunarity
     ) {
         super(noise);
         this.amplitude = amplitude;
-        this.frequency = frequency;
         this.octaves = octaves;
         this.persistence = persistence;
         this.lacunarity = lacunarity;
@@ -84,8 +71,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      * Constructs a FractalPerlinNoise object with the specified underlying Perlin noise object and fractal parameters.
      *
      * <p>
-     * The amplitude and frequency are set to default values of {@value #DEFAULT_AMPLITUDE} and
-     * {@value #DEFAULT_FREQUENCY} respectively.
+     * The amplitude and frequency are set to default values of {@value #DEFAULT_AMPLITUDE} respectively.
      *
      * @param noise       the underlying Perlin noise object
      * @param octaves     the number of octaves, determining the number of noise layers to combine
@@ -98,7 +84,12 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
         double persistence,
         double lacunarity
     ) {
-        this(noise, DEFAULT_AMPLITUDE, DEFAULT_FREQUENCY, octaves, persistence, lacunarity);
+        this(noise, DEFAULT_AMPLITUDE, octaves, persistence, lacunarity);
+    }
+
+    @Override
+    public double compute(int x, int y) {
+        return compute((double) x, y);
     }
 
     /**
@@ -112,8 +103,10 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     @Override
     public double compute(double x, double y) {
         double totalNoise = 0;
-        double f = frequency; // Starting frequency
-        double a = amplitude;   // Starting amplitude
+        // Starting frequency
+        double f = frequency();
+        // Starting amplitude
+        double a = amplitude;
 
         // Combine noise values from multiple octaves
         for (int i = 0; i < octaves; i++) {

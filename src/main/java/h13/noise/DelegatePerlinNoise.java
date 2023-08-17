@@ -61,6 +61,11 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     }
 
     @Override
+    public double frequency() {
+        return noise.frequency();
+    }
+
+    @Override
     public double fade(double t) {
         return noise.fade(t);
     }

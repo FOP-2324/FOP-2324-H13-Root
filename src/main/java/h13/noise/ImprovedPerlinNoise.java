@@ -26,6 +26,32 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      *
      * @param width       the width of the noise domain
      * @param height      the height of the noise domain
+     * @param frequency   the frequency of the noise
+     * @param seed        the random seed for generating gradient vectors
+     * @param permutation the permutation array used for accessing the gradient vectors
+     */
+    public ImprovedPerlinNoise(int width, int height, double frequency, Random seed, int[] permutation) {
+        super(width, height, frequency, seed);
+        this.permutation = permutation;
+    }
+
+    /**
+     * Constructs a ImprovedPerlinNoise object with the specified parameters.
+     *
+     * @param width     the width of the noise domain
+     * @param height    the height of the noise domain
+     * @param frequency the frequency of the noise
+     * @param seed      the random seed for generating gradient vectors
+     */
+    public ImprovedPerlinNoise(int width, int height, double frequency, Random seed) {
+        this(width, height, frequency, seed, createPermutation(seed));
+    }
+
+    /**
+     * Constructs a ImprovedPerlinNoise object with the specified parameters.
+     *
+     * @param width       the width of the noise domain
+     * @param height      the height of the noise domain
      * @param seed        the random seed for generating gradient vectors
      * @param permutation the permutation array used for accessing the gradient vectors
      */
@@ -50,7 +76,6 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      * randomly shuffled and the last 256 elements are the same as the first 256 elements but ordered in ascending
      * order.
      *
-     * @param seed the random seed for generating the permutation array
      * @return the permutation array
      */
     private static int[] createPermutation(Random seed) {

@@ -52,6 +52,31 @@ public interface PerlinNoise extends GradientNoise {
     Point2D[] gradients();
 
     /**
+     * Returns the frequency of the Perlin noise. The frequency determines how quickly the noise values change across
+     * space, and it is related to the scaling factor used in noise generation.
+     *
+     * @return the frequency of the Perlin noise
+     */
+    double frequency();
+
+    /**
+     * Computes the gradient noise value at the specified noise domain coordinates.
+     * It's recommended to multiply the coordinates by the frequency to achieve visible results.
+     * <p>
+     * If you use a lower frequency value (closer to 0), the noise pattern will have larger features and appear more
+     * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
+     * <p>
+     * If you use a higher frequency value (larger than 1), the noise pattern will have smaller and more frequent
+     * features. This can create more detailed and intricate variations in the noise, suitable for fine-grained textures
+     * or details.
+     *
+     * @param x The x-coordinate in the noise domain (scaled by frequency).
+     * @param y The y-coordinate in the noise domain (scaled by frequency).
+     * @return The computed gradient noise value at the specified noise domain coordinates.
+     */
+    double compute(double x, double y);
+
+    /**
      * Returns the gradient vector associated with the specified noise domain coordinates. Since the gradient vectors
      * wrap around the noise domain, the starting point of the gradients domain is at (-1, -1) and the ending point
      * is at (width, height) of the noise domain.

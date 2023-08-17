@@ -13,6 +13,8 @@ import java.util.Random;
  */
 public abstract class AbstractPerlinNoise implements PerlinNoise {
 
+    private static final double DEFAULT_FREQUENCY = 0.01;
+
     /**
      * The random seed used for generating gradient vectors.
      */
@@ -30,9 +32,30 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     private final int height;
 
     /**
+     * The frequency of the Perlin noise.
+     */
+    private final double frequency;
+
+    /**
      * The array of gradient vectors where each vector is associated with a grid cell.
      */
     private final Point2D[] gradients;
+
+    /**
+     * Constructs a AbstractPerlinNoise object with the specified parameters.
+     *
+     * @param width     the width of the noise domain
+     * @param height    the height of the noise domain
+     * @param frequency the frequency of the Perlin noise
+     * @param seed      the random seed for generating gradient vectors
+     */
+    public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
+        this.width = width;
+        this.height = height;
+        this.frequency = frequency;
+        this.seed = seed;
+        this.gradients = createGradients(width + 2, height + 2);
+    }
 
     /**
      * Constructs a AbstractPerlinNoise object with the specified parameters.
@@ -42,10 +65,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param seed   the random seed for generating gradient vectors
      */
     public AbstractPerlinNoise(int width, int height, Random seed) {
-        this.width = width;
-        this.height = height;
-        this.seed = seed;
-        this.gradients = createGradients(width + 2, height + 2);
+        this(width, height, DEFAULT_FREQUENCY, seed);
     }
 
     @Override
@@ -56,6 +76,11 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @Override
     public int height() {
         return height;
+    }
+
+    @Override
+    public double frequency() {
+        return frequency;
     }
 
     @Override

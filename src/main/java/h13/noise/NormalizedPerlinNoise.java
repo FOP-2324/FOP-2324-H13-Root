@@ -24,6 +24,10 @@ public class NormalizedPerlinNoise extends DelegatePerlinNoise implements Perlin
         super(noise);
     }
 
+    @Override
+    public double compute(int x, int y) {
+        return (noise.compute(x, y) + 1) / 2;
+    }
 
     @Override
     public double compute(double x, double y) {
