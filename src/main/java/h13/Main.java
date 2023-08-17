@@ -1,5 +1,8 @@
 package h13;
 
+import h13.ui.App;
+import javafx.application.Application;
+
 /**
  * Main entry point in executing the program.
  */
@@ -11,6 +14,6 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Application.launch(App.class, args);
     }
 }
