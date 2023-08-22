@@ -1,6 +1,5 @@
 package h13;
 
-import h13.ui.App;
 import javafx.application.Application;
 
 /**
@@ -14,6 +13,6 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
-        Application.launch(App.class, args);
+        System.out.println("Hello World!");
     }
 }
