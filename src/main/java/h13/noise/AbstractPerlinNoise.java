@@ -34,7 +34,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     /**
      * The frequency of the Perlin noise.
      */
-    private final double frequency;
+    private double frequency;
 
     /**
      * The array of gradient vectors where each vector is associated with a grid cell.
@@ -81,6 +81,11 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @Override
     public double frequency() {
         return frequency;
+    }
+
+    @Override
+    public void setFrequency(double frequency) {
+        this.frequency = frequency;
     }
 
     @Override

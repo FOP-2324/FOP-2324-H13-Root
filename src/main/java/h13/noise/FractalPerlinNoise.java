@@ -27,22 +27,22 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     /**
      * The amplitude of the noise, controlling the range of values for each octave.
      */
-    private final double amplitude;
+    private double amplitude;
 
     /**
      * The number of octaves to use in the fractal noise computation.
      */
-    private final int octaves;
+    private int octaves;
 
     /**
      * The persistence value which determines the amplitude decrease factor between octaves.
      */
-    private final double persistence;
+    private double persistence;
 
     /**
      * The lacunarity value which determines the frequency increase factor between octaves.
      */
-    private final double lacunarity;
+    private double lacunarity;
 
     /**
      * Constructs a FractalPerlinNoise object with the specified underlying Perlin noise object and fractal parameters.
@@ -118,6 +118,78 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
         }
 
         return totalNoise;
+    }
+
+    /**
+     * Returns the amplitude of the noise, controlling the range of values for each octave.
+     *
+     * @return the amplitude of the noise
+     */
+    public double amplitude() {
+        return amplitude;
+    }
+
+    /**
+     * Sets the amplitude of the noise, controlling the range of values for each octave.
+     *
+     * @param amplitude the new amplitude of the noise
+     */
+    public void setAmplitude(double amplitude) {
+        this.amplitude = amplitude;
+    }
+
+    /**
+     * Returns the number of octaves to use in the fractal noise computation.
+     *
+     * @return the number of octaves
+     */
+    public int octaves() {
+        return octaves;
+    }
+
+    /**
+     * Sets the number of octaves to use in the fractal noise computation.
+     *
+     * @param octaves the new number of octaves
+     */
+    public void setOctaves(int octaves) {
+        this.octaves = octaves;
+    }
+
+    /**
+     * Returns the persistence value which determines the amplitude decrease factor between octaves.
+     *
+     * @return the persistence value
+     */
+    public double persistence() {
+        return persistence;
+    }
+
+    /**
+     * Sets the persistence value which determines the amplitude decrease factor between octaves.
+     *
+     * @param persistence the new persistence value
+     */
+    public void setPersistence(double persistence) {
+        this.persistence = persistence;
+    }
+
+    /**
+     * Returns the lacunarity value which determines the frequency increase factor between octaves.
+     *
+     * @return the lacunarity value
+     */
+    public double lacunarity() {
+        return lacunarity;
+    }
+
+    /**
+     * Sets the lacunarity value which determines the frequency increase factor between octaves.
+     *
+     * @param lacunarity the new lacunarity value
+     */
+    public void setLacunarity(double lacunarity) {
+        this.lacunarity = lacunarity;
     }
 }
 

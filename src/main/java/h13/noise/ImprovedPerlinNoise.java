@@ -67,4 +67,13 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
         int index = permutation[(x + permutation[y & 255]) & 255];
         return gradients()[index];
     }
+
+    /**
+     * Returns the permutation array used for accessing the gradient vectors.
+     *
+     * @return the permutation array used for accessing the gradient vectors
+     */
+    public int[] getPermutation() {
+        return permutation;
+    }
 }

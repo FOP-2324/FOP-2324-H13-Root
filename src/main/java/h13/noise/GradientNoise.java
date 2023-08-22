@@ -1,5 +1,8 @@
 package h13.noise;
 
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+
 /**
  * This interface represents a gradient noise generator that produces coherent noise values based on grid coordinates.
  *
@@ -31,5 +34,18 @@ public interface GradientNoise {
      * @return the computed gradient noise value at the specified noise domain coordinates
      */
     double compute(int x, int y);
+
+    /**
+     * Computes the gradient noise values for the entire noise domain.
+     *
+     * @return the computed gradient noise values for the entire noise domain
+     */
+    default double[][] compute() {
+        return IntStream.range(0, width())
+            .parallel()
+            .mapToObj(x -> IntStream.range(0, height()).parallel().mapToDouble(y -> compute(x, y)))
+            .map(DoubleStream::toArray)
+            .toArray(double[][]::new);
+    }
 
 }

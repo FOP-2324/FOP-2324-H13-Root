@@ -71,6 +71,13 @@ public interface PerlinNoise extends GradientNoise {
     double frequency();
 
     /**
+     * Sets the frequency of the Perlin noise to the specified value.
+     *
+     * @param frequency the new frequency of the Perlin noise
+     */
+    void setFrequency(double frequency);
+
+    /**
      * Computes the gradient noise value at the specified noise domain coordinates.
      * It's recommended to multiply the coordinates by the frequency to achieve visible results.
      * <p>
