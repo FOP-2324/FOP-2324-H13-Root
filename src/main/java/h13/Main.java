@@ -1,5 +1,6 @@
 package h13;
 
+import h13.ui.PerlinNoiseApp;
 import javafx.application.Application;
 
 /**
@@ -13,6 +14,6 @@ public class Main {
      * @param args program arguments, currently ignored
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Application.launch(PerlinNoiseApp.class, args);
     }
 }
