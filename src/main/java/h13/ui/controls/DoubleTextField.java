@@ -1,0 +1,72 @@
+package h13.ui.controls;
+
+import javafx.util.StringConverter;
+
+import java.util.regex.Pattern;
+
+/**
+ * A TextField that only accepts doubles.
+ *
+ * @author Nhan Huynh
+ */
+public class DoubleTextField extends NumberTextField {
+
+    /**
+     * A pattern that matches any positive doubles.
+     */
+    public static final Pattern POSITIVE = Pattern.compile("\\d*(\\.\\d*)?");
+
+    /**
+     * A pattern that matches any negative doubles.
+     */
+    public static final Pattern NEGATIVE = Pattern.compile("-" + POSITIVE.pattern());
+
+    /**
+     * A pattern that matches any doubles.
+     */
+    private static final Pattern INTEGER = Pattern.compile("-?" + POSITIVE.pattern());
+
+    /**
+     * Creates a new DoubleTextField with the given pattern.
+     *
+     * @param pattern the pattern that is used to validate the input
+     */
+    public DoubleTextField(Pattern pattern) {
+        super(pattern, new DoubleStringConverter());
+    }
+
+    /**
+     * Creates a new DoubleTextField that any doubles.
+     */
+    public DoubleTextField() {
+        this(INTEGER);
+    }
+
+    /**
+     * A custom StringConverter that converts the input to a double.
+     */
+    private static class DoubleStringConverter extends StringConverter<Number> {
+
+        @Override
+        public String toString(Number value) {
+            return value == null ? "" : Double.toString(value.doubleValue());
+        }
+
+        @Override
+        public Number fromString(String value) {
+            if (value == null) {
+                return null;
+            }
+
+            value = value.trim();
+
+            if (value.isEmpty()) {
+                return null;
+            }
+
+            return (value.startsWith("-") ? -1 : 1) * Double.parseDouble(value);
+        }
+
+    }
+
+}
