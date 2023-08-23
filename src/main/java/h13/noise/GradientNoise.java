@@ -36,16 +36,29 @@ public interface GradientNoise {
     double compute(int x, int y);
 
     /**
+     * Computes the gradient noise values for the specified noise domain coordinates (rectangle area).
+     *
+     * @param x the x-coordinate of the starting point of the noise domain
+     * @param y the y-coordinate of the starting point of the noise domain
+     * @param w the width of the noise domain
+     * @param h the height of the noise domain
+     * @return the computed gradient noise values for the specified noise domain coordinates
+     */
+    default double[][] compute(int x, int y, int w, int h) {
+        return IntStream.range(x, w)
+            .parallel()
+            .mapToObj(xi -> IntStream.range(y, h).parallel().mapToDouble(yi -> compute(xi, yi)))
+            .map(DoubleStream::toArray)
+            .toArray(double[][]::new);
+    }
+
+    /**
      * Computes the gradient noise values for the entire noise domain.
      *
      * @return the computed gradient noise values for the entire noise domain
      */
     default double[][] compute() {
-        return IntStream.range(0, width())
-            .parallel()
-            .mapToObj(x -> IntStream.range(0, height()).parallel().mapToDouble(y -> compute(x, y)))
-            .map(DoubleStream::toArray)
-            .toArray(double[][]::new);
+        return compute(0, 0, width(), height());
     }
 
 }
