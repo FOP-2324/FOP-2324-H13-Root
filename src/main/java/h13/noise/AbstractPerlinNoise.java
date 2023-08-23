@@ -50,6 +50,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param seed      the random seed for generating gradient vectors
      */
     public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
+        if (frequency < 0 || frequency > 1) throw new IllegalArgumentException("Frequency must be between 0 and 1");
         this.width = width;
         this.height = height;
         this.frequency = frequency;

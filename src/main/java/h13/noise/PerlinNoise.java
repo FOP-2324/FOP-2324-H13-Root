@@ -63,8 +63,8 @@ public interface PerlinNoise extends GradientNoise {
     Point2D[] gradients();
 
     /**
-     * Returns the frequency of the Perlin noise. The frequency determines how quickly the noise values change across
-     * space, and it is related to the scaling factor used in noise generation.
+     * Returns the frequency of the Perlin noise which is between 0 and 1. The frequency determines how quickly the
+     * noise values change across space, and it is related to the scaling factor used in noise generation.
      *
      * @return the frequency of the Perlin noise
      */
