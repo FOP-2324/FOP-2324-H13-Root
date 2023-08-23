@@ -2,6 +2,8 @@ package h13.noise;
 
 import javafx.geometry.Point2D;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -146,5 +148,23 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     public Point2D getGradient(int x, int y) {
         // Since the gradients array wrap around the noise domain, the size of the gradients array is equal to width + 2
         return gradients[(width + 2) * y + x];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractPerlinNoise that = (AbstractPerlinNoise) o;
+        return width == that.width
+            && height == that.height
+            && Double.compare(frequency, that.frequency) == 0
+            && Arrays.equals(gradients, that.gradients);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(width, height, frequency);
+        result = 31 * result + Arrays.hashCode(gradients);
+        return result;
     }
 }

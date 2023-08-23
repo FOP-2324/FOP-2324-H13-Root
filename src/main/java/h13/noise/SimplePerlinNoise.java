@@ -91,5 +91,5 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     public double interpolate(double a, double b, double alpha) {
         return a + alpha * (b - a);
     }
-
+    
 }

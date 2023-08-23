@@ -1,5 +1,7 @@
 package h13.noise;
 
+import java.util.Objects;
+
 /**
  * A fractal implementation of the Perlin noise algorithm that generates coherent noise values based on grid
  * coordinates. This class adds fractal behavior to the underlying Perlin noise by combining multiple octaves of noise
@@ -190,6 +192,23 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      */
     public void setLacunarity(double lacunarity) {
         this.lacunarity = lacunarity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        FractalPerlinNoise that = (FractalPerlinNoise) o;
+        return Double.compare(amplitude, that.amplitude) == 0
+            && octaves == that.octaves
+            && Double.compare(persistence, that.persistence) == 0
+            && Double.compare(lacunarity, that.lacunarity) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), amplitude, octaves, persistence, lacunarity);
     }
 }
 

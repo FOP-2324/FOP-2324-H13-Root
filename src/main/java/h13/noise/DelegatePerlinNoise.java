@@ -2,6 +2,7 @@ package h13.noise;
 
 import javafx.geometry.Point2D;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -80,4 +81,16 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
         return noise.interpolate(y1, y2, alpha);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DelegatePerlinNoise that = (DelegatePerlinNoise) o;
+        return Objects.equals(noise, that.noise);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(noise);
+    }
 }
