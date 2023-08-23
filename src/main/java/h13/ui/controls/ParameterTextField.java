@@ -44,31 +44,6 @@ public class ParameterTextField {
     }
 
     /**
-     * Creates a new ParameterTextField with the given label and text field.
-     *
-     * @param label the label of the text field that describes the parameter
-     * @param type  the type of the text field
-     * @return the created ParameterTextField
-     */
-    public static ParameterTextField create(Label label, Type type) {
-        return switch (type) {
-            case INTEGER -> new ParameterTextField(label, new IntegerTextField());
-            case DOUBLE -> new ParameterTextField(label, new DoubleTextField());
-        };
-    }
-
-    /**
-     * Creates a new ParameterTextField with the given label and text field.
-     *
-     * @param label the label of the text field that describes the parameter
-     * @param type  the type of the text field
-     * @return the created ParameterTextField
-     */
-    public static ParameterTextField create(String label, Type type) {
-        return create(new Label(label), type);
-    }
-
-    /**
      * Returns the label of the text field that describes the parameter.
      *
      * @return the label of the text field that describes the parameter
@@ -115,20 +90,4 @@ public class ParameterTextField {
         textField.setDisable(value);
     }
 
-
-    /**
-     * Represents the type of the parameter text field.
-     */
-    public enum Type {
-
-        /**
-         * The parameter text field is an integer.
-         */
-        INTEGER,
-
-        /**
-         * The parameter text field is a double.
-         */
-        DOUBLE
-    }
 }
