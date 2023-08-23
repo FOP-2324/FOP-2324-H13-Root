@@ -1,16 +1,18 @@
 package h13.ui;
 
-import h13.ui.controls.DoubleTextField;
-import h13.ui.controls.IntegerTextField;
-import h13.ui.controls.LongTextField;
-import h13.ui.controls.ParameterTextField;
+import h13.ui.controls.*;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Control;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+
+import java.util.Arrays;
 
 public class AlgorithmPane extends BorderPane {
 
@@ -27,6 +29,8 @@ public class AlgorithmPane extends BorderPane {
     private final Canvas canvas = new Canvas();
 
     private final GridPane controls = new GridPane();
+
+    private final CheckboxGroup algorithms = new CheckboxGroup("Algorithm", "Improved", "Fractal");
 
     private final ParameterTextField seed = new ParameterTextField("Seed", new LongTextField(LongTextField.POSITIVE));
 
@@ -72,11 +76,16 @@ public class AlgorithmPane extends BorderPane {
         controls.setAlignment(Pos.CENTER_RIGHT);
         controls.setVgap(VGAP);
         controls.setHgap(HGAP);
+
+        algorithms.getBoxGroup().setSpacing(SPACING);
+        controls.addRow(0, algorithms.getControls());
+
         ParameterTextField[] allFields = {seed, frequency, amplitude, octaves, persistence, lacunarity};
         for (int i = 0; i < allFields.length; i++) {
-            controls.addRow(i, allFields[i].getControls());
+            controls.addRow(i + 1, allFields[i].getControls());
         }
-        controls.addRow(allFields.length, generate);
+
+        controls.addRow(allFields.length + 1, generate);
 
         // Visibility of default parameters
         ParameterTextField[] fractalFields = {amplitude, octaves, persistence, lacunarity};
@@ -85,8 +94,20 @@ public class AlgorithmPane extends BorderPane {
         }
 
         // Bindings
+        CheckBox[] boxes = algorithms.getBoxes();
+        BooleanProperty[] options = new BooleanProperty[]{controller.improvedProperty(), controller.fractalProperty()};
+        for (int i = 0; i < boxes.length; i++) {
+            boxes[i].selectedProperty().bindBidirectional(options[i]);
+        }
+        controller.addFractalParameterListener(
+            Arrays.stream(fractalFields)
+                .map(ParameterTextField::getControls)
+                .flatMap(Arrays::stream)
+                .toArray(Control[]::new)
+        );
+
         @SuppressWarnings("unchecked")
-        Property<Number>[] properties = (Property<Number>[]) new Property<?>[]{
+        Property<Number>[] parameters = (Property<Number>[]) new Property<?>[]{
             controller.seedProperty(),
             controller.frequencyProperty(),
             controller.amplitudeProperty(),
@@ -94,8 +115,8 @@ public class AlgorithmPane extends BorderPane {
             controller.persistenceProperty(),
             controller.lacunarityProperty()
         };
-        for (int i = 0; i < properties.length; i++) {
-            allFields[i].valueProperty().bindBidirectional(properties[i]);
+        for (int i = 0; i < parameters.length; i++) {
+            allFields[i].valueProperty().bindBidirectional(parameters[i]);
         }
         controller.addGenerateListener(generate.pressedProperty(), canvas);
     }

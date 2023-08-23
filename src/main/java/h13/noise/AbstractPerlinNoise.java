@@ -88,6 +88,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
 
     @Override
     public void setFrequency(double frequency) {
+        if (frequency < 0 || frequency > 1) throw new IllegalArgumentException("Frequency must be between 0 and 1");
         this.frequency = frequency;
     }
 

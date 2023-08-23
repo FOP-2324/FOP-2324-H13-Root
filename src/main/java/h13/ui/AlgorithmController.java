@@ -8,6 +8,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Control;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -31,6 +32,10 @@ public class AlgorithmController {
 
     private @Nullable PerlinNoise noise;
 
+    private final BooleanProperty improved = new SimpleBooleanProperty(this, "improved");
+
+    private final BooleanProperty fractal = new SimpleBooleanProperty(this, "fractal");
+
     private final IntegerProperty seed = new SimpleIntegerProperty(this, "seed");
 
     private final DoubleProperty frequency = new SimpleDoubleProperty(this, "frequency");
@@ -43,6 +48,14 @@ public class AlgorithmController {
     private final DoubleProperty lacunarity = new SimpleDoubleProperty(this, "lacunarity");
 
     private final BooleanProperty generate = new SimpleBooleanProperty(this, "generate");
+
+    public BooleanProperty improvedProperty() {
+        return improved;
+    }
+
+    public BooleanProperty fractalProperty() {
+        return fractal;
+    }
 
     public IntegerProperty seedProperty() {
         return seed;
@@ -72,22 +85,25 @@ public class AlgorithmController {
         return generate;
     }
 
+    public void addFractalParameterListener(Control... controls) {
+        for (Control control : controls) {
+            control.disableProperty().bind(fractal.not());
+        }
+    }
+
     public void addGenerateListener(BooleanExpression property, Canvas canvas) {
         generate.bind(property);
         generate.addListener((observable, oldValue, newValue) -> {
             if (!newValue) return;
 
-            if (noise == null) {
+            if (noise == null || !improved.getValue()) {
                 // Screen bounds
                 Rectangle2D screen = Screen.getPrimary().getVisualBounds();
                 int swidth = (int) screen.getWidth() / 2;
                 int sheight = (int) screen.getHeight() / 2;
 
-                // Simpöe value < 1
                 try {
                     noise = new SimplePerlinNoise(swidth, sheight, frequency.get(), new Random(seed.get()));
-                    noise = PerlinNoise.improved(noise);
-                    noise = PerlinNoise.normalized(noise);
                 } catch (IllegalArgumentException e) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setHeaderText("Invalid parameters");
@@ -96,8 +112,21 @@ public class AlgorithmController {
                     return;
                 }
             }
+            if (improved.getValue()) {
+                noise = PerlinNoise.improved(noise);
+            }
+            noise = PerlinNoise.normalized(noise);
 
-            noise.setFrequency(frequency.doubleValue());
+            try {
+                noise.setFrequency(frequency.doubleValue());
+            } catch (IllegalArgumentException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Invalid parameters");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+                return;
+            }
+
             int width = (int) canvas.getWidth();
             int height = (int) canvas.getHeight();
             double[][] noises = noise.compute(0, 0, width, height);
@@ -110,6 +139,6 @@ public class AlgorithmController {
                 }
             }
         });
-
     }
+
 }

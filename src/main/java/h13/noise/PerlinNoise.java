@@ -74,6 +74,7 @@ public interface PerlinNoise extends GradientNoise {
      * Sets the frequency of the Perlin noise to the specified value.
      *
      * @param frequency the new frequency of the Perlin noise
+     * @throws IllegalArgumentException if the specified frequency is not in the range [0, 1]
      */
     void setFrequency(double frequency);
 
