@@ -64,7 +64,7 @@ public class IntegerTextField extends NumberTextField {
                 return null;
             }
 
-            return (value.startsWith("-") ? -1 : 1) * Integer.parseInt(value);
+            return value.equals("-") ? -1 : Integer.parseInt(value);
         }
 
     }

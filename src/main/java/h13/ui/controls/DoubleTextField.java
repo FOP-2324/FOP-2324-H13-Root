@@ -24,7 +24,7 @@ public class DoubleTextField extends NumberTextField {
     /**
      * A pattern that matches any doubles.
      */
-    private static final Pattern INTEGER = Pattern.compile("-?" + POSITIVE.pattern());
+    private static final Pattern DOUBLE = Pattern.compile("-?" + POSITIVE.pattern());
 
     /**
      * Creates a new DoubleTextField with the given pattern.
@@ -39,7 +39,7 @@ public class DoubleTextField extends NumberTextField {
      * Creates a new DoubleTextField that any doubles.
      */
     public DoubleTextField() {
-        this(INTEGER);
+        this(DOUBLE);
     }
 
     /**
@@ -64,7 +64,7 @@ public class DoubleTextField extends NumberTextField {
                 return null;
             }
 
-            return (value.startsWith("-") ? -1 : 1) * Double.parseDouble(value);
+            return value.equals("-") ? -1d : Double.parseDouble(value);
         }
 
     }
