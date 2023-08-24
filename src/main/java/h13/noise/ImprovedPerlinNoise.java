@@ -74,7 +74,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      *
      * @return the permutation array used for accessing the gradient vectors
      */
-    public int[] getPermutation() {
+    public int[] permutation() {
         return permutation;
     }
 

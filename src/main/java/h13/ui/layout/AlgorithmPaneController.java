@@ -28,12 +28,10 @@ public class AlgorithmPaneController {
     private static final DoubleFunction<Color> COLOR_MAPPER = value -> {
         if (value <= 0.5) {
             // Water color (blue)
-            double blue = value * 2f;
-            return Color.color(0, 0f, blue);
+            return Color.color(0, 0f, value * 2f);
         } else {
             // Land color (green)
-            double green = value;
-            return Color.color(0f, green, 0f);
+            return Color.color(0f, value, 0f);
         }
     };
 
@@ -50,6 +48,7 @@ public class AlgorithmPaneController {
                 default -> new SimpleDoubleProperty(this, p.toString());
             }
         ));
+
 
     private final Map<String, BooleanProperty> algorithms = Arrays.stream(Algorithm.values())
         .collect(Collectors.toMap(
@@ -99,18 +98,18 @@ public class AlgorithmPaneController {
         return PerlinNoise.normalized(noise);
     }
 
-    private void draw(PerlinNoise algorithm, Canvas canvas) {
+    private void draw(PerlinNoise algorithm, Canvas canvas, int x, int y, int w, int h) {
         GraphicsContext context = canvas.getGraphicsContext2D();
-        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        double[][] noises = algorithm.compute(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-        for (int x = 0; x < noises.length; x++) {
-            for (int y = 0; y < noises[x].length; y++) {
-                Color color = COLOR_MAPPER.apply(noises[x][y]);
+        double[][] noises = algorithm.compute(x, y, w, h);
+        for (int xi = 0; xi < noises.length; xi++) {
+            for (int yi = 0; yi < noises[xi].length; yi++) {
+                Color color = COLOR_MAPPER.apply(noises[xi][yi]);
                 context.setFill(color);
-                context.fillRect(x, y, 1, 1);
+                context.fillRect(x + xi, y + yi, 1, 1);
             }
         }
     }
+
 
     public void addGenerateListener(BooleanExpression expression, Canvas canvas) {
         expression.addListener((observable, oldValue, newValue) -> {
@@ -122,7 +121,7 @@ public class AlgorithmPaneController {
                 return;
             lastAlgorithm = algorithm;
             algorithm.setFrequency(frequency);
-            draw(algorithm, canvas);
+            draw(algorithm, canvas, 0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
         });
     }
 }
