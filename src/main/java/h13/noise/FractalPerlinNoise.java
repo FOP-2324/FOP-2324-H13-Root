@@ -22,7 +22,7 @@ import java.util.Objects;
 public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoise {
 
     /**
-     * The default amplitude for the noise.
+     * The default amplitude to use for the noise.
      */
     private static final double DEFAULT_AMPLITUDE = 1.0;
 
@@ -47,7 +47,8 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     private double lacunarity;
 
     /**
-     * Constructs a FractalPerlinNoise object with the specified underlying Perlin noise object and fractal parameters.
+     * Constructs a fractal Perlin noise object with the specified underlying Perlin noise object and fractal
+     * parameters.
      *
      * @param noise       the underlying Perlin noise object
      * @param amplitude   the amplitude of the noise, controlling the range of values for each octave
@@ -71,10 +72,8 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     }
 
     /**
-     * Constructs a FractalPerlinNoise object with the specified underlying Perlin noise object and fractal parameters.
-     *
-     * <p>
-     * The amplitude and frequency are set to default values of {@value #DEFAULT_AMPLITUDE} respectively.
+     * Constructs a fractal Perlin noise object with the specified underlying Perlin noise object and fractal
+     * parameters.
      *
      * @param noise       the underlying Perlin noise object
      * @param octaves     the number of octaves, determining the number of noise layers to combine

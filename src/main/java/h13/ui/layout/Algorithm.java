@@ -1,8 +1,25 @@
 package h13.ui.layout;
 
+/**
+ * Represents all available algorithms for generating Perlin noise.
+ *
+ * @author Nhan Huynh
+ */
 public enum Algorithm {
+
+    /**
+     * The simple Perlin noise algorithm.
+     */
     SIMPLE,
+
+    /**
+     * The improved Perlin noise algorithm using a permutation table.
+     */
     IMPROVED,
+
+    /**
+     * The fractal Perlin noise algorithm using multiple octaves, each with a different frequency and amplitude.
+     */
     FRACTAL;
 
     @Override

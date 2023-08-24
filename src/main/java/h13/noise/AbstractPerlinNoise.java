@@ -15,6 +15,9 @@ import java.util.Random;
  */
 public abstract class AbstractPerlinNoise implements PerlinNoise {
 
+    /**
+     * The default frequency to use for the Perlin noise.
+     */
     private static final double DEFAULT_FREQUENCY = 0.01;
 
     /**
@@ -44,7 +47,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     private final Point2D[] gradients;
 
     /**
-     * Constructs a AbstractPerlinNoise object with the specified parameters.
+     * Constructs an abstract Perlin noise with the specified noise domain, frequency and seed.
      *
      * @param width     the width of the noise domain
      * @param height    the height of the noise domain
@@ -61,7 +64,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     /**
-     * Constructs a AbstractPerlinNoise object with the specified parameters.
+     * Constructs an abstract Perlin noise with the specified noise domain and seed.
      *
      * @param width  the width of the noise domain
      * @param height the height of the noise domain
@@ -100,7 +103,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     /**
      * Generates a random 2D gradient vector within the unit circle.
      *
-     * @return a Point2D representing the random gradient vector within the unit circle
+     * @return a random gradient vector within the unit circle
      */
     private Point2D createGradient() {
         return new Point2D(seed.nextDouble(-1, 1), seed.nextDouble(-1, 1));

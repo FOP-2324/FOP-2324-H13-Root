@@ -5,7 +5,7 @@ import javafx.util.StringConverter;
 import java.util.regex.Pattern;
 
 /**
- * A TextField that only accepts longs.
+ * A text field that only accepts longs.
  *
  * @author Nhan Huynh
  */
@@ -27,7 +27,7 @@ public class LongTextField extends NumberTextField {
     private static final Pattern LONG = Pattern.compile("-?" + POSITIVE.pattern());
 
     /**
-     * Creates a new LongTextField with the given pattern.
+     * Creates a new long valued text field which accepts longs that match the given pattern.
      *
      * @param pattern the pattern that is used to validate the input
      */
@@ -36,14 +36,14 @@ public class LongTextField extends NumberTextField {
     }
 
     /**
-     * Creates a new LongTextField that any integers.
+     * Creates a new long valued text field that accepts any long.
      */
     public LongTextField() {
         this(LONG);
     }
 
     /**
-     * A custom StringConverter that converts the input to a long.
+     * A custom String converter that converts the input to a long.
      */
     private static class LongStringConverter extends StringConverter<Number> {
 

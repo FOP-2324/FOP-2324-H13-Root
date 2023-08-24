@@ -18,7 +18,6 @@ import java.util.Random;
  * noise generation logic in the compute method.
  *
  * @author Nhan Huynh
- * @see PerlinNoise
  */
 public abstract class DelegatePerlinNoise implements PerlinNoise {
 
@@ -28,7 +27,7 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     protected final PerlinNoise noise;
 
     /**
-     * Constructs a DelegatePerlinNoise object with the specified underlying Perlin noise object.
+     * Constructs a delegate Perlin noise object with the specified underlying Perlin noise object.
      *
      * @param noise the underlying Perlin noise object
      */

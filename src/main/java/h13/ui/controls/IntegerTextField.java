@@ -5,7 +5,7 @@ import javafx.util.StringConverter;
 import java.util.regex.Pattern;
 
 /**
- * A TextField that only accepts integers.
+ * A text field that only accepts integers.
  *
  * @author Nhan Huynh
  */
@@ -27,7 +27,7 @@ public class IntegerTextField extends NumberTextField {
     private static final Pattern INTEGER = Pattern.compile("-?" + POSITIVE.pattern());
 
     /**
-     * Creates a new IntegerTextField with the given pattern.
+     * Creates a new integer valued text field which accepts doubles that match the given pattern.
      *
      * @param pattern the pattern that is used to validate the input
      */
@@ -36,14 +36,14 @@ public class IntegerTextField extends NumberTextField {
     }
 
     /**
-     * Creates a new IntegerTextField that any integers.
+     * Creates a new integer valued text field that accepts any integer.
      */
     public IntegerTextField() {
         this(INTEGER);
     }
 
     /**
-     * A custom StringConverter that converts the input to an integer.
+     * A custom String converter that converts the input to an integer.
      */
     private static class IntegerStringConverter extends StringConverter<Number> {
 

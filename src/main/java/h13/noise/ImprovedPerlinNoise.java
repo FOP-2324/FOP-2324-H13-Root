@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * An improved implementation of the Perlin noise algorithm.
+ * An improved implementation of the Perlin noise algorithm that uses a permutation array to access the gradient.
  *
  * @author Nhan Huynh
  */

@@ -5,7 +5,7 @@ import javafx.util.StringConverter;
 import java.util.regex.Pattern;
 
 /**
- * A TextField that only accepts doubles.
+ * A text field that only accepts doubles.
  *
  * @author Nhan Huynh
  */
@@ -27,7 +27,7 @@ public class DoubleTextField extends NumberTextField {
     private static final Pattern DOUBLE = Pattern.compile("-?" + POSITIVE.pattern());
 
     /**
-     * Creates a new DoubleTextField with the given pattern.
+     * Creates a new double valued text field which accepts doubles that match the given pattern.
      *
      * @param pattern the pattern that is used to validate the input
      */
@@ -36,14 +36,14 @@ public class DoubleTextField extends NumberTextField {
     }
 
     /**
-     * Creates a new DoubleTextField that any doubles.
+     * Creates a new double valued text field that accepts any double.
      */
     public DoubleTextField() {
         this(DOUBLE);
     }
 
     /**
-     * A custom StringConverter that converts the input to a double.
+     * A custom String converter that converts the input to a double.
      */
     private static class DoubleStringConverter extends StringConverter<Number> {
 

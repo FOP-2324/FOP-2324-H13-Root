@@ -23,7 +23,7 @@ public class ParameterTextField {
     private final NumberTextField numberTextField;
 
     /**
-     * Creates a new ParameterTextField with the given label and text field.
+     * Creates a new parameter text field with the given label and text field.
      *
      * @param label           the label of the text field that describes the parameter
      * @param numberTextField the numeric text field of the parameter
@@ -34,7 +34,7 @@ public class ParameterTextField {
     }
 
     /**
-     * Creates a new ParameterTextField with the given label and text field.
+     * Creates a new parameter text field with the given label and text field.
      *
      * @param label           the label of the text field that describes the parameter
      * @param numberTextField the numeric text field of the parameter

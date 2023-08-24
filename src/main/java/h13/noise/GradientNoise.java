@@ -25,7 +25,6 @@ public interface GradientNoise {
      */
     int height();
 
-
     /**
      * Computes the gradient noise value at the specified noise domain coordinates.
      *

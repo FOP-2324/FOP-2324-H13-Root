@@ -12,7 +12,7 @@ import java.util.Random;
 public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNoise {
 
     /**
-     * Constructs a SimplePerlinNoise object with the specified parameters.
+     * Constructs a simple Perlin noise object with the specified noise domain width, height, frequency, and seed.
      *
      * @param width     the width of the noise domain
      * @param height    the height of the noise domain
@@ -24,11 +24,11 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     }
 
     /**
-     * Constructs a SimplePerlinNoise object with the specified parameters.
+     * Constructs a simple Perlin noise object with the specified noise domain width, height, and seed.
      *
-     * @param width  the width of the noise domain
-     * @param height the height of the noise domain
-     * @param seed   the random seed for generating gradient vectors
+     * @param width     the width of the noise domain
+     * @param height    the height of the noise domain
+     * @param seed      the random seed for generating gradient vectors
      */
     public SimplePerlinNoise(int width, int height, Random seed) {
         super(width, height, seed);
@@ -91,5 +91,5 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     public double interpolate(double a, double b, double alpha) {
         return a + alpha * (b - a);
     }
-    
+
 }

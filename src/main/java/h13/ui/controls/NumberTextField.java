@@ -10,7 +10,7 @@ import javafx.util.StringConverter;
 import java.util.regex.Pattern;
 
 /**
- * A TextField that only accepts numbers.
+ * A text field that only accepts numbers.
  *
  * @author Nhan Huynh
  */
@@ -27,7 +27,8 @@ public abstract class NumberTextField extends TextField {
     private final Property<Number> value = new SimpleObjectProperty<>(this, "NumericValue");
 
     /**
-     * Creates a new NumberTextField with the given formatter and converter.
+     * Creates a new number valued text field with the given formatter and converter which accepts any number that
+     * matches the given pattern and converts the input to a numeric value from String and vice versa.
      *
      * @param formatter the formatter that is used to validate the input
      * @param converter the converter that is used to convert the input (string) to a numeric value
@@ -39,7 +40,8 @@ public abstract class NumberTextField extends TextField {
     }
 
     /**
-     * Creates a new NumberTextField with the given pattern and converter.
+     * Creates a new number valued text field with the given pattern and converter which accepts any number that
+     * matches the given pattern and converts the input to a numeric value from String and vice versa.
      *
      * @param pattern   the pattern that is used to validate the input
      * @param converter the converter that is used to convert the input (string) to a numeric value
@@ -61,9 +63,9 @@ public abstract class NumberTextField extends TextField {
     }
 
     /**
-     * Returns the numeric value of the TextField property.
+     * Returns the numeric value of the text field property.
      *
-     * @return the numeric value of the TextField property
+     * @return the numeric value of the text field  property
      */
     public Property<Number> valueProperty() {
         return value;
@@ -78,6 +80,11 @@ public abstract class NumberTextField extends TextField {
         this.value.setValue(value);
     }
 
+    /**
+     * Sets the prompt text of the text field to the given value.
+     *
+     * @param value the value to set the prompt text to
+     */
     public void setPromptValue(Number value) {
         this.setPromptText(value.toString());
     }

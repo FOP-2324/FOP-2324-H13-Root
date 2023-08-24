@@ -8,6 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * A JavaFX application that visualizes the Perlin noise algorithm.
+ *
+ * @author Nhan Huynh
+ */
 public class PerlinNoiseApp extends Application {
     @Override
     public void start(Stage primaryStage) {

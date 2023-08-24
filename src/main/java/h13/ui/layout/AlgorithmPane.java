@@ -19,16 +19,36 @@ import javafx.scene.text.FontWeight;
 
 import java.util.Arrays;
 
+/**
+ * A pane that visualizes a Perlin noise algorithm which can be configured.
+ *
+ * @author Mhan Huynh
+ */
 public class AlgorithmPane extends BorderPane {
 
+    /**
+     * The spacing between controls.
+     */
     private static final int SPACING = 10;
 
+    /**
+     * The padding of the pane.
+     */
     private static final Insets PADDING = new Insets(10);
 
+    /**
+     * The vertical gap between controls.
+     */
     private static final int VGAP = 5;
 
+    /**
+     * The horizontal gap between controls.
+     */
     private static final int HGAP = 10;
 
+    /**
+     * The font of the header labels.
+     */
     private final static Font HEADER;
 
 
@@ -37,24 +57,53 @@ public class AlgorithmPane extends BorderPane {
         HEADER = Font.font(font.getName(), FontWeight.BOLD, font.getSize() * 1.25);
     }
 
+    /**
+     * The controller of this pane which handles the logic.
+     */
     private final AlgorithmPaneController controller = new AlgorithmPaneController();
+
+    /**
+     * The visualization of the algorithm.
+     */
     private final Canvas visualization = new Canvas();
 
+    /**
+     * The controls of the pane.
+     */
     private final VBox controls = new VBox();
 
+    /**
+     * The label of the algorithm selection.
+     */
     private final Label algorithmLabel = new Label("Algorithm");
 
+    /**
+     * The algorithm selection.
+     */
     private final OptionsView algorithm = new OptionsView(
         3,
         Arrays.stream(Algorithm.values())
             .map(Algorithm::toString).toArray(String[]::new)
     );
 
+    /**
+     * The label of the parameters' selection.
+     */
     private final Label parametersLabel = new Label("Parameters");
+
+    /**
+     * The parameters' selection.
+     */
     private final ParametersView parameters = new ParametersView();
 
+    /**
+     * The generate button.
+     */
     private final Button generate = new Button("Generate");
 
+    /**
+     * Creates a new algorithm pane.
+     */
     public AlgorithmPane() {
         setCenter(visualization);
         setRight(controls);
@@ -65,6 +114,9 @@ public class AlgorithmPane extends BorderPane {
         initControls();
     }
 
+    /**
+     * Initializes the visualization.
+     */
     private void initVisualization() {
         setPadding(PADDING);
         visualization.widthProperty().bind(
@@ -80,7 +132,9 @@ public class AlgorithmPane extends BorderPane {
         );
     }
 
-
+    /**
+     * Initializes the controls.
+     */
     private void initControls() {
         controls.setSpacing(SPACING);
         controls.setPadding(PADDING);
@@ -92,6 +146,9 @@ public class AlgorithmPane extends BorderPane {
         controller.addGenerateListener(generate.pressedProperty(), visualization);
     }
 
+    /**
+     * Initializes the algorithm selection.
+     */
     private void initAlgorithm() {
         algorithmLabel.setFont(HEADER);
         GridPane view = algorithm.getView();
@@ -108,6 +165,9 @@ public class AlgorithmPane extends BorderPane {
             .forEach(box -> controller.getAlgorithm(box.getText()).bind(box.selectedProperty()));
     }
 
+    /**
+     * Initializes the parameters' selection.
+     */
     private void initParameters() {
         parametersLabel.setFont(HEADER);
         GridPane view = parameters.getView();
