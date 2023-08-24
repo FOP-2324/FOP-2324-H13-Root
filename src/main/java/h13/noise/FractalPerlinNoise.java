@@ -52,21 +52,22 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      * @param noise       the underlying Perlin noise object
      * @param amplitude   the amplitude of the noise, controlling the range of values for each octave
      * @param octaves     the number of octaves, determining the number of noise layers to combine
-     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
      * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
+     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
      */
     public FractalPerlinNoise(
         PerlinNoise noise,
         double amplitude,
         int octaves,
-        double persistence,
-        double lacunarity
+        double lacunarity,
+        double persistence
+
     ) {
         super(noise);
         this.amplitude = amplitude;
         this.octaves = octaves;
-        this.persistence = persistence;
         this.lacunarity = lacunarity;
+        this.persistence = persistence;
     }
 
     /**
@@ -77,16 +78,16 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @param noise       the underlying Perlin noise object
      * @param octaves     the number of octaves, determining the number of noise layers to combine
-     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
      * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
+     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
      */
     public FractalPerlinNoise(
         PerlinNoise noise,
         int octaves,
-        double persistence,
-        double lacunarity
+        double lacunarity,
+        double persistence
     ) {
-        this(noise, DEFAULT_AMPLITUDE, octaves, persistence, lacunarity);
+        this(noise, DEFAULT_AMPLITUDE, octaves, lacunarity, persistence);
     }
 
     @Override
@@ -159,24 +160,6 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     }
 
     /**
-     * Returns the persistence value which determines the amplitude decrease factor between octaves.
-     *
-     * @return the persistence value
-     */
-    public double persistence() {
-        return persistence;
-    }
-
-    /**
-     * Sets the persistence value which determines the amplitude decrease factor between octaves.
-     *
-     * @param persistence the new persistence value
-     */
-    public void setPersistence(double persistence) {
-        this.persistence = persistence;
-    }
-
-    /**
      * Returns the lacunarity value which determines the frequency increase factor between octaves.
      *
      * @return the lacunarity value
@@ -194,6 +177,24 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
         this.lacunarity = lacunarity;
     }
 
+    /**
+     * Returns the persistence value which determines the amplitude decrease factor between octaves.
+     *
+     * @return the persistence value
+     */
+    public double persistence() {
+        return persistence;
+    }
+
+    /**
+     * Sets the persistence value which determines the amplitude decrease factor between octaves.
+     *
+     * @param persistence the new persistence value
+     */
+    public void setPersistence(double persistence) {
+        this.persistence = persistence;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -202,13 +203,14 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
         FractalPerlinNoise that = (FractalPerlinNoise) o;
         return Double.compare(amplitude, that.amplitude) == 0
             && octaves == that.octaves
-            && Double.compare(persistence, that.persistence) == 0
-            && Double.compare(lacunarity, that.lacunarity) == 0;
+            && Double.compare(lacunarity, that.lacunarity) == 0
+            && Double.compare(persistence, that.persistence) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), amplitude, octaves, persistence, lacunarity);
+        return Objects.hash(super.hashCode(), amplitude, octaves, lacunarity, persistence);
     }
+
 }
 

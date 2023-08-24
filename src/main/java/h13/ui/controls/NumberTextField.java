@@ -69,4 +69,16 @@ public abstract class NumberTextField extends TextField {
         return value;
     }
 
+    /**
+     * Sets the numeric value of the text field.
+     *
+     * @param value the numeric value of the text field
+     */
+    public void setValue(Number value) {
+        this.value.setValue(value);
+    }
+
+    public void setPromptValue(Number value) {
+        this.setPromptText(value.toString());
+    }
 }

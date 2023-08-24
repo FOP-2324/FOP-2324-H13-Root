@@ -2,6 +2,7 @@ package h13.noise;
 
 import javafx.geometry.Point2D;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -75,5 +76,21 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      */
     public int[] getPermutation() {
         return permutation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ImprovedPerlinNoise that = (ImprovedPerlinNoise) o;
+        return Arrays.equals(permutation, that.permutation);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(permutation);
+        return result;
     }
 }

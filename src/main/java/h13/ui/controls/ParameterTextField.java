@@ -20,27 +20,27 @@ public class ParameterTextField {
     /**
      * The numeric text field of the parameter.
      */
-    private final NumberTextField textField;
+    private final NumberTextField numberTextField;
 
     /**
      * Creates a new ParameterTextField with the given label and text field.
      *
-     * @param label     the label of the text field that describes the parameter
-     * @param textField the numeric text field of the parameter
+     * @param label           the label of the text field that describes the parameter
+     * @param numberTextField the numeric text field of the parameter
      */
-    public ParameterTextField(Label label, NumberTextField textField) {
+    public ParameterTextField(Label label, NumberTextField numberTextField) {
         this.label = label;
-        this.textField = textField;
+        this.numberTextField = numberTextField;
     }
 
     /**
      * Creates a new ParameterTextField with the given label and text field.
      *
-     * @param label     the label of the text field that describes the parameter
-     * @param textField the numeric text field of the parameter
+     * @param label           the label of the text field that describes the parameter
+     * @param numberTextField the numeric text field of the parameter
      */
-    public ParameterTextField(String label, NumberTextField textField) {
-        this(new Label(label), textField);
+    public ParameterTextField(String label, NumberTextField numberTextField) {
+        this(new Label(label), numberTextField);
     }
 
     /**
@@ -57,8 +57,8 @@ public class ParameterTextField {
      *
      * @return the numeric text field of the parameter
      */
-    public NumberTextField getTextField() {
-        return textField;
+    public NumberTextField getNumberTextField() {
+        return numberTextField;
     }
 
     /**
@@ -67,7 +67,7 @@ public class ParameterTextField {
      * @return all controls of the parameter text field
      */
     public Control[] getControls() {
-        return new Control[]{label, textField};
+        return new Control[]{label, numberTextField,};
     }
 
     /**
@@ -76,7 +76,7 @@ public class ParameterTextField {
      * @return the numeric value of the text field property of the parameter
      */
     public Property<Number> valueProperty() {
-        return textField.valueProperty();
+        return numberTextField.valueProperty();
     }
 
     /**
@@ -87,7 +87,7 @@ public class ParameterTextField {
      */
     public void setDisable(boolean value) {
         label.setDisable(value);
-        textField.setDisable(value);
+        numberTextField.setDisable(value);
     }
 
 }
