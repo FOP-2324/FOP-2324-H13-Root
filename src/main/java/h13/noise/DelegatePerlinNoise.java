@@ -9,11 +9,11 @@ import java.util.Random;
  * An abstract base class that delegates method calls to an underlying Perlin noise object.
  * This class simplifies the implementation of new Perlin noise variations by providing a basic structure
  * and forwarding method calls to an existing Perlin noise object.
- * <p>
- * Subclasses of DelegatePerlinNoise can focus on implementing only the compute method
+ *
+ * <p>Subclasses of DelegatePerlinNoise can focus on implementing only the compute method
  * while inheriting the default implementations of other methods from the PerlinNoise interface.
- * <p>
- * The DelegatePerlinNoise class is designed to promote code reuse and modularity in Perlin noise algorithms.
+ *
+ * <p>The DelegatePerlinNoise class is designed to promote code reuse and modularity in Perlin noise algorithms.
  * It allows new Perlin noise variants to be created easily by extending this class and implementing specific
  * noise generation logic in the compute method.
  *
@@ -82,8 +82,12 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         DelegatePerlinNoise that = (DelegatePerlinNoise) o;
         return Objects.equals(noise, that.noise);
     }

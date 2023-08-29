@@ -1,6 +1,6 @@
 package h13;
 
-import h13.ui.PerlinNoiseApp;
+import h13.ui.app.PerlinNoiseApp;
 import javafx.application.Application;
 
 /**

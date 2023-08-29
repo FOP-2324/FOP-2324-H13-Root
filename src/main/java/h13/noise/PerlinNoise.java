@@ -7,8 +7,8 @@ import java.util.Random;
 /**
  * This interface represents a gradient noise generator that used the Perlin noise algorithm to produce coherent noise
  * values based on grid coordinates.
- * <p>
- * Perlin noise is a type of gradient noise used in computer graphics and procedural content generation.
+ *
+ * <p>Perlin noise is a type of gradient noise used in computer graphics and procedural content generation.
  *
  * @author Nhan Huynh
  * @see <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>
@@ -81,11 +81,11 @@ public interface PerlinNoise extends GradientNoise {
     /**
      * Computes the gradient noise value at the specified noise domain coordinates.
      * It's recommended to multiply the coordinates by the frequency to achieve visible results.
-     * <p>
-     * If you use a lower frequency value (closer to 0), the noise pattern will have larger features and appear more
+     *
+     * <p>If you use a lower frequency value (closer to 0), the noise pattern will have larger features and appear more
      * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
-     * <p>
-     * If you use a higher frequency value (larger than 1), the noise pattern will have smaller and more frequent
+     *
+     * <p>If you use a higher frequency value (larger than 1), the noise pattern will have smaller and more frequent
      * features. This can create more detailed and intricate variations in the noise, suitable for fine-grained textures
      * or details.
      *

@@ -8,12 +8,10 @@ import java.util.Objects;
  * values. Each octave has different parameters such as amplitude, frequency, and persistence, contributing to the
  * final result.
  *
- * <p>
- * The fractal nature of this noise introduces variations across different scales, creating complex and detailed
+ * <p>The fractal nature of this noise introduces variations across different scales, creating complex and detailed
  * patterns that resemble natural textures and terrains.
  *
- * <p>
- * FractalPerlinNoise is useful for generating diverse procedural content in applications such as terrain generation,
+ * <p>FractalPerlinNoise is useful for generating diverse procedural content in applications such as terrain generation,
  * texture synthesis, and more.
  *
  * @author Nhan Huynh
@@ -196,9 +194,15 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         FractalPerlinNoise that = (FractalPerlinNoise) o;
         return Double.compare(amplitude, that.amplitude) == 0
             && octaves == that.octaves

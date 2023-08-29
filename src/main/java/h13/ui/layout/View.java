@@ -1,20 +1,9 @@
 package h13.ui.layout;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.Parent;
 
-/**
- * Represents on object that is viewable on a scene.
- *
- * @param <V> the type of the view
- * @author Nhan Huynh
- */
-public interface View<V extends Pane> {
+public interface View {
 
-    /**
-     * Returns the view that can be displayed on a scene.
-     *
-     * @return the view that can be displayed on a scene
-     */
-    V getView();
+    Parent view();
 
 }

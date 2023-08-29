@@ -55,7 +55,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param seed      the random seed for generating gradient vectors
      */
     public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
-        if (frequency < 0 || frequency > 1) throw new IllegalArgumentException("Frequency must be between 0 and 1");
+        if (frequency < 0 || frequency > 1) {
+            throw new IllegalArgumentException("Frequency must be between 0 and 1");
+        }
         this.width = width;
         this.height = height;
         this.frequency = frequency;
@@ -91,7 +93,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
 
     @Override
     public void setFrequency(double frequency) {
-        if (frequency < 0 || frequency > 1) throw new IllegalArgumentException("Frequency must be between 0 and 1");
+        if (frequency < 0 || frequency > 1) {
+            throw new IllegalArgumentException("Frequency must be between 0 and 1");
+        }
         this.frequency = frequency;
     }
 
@@ -112,10 +116,10 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     /**
      * Generates an array of random 2D gradient vectors with dimensions wrapping around on the noise dimension which
      * means that the width and height of the gradient array is two units larger than the noise domain.
-     * <p>
-     * Each point in the noise domain is associated with four corner gradient vectors.
-     * <p>
-     * The gradients vectors are stored in a 1D array, where we need to map the 2D coordinates to the 1D index.
+     *
+     * <p>Each point in the noise domain is associated with four corner gradient vectors.
+     *
+     * <p>The gradients vectors are stored in a 1D array, where we need to map the 2D coordinates to the 1D index.
      *
      * <p>Visual representation of the gradients domain:
      *
@@ -156,8 +160,12 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AbstractPerlinNoise that = (AbstractPerlinNoise) o;
         return width == that.width
             && height == that.height

@@ -80,9 +80,15 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         ImprovedPerlinNoise that = (ImprovedPerlinNoise) o;
         return Arrays.equals(permutation, that.permutation);
     }
