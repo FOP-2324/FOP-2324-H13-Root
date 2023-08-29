@@ -126,9 +126,6 @@ public class PerlinNoiseApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.show();
-
-        var visualization = root.getVisualization();
-        visualization.getGraphicsContext2D().fillRect(0, 0, visualization.getWidth(), visualization.getHeight());
     }
 
 }
