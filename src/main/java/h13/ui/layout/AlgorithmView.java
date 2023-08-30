@@ -3,6 +3,8 @@ package h13.ui.layout;
 import h13.noise.PerlinNoise;
 import h13.ui.controls.NumberField;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 
@@ -68,13 +70,20 @@ public class AlgorithmView implements View {
         visualization.widthProperty().bind(
             root.widthProperty()
                 .subtract(settings.view().widthProperty())
-                .subtract(root.getPadding().getLeft())
-                .subtract(root.getPadding().getRight())
         );
+
+        // Bindings for padding since they can be changed dynamically. Therefore, we need to listen to changes in
+        // order th adjust the height of the canvas accordingly.
+        DoubleProperty paddingTop = new SimpleDoubleProperty();
+        DoubleProperty paddingBottom = new SimpleDoubleProperty();
+
+        root.paddingProperty().addListener((observable, oldValue, newValue) -> {
+            paddingTop.set(newValue.getTop());
+            paddingBottom.set(newValue.getBottom());
+        });
+
         visualization.heightProperty().bind(
-            root.heightProperty()
-                .subtract(root.getPadding().getTop())
-                .subtract(root.getPadding().getBottom())
+            root.heightProperty().subtract(paddingTop).subtract(paddingBottom)
         );
     }
 
