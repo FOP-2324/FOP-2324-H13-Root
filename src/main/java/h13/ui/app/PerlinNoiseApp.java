@@ -81,7 +81,7 @@ public class PerlinNoiseApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Perlin Noise");
-        primaryStage.setResizable(false);
+
 
         // Algorithms - Specify the available algorithms
         ChooserView options = new ChooserView(new GridPane(), 3);
@@ -151,8 +151,11 @@ public class PerlinNoiseApp extends Application {
         int height = (int) screen.getHeight() / 2;
         Scene scene = new Scene(root.view(), width, height);
 
+        primaryStage.setMinHeight(height);
+        primaryStage.setMinWidth(width);
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
+
         primaryStage.show();
     }
 
