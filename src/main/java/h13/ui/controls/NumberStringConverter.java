@@ -4,20 +4,38 @@ import javafx.util.StringConverter;
 
 import java.util.function.Function;
 
+/**
+ * A {@link StringConverter} that converts between {@link Number} and {@link String}.
+ *
+ * @author Nhan Huynh
+ */
 public class NumberStringConverter extends StringConverter<Number> {
 
-    private final Function<Number, String> toString;
+    /**
+     * A {@link Function} that converts a {@link Number} to a {@link String}.
+     */
+    private final Function<Number, String> stringifier;
 
-    private final Function<String, Number> toNumber;
+    /**
+     * A {@link Function} that converts a {@link String} to a {@link Number}.
+     */
+    private final Function<String, Number> numericizer;
 
-    public NumberStringConverter(Function<Number, String> toString, Function<String, Number> toNumber) {
-        this.toString = toString;
-        this.toNumber = toNumber;
+    /**
+     * Constructs a number/string converter with the given functions for converting between {@link Number} and
+     * {@link String} and vice versa.
+     *
+     * @param stringifier a function that converts a {@link Number} to a {@link String}
+     * @param numericizer  a function that converts a {@link String} to a {@link Number}
+     */
+    public NumberStringConverter(Function<Number, String> stringifier, Function<String, Number> numericizer) {
+        this.stringifier = stringifier;
+        this.numericizer = numericizer;
     }
 
     @Override
     public String toString(Number value) {
-        return value == null ? "" : toString.apply(value);
+        return value == null ? "" : stringifier.apply(value);
     }
 
     @Override
@@ -32,7 +50,7 @@ public class NumberStringConverter extends StringConverter<Number> {
             return null;
         }
 
-        return value.equals("-") ? toNumber.apply("-1") : toNumber.apply(value);
+        return value.equals("-") ? numericizer.apply("-1") : numericizer.apply(value);
     }
 
 }

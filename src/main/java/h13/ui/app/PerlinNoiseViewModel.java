@@ -74,7 +74,7 @@ class PerlinNoiseViewModel extends AlgorithmViewModel {
             );
         }
 
-        if (Objects.equals(lastAlgorithm, algorithm) && Double.compare(frequency, algorithm.frequency()) == 0) {
+        if (Objects.equals(lastAlgorithm, algorithm) && Double.compare(frequency, algorithm.getFrequency()) == 0) {
             return null;
         }
         lastAlgorithm = algorithm;

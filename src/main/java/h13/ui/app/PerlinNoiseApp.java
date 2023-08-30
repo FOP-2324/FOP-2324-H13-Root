@@ -1,5 +1,6 @@
 package h13.ui.app;
 
+import h13.noise.PerlinNoise;
 import h13.ui.controls.DoubleField;
 import h13.ui.controls.IntegerField;
 import h13.ui.controls.LongField;
@@ -27,18 +28,50 @@ import java.util.Set;
 import java.util.function.DoubleFunction;
 import java.util.stream.Collectors;
 
+/**
+ * The {@link PerlinNoise} visualization application.
+ *
+ * @author Nhan Huynh
+ */
 public class PerlinNoiseApp extends Application {
 
+    /**
+     * The spacing between nodes.
+     */
     private static final int SPACING = 10;
 
+    /**
+     * The padding of the nodes.
+     */
     private static final Insets PADDING = new Insets(10);
 
+    /**
+     * The vertical gap between nodes.
+     */
     private static final int VGAP = 5;
 
+    /**
+     * The horizontal gap between nodes.
+     */
     private static final int HGAP = 10;
 
+    /**
+     * The header font.
+     */
     private static final Font HEADER;
 
+    /**
+     * The color mapper used to map the noise value to a color.
+     */
+    private static final DoubleFunction<Color> COLOR_MAPPER = value -> {
+        if (value <= 0.5) {
+            // Water color (blue)
+            return Color.color(0, 0f, value * 2f);
+        } else {
+            // Land color (green)
+            return Color.color(0f, value, 0f);
+        }
+    };
 
     static {
         Font font = Font.getDefault();
@@ -50,6 +83,7 @@ public class PerlinNoiseApp extends Application {
         primaryStage.setTitle("Perlin Noise");
         primaryStage.setResizable(false);
 
+        // Algorithms - Specify the available algorithms
         ChooserView options = new ChooserView(new GridPane(), 3);
         options.view().setPadding(PADDING);
         options.view().setHgap(HGAP);
@@ -62,6 +96,7 @@ public class PerlinNoiseApp extends Application {
         defaultOption.setSelected(true);
         defaultOption.setDisable(true);
 
+        // Parameters - Specify the available parameters
         ParameterView parameters = new ParameterView(new GridPane());
         parameters.view().setPadding(PADDING);
         parameters.view().setHgap(HGAP);
@@ -77,44 +112,37 @@ public class PerlinNoiseApp extends Application {
             parameters.add(parameter.toString(), field);
         }
 
+        // Settings - Specify, when parameters are enabled
         SettingsView settings = new SettingsView(
-                new VBox(),
-                "Algorithms", options,
-                "Parameters", parameters,
-                "Generate",
-                Map.of(
-                                Algorithm.SIMPLE, Set.of(Parameter.SEED, Parameter.FREQUENCY),
-                                Algorithm.IMPROVED, Set.of(Parameter.SEED, Parameter.FREQUENCY), Algorithm.FRACTAL,
-                                Set.of(
-                                        Parameter.SEED, Parameter.FREQUENCY, Parameter.AMPLITUDE,
-                                        Parameter.OCTAVES, Parameter.LACUNARITY, Parameter.PERSISTENCE)
-                        ).entrySet().stream()
-                        .collect(
-                                Collectors.toMap(
-                                        entry -> entry.getKey().toString(),
-                                        entry -> entry.getValue().stream().map(Parameter::toString)
-                                                .collect(Collectors.toSet()))
-                        )
+            new VBox(),
+            "Algorithms", options,
+            "Parameters", parameters,
+            "Generate",
+            Map.of(
+                    Algorithm.SIMPLE, Set.of(Parameter.SEED, Parameter.FREQUENCY),
+                    Algorithm.IMPROVED, Set.of(Parameter.SEED, Parameter.FREQUENCY), Algorithm.FRACTAL,
+                    Set.of(
+                        Parameter.SEED, Parameter.FREQUENCY, Parameter.AMPLITUDE,
+                        Parameter.OCTAVES, Parameter.LACUNARITY, Parameter.PERSISTENCE)
+                ).entrySet().stream()
+                .collect(
+                    Collectors.toMap(
+                        entry -> entry.getKey().toString(),
+                        entry -> entry.getValue().stream().map(Parameter::toString)
+                            .collect(Collectors.toSet()))
+                )
         );
         settings.view().setPadding(PADDING);
         settings.view().setSpacing(SPACING);
         settings.view().setAlignment(Pos.CENTER_LEFT);
         settings.setHeaderFont(HEADER);
 
-        DoubleFunction<Color> colorMapper = value -> {
-            if (value <= 0.5) {
-                // Water color (blue)
-                return Color.color(0, 0f, value * 2f);
-            } else {
-                // Land color (green)
-                return Color.color(0f, value, 0f);
-            }
-        };
 
+        // Main view
         AlgorithmView root = new AlgorithmView(
-                new BorderPane(),
-                settings,
-                (o, p) -> new PerlinNoiseViewModel(o, p, colorMapper, 10)
+            new BorderPane(),
+            settings,
+            (o, p) -> new PerlinNoiseViewModel(o, p, COLOR_MAPPER, 10)
         );
         root.view().setPadding(PADDING);
 

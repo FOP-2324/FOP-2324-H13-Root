@@ -12,7 +12,7 @@ import java.util.Random;
 public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNoise {
 
     /**
-     * Constructs a simple Perlin noise object with the specified noise domain width, height, frequency, and seed.
+     * Constructs a simple Perlin noise object with the specified noise domain width, height, frequency and seed.
      *
      * @param width     the width of the noise domain
      * @param height    the height of the noise domain
@@ -24,7 +24,7 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     }
 
     /**
-     * Constructs a simple Perlin noise object with the specified noise domain width, height, and seed.
+     * Constructs a simple Perlin noise object with the specified noise domain width, height and seed.
      *
      * @param width     the width of the noise domain
      * @param height    the height of the noise domain
@@ -36,7 +36,7 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
 
     @Override
     public double compute(int x, int y) {
-        double f = frequency();
+        double f = getFrequency();
         return compute(x * f, y * f);
     }
 

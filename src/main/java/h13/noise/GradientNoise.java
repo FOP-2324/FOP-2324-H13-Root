@@ -16,14 +16,14 @@ public interface GradientNoise {
      *
      * @return the width of the noise domain
      */
-    int width();
+    int getWidth();
 
     /**
      * Returns the height of the noise domain.
      *
      * @return the height of the noise domain
      */
-    int height();
+    int getHeight();
 
     /**
      * Computes the gradient noise value at the specified noise domain coordinates.
@@ -57,7 +57,7 @@ public interface GradientNoise {
      * @return the computed gradient noise values for the entire noise domain
      */
     default double[][] compute() {
-        return compute(0, 0, width(), height());
+        return compute(0, 0, getWidth(), getHeight());
     }
 
 }

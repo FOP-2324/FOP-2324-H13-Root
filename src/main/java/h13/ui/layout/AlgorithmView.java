@@ -1,5 +1,6 @@
 package h13.ui.layout;
 
+import h13.noise.PerlinNoise;
 import h13.ui.controls.NumberField;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.canvas.Canvas;
@@ -9,15 +10,40 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+/**
+ * A {@link PerlinNoise} algorithm visualization view.
+ *
+ * @author Nhan Huynh
+ */
 public class AlgorithmView implements View {
 
+    /**
+     * The root layout.
+     */
     private final BorderPane root;
+
+    /**
+     * The view model of the view for handling the logic.
+     */
     private final AlgorithmViewModel viewModel;
 
+    /**
+     * The canvas for visualizing the algorithm.
+     */
     private final Canvas visualization;
 
+    /**
+     * The view for settings that are related to the algorithm configurations.
+     */
     private final SettingsView settings;
 
+    /**
+     * Creates a new algorithm view with the given root, settings and factory for creating the view model.
+     *
+     * @param root     the root layout
+     * @param settings the settings view
+     * @param factory  the factory for creating the view model
+     */
     public AlgorithmView(
         BorderPane root,
         SettingsView settings,
@@ -26,17 +52,19 @@ public class AlgorithmView implements View {
         this.visualization = new Canvas();
         this.settings = settings;
 
+        // Layout
         root.setCenter(visualization);
         root.setRight(settings.view());
 
+        // View model
         var options = settings.getOptions().getOptions().entrySet()
             .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().selectedProperty()));
         var parameters = settings.getParameters().getParameters().entrySet()
             .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getValue()));
         this.viewModel = factory.apply(options, parameters);
 
+        // Bindings
         this.viewModel.addDrawListener(settings.getSubmitButton().pressedProperty(), visualization);
-
         visualization.widthProperty().bind(
             root.widthProperty()
                 .subtract(settings.view().widthProperty())

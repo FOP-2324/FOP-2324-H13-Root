@@ -1,8 +1,8 @@
 package h13.noise;
 
 /**
- * A class that wraps a Perlin noise object and provides a normalized version of the noise values.
- * Normalization ensures that the noise values are scaled to the range [0, 1] for better usability.
+ * A class that wraps a Perlin noise object and provides a normalized version of the noise values. Normalization
+ * ensures that the noise values are scaled to the range [0, 1] for better usability.
  *
  * <p>The normalization is applied to the output of the specified Perlin noise object by dividing the noise value by 2
  * and then adding 0.5. This transformation maps the noise range [-1, 1] to the normalized range [0, 1].

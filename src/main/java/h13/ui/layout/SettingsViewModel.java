@@ -15,35 +15,54 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The viw model for {@link SettingsView} that handles the visibility of parameters based on the selected options.
+ *
+ * @author Nhan Huynh
+ */
 public class SettingsViewModel {
 
+    /**
+     * The available options.
+     */
     private final Map<String, BooleanProperty> options;
 
+    /**
+     * Creates a settings view model with the given available options.
+     *
+     * @param options the available options
+     */
     public SettingsViewModel(Collection<CheckBox> options) {
         this.options = new HashMap<>(options.size());
 
-        for (var option : options) {
+        for (CheckBox option : options) {
             this.options.put(option.getText(), option.selectedProperty());
         }
     }
 
+    /**
+     * Adds visibility listeners to the given parameters based on the given configurations.
+     *
+     * @param configurations the configurations that specify which parameters are visible for which options
+     * @param parameters     the parameters to add visibility listeners to
+     */
     public void addVisibilityListener(Map<String, Set<String>> configurations, Map<String, Pair<Label, NumberField>> parameters) {
         Map<String, BooleanBinding> visibilities = new HashMap<>(parameters.size());
 
         // Create state binding for parameters when an option is selected, the binding is true
         for (var parameter : parameters.entrySet()) {
-            var parameterName = parameter.getKey();
-            var current = visibilities.computeIfAbsent(
+            String parameterName = parameter.getKey();
+            BooleanBinding current = visibilities.computeIfAbsent(
                 parameterName,
                 key -> {
-                    var never = new SimpleBooleanProperty(SettingsViewModel.this, parameterName, false);
+                    BooleanProperty never = new SimpleBooleanProperty(SettingsViewModel.this, parameterName, false);
                     return Bindings.createBooleanBinding(never::get, never);
                 }
             );
             for (var option : configurations.entrySet()) {
-                var optionName = option.getKey();
-                var state = options.get(optionName);
-                var visibleParameters = option.getValue();
+                String optionName = option.getKey();
+                BooleanProperty state = options.get(optionName);
+                Set<String> visibleParameters = option.getValue();
                 // Selected options are visible
                 if (visibleParameters.contains(parameterName)) {
                     current = current.or(state);

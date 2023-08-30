@@ -1,19 +1,24 @@
 package h13.ui.controls;
 
-import javafx.util.StringConverter;
-
 import java.util.regex.Pattern;
 
+/**
+ * A {@link NumberField} that only accepts {@link Long} values.
+ */
 public class LongField extends IntegerField {
 
-    protected LongField(Pattern pattern, StringConverter<Number> converter) {
-        super(pattern, converter);
-    }
-
+    /**
+     * Creates an long field with the given pattern.
+     *
+     * @param pattern The pattern to use for validating the input.
+     */
     public LongField(Pattern pattern) {
-        this(pattern, new NumberStringConverter(value -> Long.toString(value.longValue()), Long::parseLong));
+        super(pattern, new NumberStringConverter(value -> Long.toString(value.longValue()), Long::parseLong));
     }
 
+    /**
+     * Creates an long field that accepts any {@link Long} value.
+     */
     public LongField() {
         this(ANY);
     }

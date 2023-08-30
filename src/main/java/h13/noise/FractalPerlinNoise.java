@@ -104,7 +104,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     public double compute(double x, double y) {
         double totalNoise = 0;
         // Starting frequency
-        double f = frequency();
+        double f = getFrequency();
         // Starting amplitude
         double a = amplitude;
 
@@ -125,7 +125,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @return the amplitude of the noise
      */
-    public double amplitude() {
+    public double getAmplitude() {
         return amplitude;
     }
 
@@ -143,7 +143,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @return the number of octaves
      */
-    public int octaves() {
+    public int getOctaves() {
         return octaves;
     }
 
@@ -161,7 +161,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @return the lacunarity value
      */
-    public double lacunarity() {
+    public double getLacunarity() {
         return lacunarity;
     }
 
@@ -179,7 +179,7 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
      *
      * @return the persistence value
      */
-    public double persistence() {
+    public double getPersistence() {
         return persistence;
     }
 

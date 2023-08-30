@@ -36,18 +36,16 @@ public interface PerlinNoise extends GradientNoise {
         return new NormalizedPerlinNoise(noise);
     }
 
-
     /**
      * Returns the seed used by this Perlin noise object.
      *
      * @return the seed used by this Perlin noise object
      */
-    Random seed();
+    Random getSeed();
 
     /**
      * Returns the gradient vectors associated with the specified noise domain coordinates. Since the gradient vectors
-     * wrap around the noise domain, the starting point of the gradients domain is at (-1, -1) and the ending point
-     * is at (width, height) of the noise domain.
+     * wrap around the noise domain.
      *
      * <p>Visual representation of the gradients of a noise point (x,y):
      * <pre>{@code
@@ -60,7 +58,18 @@ public interface PerlinNoise extends GradientNoise {
      *
      * @return the gradient vectors associated with the specified gradient domain coordinates
      */
-    Point2D[] gradients();
+    Point2D[] getGradients();
+
+    /**
+     * Returns the gradient vector associated with the specified noise domain coordinates. Since the gradient vectors
+     * wrap around the noise domain, the starting point of the gradients domain is at (0, 0) and the ending point
+     * is at (width + 1, height + 1) of the noise domain.
+     *
+     * @param x the x coordinate of the gradient domain
+     * @param y the y coordinate of the gradient domain
+     * @return the gradient vector associated with the specified gradient domain coordinates
+     */
+    Point2D getGradient(int x, int y);
 
     /**
      * Returns the frequency of the Perlin noise which is between 0 and 1. The frequency determines how quickly the
@@ -68,7 +77,7 @@ public interface PerlinNoise extends GradientNoise {
      *
      * @return the frequency of the Perlin noise
      */
-    double frequency();
+    double getFrequency();
 
     /**
      * Sets the frequency of the Perlin noise to the specified value.
@@ -77,34 +86,6 @@ public interface PerlinNoise extends GradientNoise {
      * @throws IllegalArgumentException if the specified frequency is not in the range [0, 1]
      */
     void setFrequency(double frequency);
-
-    /**
-     * Computes the gradient noise value at the specified noise domain coordinates.
-     * It's recommended to multiply the coordinates by the frequency to achieve visible results.
-     *
-     * <p>If you use a lower frequency value (closer to 0), the noise pattern will have larger features and appear more
-     * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
-     *
-     * <p>If you use a higher frequency value (larger than 1), the noise pattern will have smaller and more frequent
-     * features. This can create more detailed and intricate variations in the noise, suitable for fine-grained textures
-     * or details.
-     *
-     * @param x The x-coordinate in the noise domain (scaled by frequency).
-     * @param y The y-coordinate in the noise domain (scaled by frequency).
-     * @return The computed gradient noise value at the specified noise domain coordinates.
-     */
-    double compute(double x, double y);
-
-    /**
-     * Returns the gradient vector associated with the specified noise domain coordinates. Since the gradient vectors
-     * wrap around the noise domain, the starting point of the gradients domain is at (-1, -1) and the ending point
-     * is at (width, height) of the noise domain.
-     *
-     * @param x the x coordinate of the gradient domain
-     * @param y the y coordinate of the gradient domain
-     * @return the gradient vector associated with the specified gradient domain coordinates
-     */
-    Point2D getGradient(int x, int y);
 
     /**
      * Applies the fade function to the given value to achieve a fading effect. The fade function is used to reduce the
@@ -126,5 +107,22 @@ public interface PerlinNoise extends GradientNoise {
      * @return the interpolated value between y1 and y2.
      */
     double interpolate(double y1, double y2, double alpha);
+
+    /**
+     * Computes the gradient noise value at the specified noise domain coordinates.
+     * It's recommended to multiply the coordinates by the frequency to achieve visible results.
+     *
+     * <p>If you use a lower frequency value, the noise pattern will have larger features and appear more
+     * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
+     *
+     * <p>If you use a higher frequency value, the noise pattern will have smaller and more frequent
+     * features. This can create more detailed and intricate variations in the noise, suitable for fine-grained textures
+     * or details.
+     *
+     * @param x The x-coordinate in the noise domain (scaled by frequency).
+     * @param y The y-coordinate in the noise domain (scaled by frequency).
+     * @return The computed gradient noise value at the specified noise domain coordinates.
+     */
+    double compute(double x, double y);
 
 }

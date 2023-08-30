@@ -10,10 +10,10 @@ import java.util.Random;
  * This class simplifies the implementation of new Perlin noise variations by providing a basic structure
  * and forwarding method calls to an existing Perlin noise object.
  *
- * <p>Subclasses of DelegatePerlinNoise can focus on implementing only the compute method
+ * <p>Subclasses of {@link  DelegatePerlinNoise} can focus on implementing only the compute method
  * while inheriting the default implementations of other methods from the PerlinNoise interface.
  *
- * <p>The DelegatePerlinNoise class is designed to promote code reuse and modularity in Perlin noise algorithms.
+ * <p>The {@link DelegatePerlinNoise} class is designed to promote code reuse and modularity in Perlin noise algorithms.
  * It allows new Perlin noise variants to be created easily by extending this class and implementing specific
  * noise generation logic in the compute method.
  *
@@ -27,7 +27,7 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     protected final PerlinNoise noise;
 
     /**
-     * Constructs a delegate Perlin noise object with the specified underlying Perlin noise object.
+     * Constructs a delegated Perlin noise object with the specified underlying Perlin noise object.
      *
      * @param noise the underlying Perlin noise object
      */
@@ -36,23 +36,23 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public int width() {
-        return noise.width();
+    public int getWidth() {
+        return noise.getWidth();
     }
 
     @Override
-    public int height() {
-        return noise.height();
+    public int getHeight() {
+        return noise.getHeight();
     }
 
     @Override
-    public Random seed() {
-        return noise.seed();
+    public Random getSeed() {
+        return noise.getSeed();
     }
 
     @Override
-    public Point2D[] gradients() {
-        return noise.gradients();
+    public Point2D[] getGradients() {
+        return noise.getGradients();
     }
 
     @Override
@@ -61,8 +61,8 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public double frequency() {
-        return noise.frequency();
+    public double getFrequency() {
+        return noise.getFrequency();
     }
 
     @Override

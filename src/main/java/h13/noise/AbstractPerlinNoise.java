@@ -55,12 +55,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param seed      the random seed for generating gradient vectors
      */
     public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
-        if (frequency < 0 || frequency > 1) {
-            throw new IllegalArgumentException("Frequency must be between 0 and 1");
-        }
+        setFrequency(frequency);
         this.width = width;
         this.height = height;
-        this.frequency = frequency;
         this.seed = seed;
         this.gradients = createGradients(width + 2, height + 2);
     }
@@ -77,17 +74,17 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public int width() {
+    public int getWidth() {
         return width;
     }
 
     @Override
-    public int height() {
+    public int getHeight() {
         return height;
     }
 
     @Override
-    public double frequency() {
+    public double getFrequency() {
         return frequency;
     }
 
@@ -100,7 +97,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public Random seed() {
+    public Random getSeed() {
         return seed;
     }
 
@@ -148,13 +145,15 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public Point2D[] gradients() {
+    public Point2D[] getGradients() {
         return gradients;
     }
 
     @Override
     public Point2D getGradient(int x, int y) {
-        // Since the gradients array wrap around the noise domain, the size of the gradients array is equal to width + 2
+        // Position of a 2D gradient (x, y) vector in a 1D array: (width + 2) * y + x
+        // The +2 is because the gradient array is two units larger than the noise domain
+        // (width + 2) * y =  first dimension of the 2D array, x = second dimension of the 2D array
         return gradients[(width + 2) * y + x];
     }
 
