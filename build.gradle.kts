@@ -10,7 +10,7 @@ version = file("version").readLines().first()
 
 javafx {
     version = "17.0.1"
-    modules("javafx.controls", "javafx.fxml", "javafx.swing", "javafx.graphics", "javafx.base")
+    modules("javafx.controls", "javafx.graphics", "javafx.base")
 }
 
 jagr {
