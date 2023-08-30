@@ -51,7 +51,6 @@ public class ChooserView implements View {
         this.options.addListener(
             (MapChangeListener.Change<? extends String, ? extends CheckBox> change) -> {
                 if (change.wasAdded()) {
-                    CheckBox box = change.getValueAdded();
                     root.add(change.getValueAdded(), nextColumn++, nextRow);
                     if (nextColumn == columnSize) {
                         nextColumn = 0;
@@ -131,7 +130,7 @@ public class ChooserView implements View {
      *
      * @param option the name of the option
      * @return the option with the given name
-     * @throws NoSuchElementException if the view does not contain the optiono
+     * @throws NoSuchElementException if the view does not contain the option
      */
     public CheckBox get(String option) throws NoSuchElementException {
         if (!contains(option)) {

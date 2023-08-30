@@ -72,7 +72,7 @@ public abstract class NumberField extends TextField {
     /**
      * Sets the numeric value of the field.
      *
-     * @param value the numeric value of the fieldo
+     * @param value the numeric value of the field
      */
     public void setValue(Number value) {
         this.value.setValue(value);

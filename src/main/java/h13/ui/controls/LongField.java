@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class LongField extends IntegerField {
 
     /**
-     * Creates an long field with the given pattern.
+     * Creates a long field with the given pattern.
      *
      * @param pattern The pattern to use for validating the input.
      */
@@ -17,7 +17,7 @@ public class LongField extends IntegerField {
     }
 
     /**
-     * Creates an long field that accepts any {@link Long} value.
+     * Creates a long field that accepts any {@link Long} value.
      */
     public LongField() {
         this(ANY);

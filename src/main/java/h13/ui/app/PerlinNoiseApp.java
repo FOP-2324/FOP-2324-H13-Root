@@ -79,7 +79,7 @@ public class PerlinNoiseApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Perlin Noise");
         primaryStage.setResizable(false);
 
