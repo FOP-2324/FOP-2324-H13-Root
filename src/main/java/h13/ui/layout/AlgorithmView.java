@@ -83,10 +83,20 @@ public class AlgorithmView implements View {
         return root;
     }
 
+    /**
+     * Returns the canvas for visualizing the algorithm.
+     *
+     * @return the canvas for visualizing the algorithm
+     */
     public Canvas getVisualization() {
         return visualization;
     }
 
+    /**
+     * Returns the settings view.
+     *
+     * @return the settings view
+     */
     public SettingsView getSettings() {
         return settings;
     }
