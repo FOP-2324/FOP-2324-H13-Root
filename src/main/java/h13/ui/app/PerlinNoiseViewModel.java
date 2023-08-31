@@ -83,4 +83,5 @@ class PerlinNoiseViewModel extends AlgorithmViewModel {
             return algorithm;
         });
     }
+
 }

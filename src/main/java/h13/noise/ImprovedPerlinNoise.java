@@ -104,4 +104,5 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
         result = 31 * result + Arrays.hashCode(permutationTable);
         return result;
     }
+
 }

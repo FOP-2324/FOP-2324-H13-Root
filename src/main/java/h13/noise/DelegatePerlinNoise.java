@@ -96,4 +96,5 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     public int hashCode() {
         return Objects.hash(noise);
     }
+
 }

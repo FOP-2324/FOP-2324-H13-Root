@@ -178,4 +178,5 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         result = 31 * result + Arrays.hashCode(gradients);
         return result;
     }
+
 }

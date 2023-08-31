@@ -32,4 +32,5 @@ enum Algorithm {
     public String toString() {
         return Strings.capitalize(name());
     }
+
 }
