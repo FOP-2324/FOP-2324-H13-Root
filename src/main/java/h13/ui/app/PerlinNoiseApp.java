@@ -82,7 +82,6 @@ public class PerlinNoiseApp extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Perlin Noise");
 
-
         // Algorithms - Specify the available algorithms
         ChooserView options = new ChooserView(new GridPane(), 3);
         options.view().setPadding(PADDING);
@@ -136,7 +135,6 @@ public class PerlinNoiseApp extends Application {
         settings.view().setSpacing(SPACING);
         settings.view().setAlignment(Pos.CENTER_LEFT);
         settings.setHeaderFont(HEADER);
-
 
         // Main view
         AlgorithmView root = new AlgorithmView(

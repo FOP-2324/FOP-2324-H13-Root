@@ -1,10 +1,10 @@
 package h13.ui.layout;
 
+import h13.noise.NormalizedPerlinNoise;
 import h13.noise.PerlinNoise;
 import h13.ui.controls.NumberField;
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.BooleanProperty;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -40,6 +40,8 @@ public abstract class AlgorithmViewModel {
      * The color mapper for mapping the noise value to a color.
      */
     private final DoubleFunction<Color> colorMapper;
+
+    private @Nullable PerlinNoise lastAlgorithm = null;
 
     /**
      * Creates a new algorithm view model with the given options, parameters and color mapper.
@@ -82,32 +84,42 @@ public abstract class AlgorithmViewModel {
         for (int xi = 0; xi < noises.length; xi++) {
             for (int yi = 0; yi < noises[xi].length; yi++) {
                 Color color = colorMapper.apply(noises[xi][yi]);
-                writer.setColor(x + xi, y + yi, color);
+                writer.setColor(xi, yi, color);
             }
         }
         return image;
     }
 
     /**
-     * Adds a draw listener to the given expression and canvas. The listener will draw the algorithm on the canvas when
-     * the expression is true.
+     * Draws the given algorithm on the given graphics context at the given position and size. If the given algorithm
+     * is {@code null}, nothing will be drawn. The algorithm will be normalized if it is not already normalized.
      *
-     * @param expression the expression to listen to
-     * @param canvas     the canvas to draw on
+     * @param algorithm the algorithm to draw
+     * @param context   the graphics context to draw on
+     * @param x         the starting x coordinate of the image
+     * @param y         the starting y coordinate of the image
+     * @param w         the width of the image
+     * @param h         the height of the image
      */
-    public void addDrawListener(BooleanExpression expression, Canvas canvas) {
-        expression.addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                PerlinNoise algorithm = getAlgorithm();
-                if (algorithm == null) {
-                    return;
-                }
-                algorithm = PerlinNoise.normalized(algorithm);
-                canvas.getGraphicsContext2D().drawImage(
-                    createImage(algorithm, 0, 0, (int) canvas.getWidth(), (int) canvas.getHeight()), 0, 0
-                );
-            }
-        });
+    public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
+        if (algorithm == null) {
+            return;
+        }
+        if (!(algorithm instanceof NormalizedPerlinNoise)) {
+            algorithm = PerlinNoise.normalized(algorithm);
+        }
+        lastAlgorithm = algorithm;
+        Image image = createImage(algorithm, x, y, w, h);
+        context.drawImage(image, x, y);
+    }
+
+    /**
+     * Returns the last drawn algorithm. The is {@code null} if no algorithm has been drawn yet.
+     *
+     * @return the last drawn algorithm
+     */
+    public @Nullable PerlinNoise getLastAlgorithm() {
+        return lastAlgorithm;
     }
 
 }

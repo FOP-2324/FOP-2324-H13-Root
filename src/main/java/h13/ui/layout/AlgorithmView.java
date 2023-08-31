@@ -6,7 +6,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -66,7 +70,37 @@ public class AlgorithmView implements View {
         this.viewModel = factory.apply(options, parameters);
 
         // Bindings
-        this.viewModel.addDrawListener(settings.getSubmitButton().pressedProperty(), visualization);
+        settings.getSubmitButton().setOnAction(event -> viewModel.draw(
+            viewModel.getAlgorithm(),
+            visualization.getGraphicsContext2D(),
+            0, 0,
+            (int) visualization.getWidth(), (int) visualization.getHeight())
+        );
+
+        visualization.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue.intValue() >= newValue.intValue()) {
+                return;
+            }
+            viewModel.draw(
+                viewModel.getLastAlgorithm(),
+                visualization.getGraphicsContext2D(),
+                oldValue.intValue(), 0,
+                newValue.intValue(), (int) visualization.getHeight()
+            );
+        });
+
+        visualization.heightProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue.intValue() >= newValue.intValue()) {
+                return;
+            }
+            viewModel.draw(
+                viewModel.getLastAlgorithm(),
+                visualization.getGraphicsContext2D(),
+                0, oldValue.intValue(),
+                (int) visualization.getWidth(), newValue.intValue()
+            );
+        });
+
         visualization.widthProperty().bind(
             root.widthProperty()
                 .subtract(settings.view().widthProperty())
