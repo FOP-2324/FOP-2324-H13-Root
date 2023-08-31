@@ -6,11 +6,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.Map;
 import java.util.function.BiFunction;

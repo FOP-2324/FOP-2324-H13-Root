@@ -112,9 +112,9 @@ public abstract class AlgorithmViewModel {
         }
         lastAlgorithm = algorithm;
 
-        @Nullable PerlinNoise finalAlgorithm = algorithm;
+        @Nullable PerlinNoise toDraw = algorithm;
         run(() -> {
-            context.drawImage(createImage(finalAlgorithm, x, y, w, h), x, y);
+            context.drawImage(createImage(toDraw, x, y, w, h), x, y);
             return null;
         });
     }
