@@ -5,6 +5,7 @@ import h13.noise.PerlinNoise;
 import h13.ui.controls.NumberField;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.DoubleFunction;
+import java.util.function.Supplier;
 
 /**
  * An abstract base class that provides common functionality for handling the logic of the {@link AlgorithmView} for
@@ -109,8 +111,33 @@ public abstract class AlgorithmViewModel {
             algorithm = PerlinNoise.normalized(algorithm);
         }
         lastAlgorithm = algorithm;
-        Image image = createImage(algorithm, x, y, w, h);
-        context.drawImage(image, x, y);
+
+        @Nullable PerlinNoise finalAlgorithm = algorithm;
+        run(() -> {
+            context.drawImage(createImage(finalAlgorithm, x, y, w, h), x, y);
+            return null;
+        });
+    }
+
+    /**
+     * Runs the given input and returns the result. If the input throws an {@link IllegalArgumentException}, an
+     * {@link Alert} will be shown and {@code null} will be returned.
+     *
+     * @param input the input to run
+     * @return the result of the input
+     * @param <T> the type of the result
+     */
+    protected <T> @Nullable T run(Supplier<T> input) {
+        try {
+            return input.get();
+        } catch (IllegalArgumentException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Illegal parameter(s)");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return null;
+        }
     }
 
     /**
