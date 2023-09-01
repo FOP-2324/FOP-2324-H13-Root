@@ -17,7 +17,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
@@ -25,7 +24,6 @@ import javafx.stage.Stage;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.DoubleFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -60,23 +58,15 @@ public class PerlinNoiseApp extends Application {
      */
     private static final Font HEADER;
 
-    /**
-     * The color mapper used to map the noise value to a color.
-     */
-    private static final DoubleFunction<Color> COLOR_MAPPER = value -> {
-        if (value <= 0.5) {
-            // Water color (blue)
-            return Color.color(0, 0f, value * 2f);
-        } else {
-            // Land color (green)
-            return Color.color(0f, value, 0f);
-        }
-    };
-
     static {
         Font font = Font.getDefault();
         HEADER = Font.font(font.getName(), FontWeight.BOLD, font.getSize() * 1.25);
     }
+
+    /**
+     * The coloring of the noise.
+     */
+    private static final Coloring COLORING = Coloring.MOUNTAIN;
 
     @Override
     public void start(Stage primaryStage) {
@@ -140,7 +130,7 @@ public class PerlinNoiseApp extends Application {
         AlgorithmView root = new AlgorithmView(
             new BorderPane(),
             settings,
-            (o, p) -> new PerlinNoiseViewModel(o, p, COLOR_MAPPER, 10)
+            (o, p) -> new PerlinNoiseViewModel(o, p, COLORING.getMapper(), 10)
         );
         root.view().setPadding(PADDING);
 
