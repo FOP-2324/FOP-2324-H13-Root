@@ -7,12 +7,17 @@ import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.match.MatcherFactories;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
+import org.tudalgo.algoutils.tutor.general.reflections.ConstructorLink;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.tudalgo.algoutils.tutor.general.assertions.Assertions3.assertConstructorExists;
+import static org.tudalgo.algoutils.tutor.general.assertions.Assertions3.assertFieldExists;
+import static org.tudalgo.algoutils.tutor.general.assertions.Assertions3.assertMethodExists;
 
 public final class Links {
 
@@ -29,25 +34,25 @@ public final class Links {
         );
     }
 
-    public static FieldLink field(TypeLink type, String fieldName) {
-        return Assertions3.assertFieldExists(type, MATCHER_FACTORY.matcher(fieldName));
-    }
-
-    public static FieldLink field(Package p, Class<?> clazz, String fieldName) {
-        return field(type(p, clazz), fieldName);
+    @SafeVarargs
+    public static ConstructorLink constructor(TypeLink type, Matcher<ConstructorLink>... matchers) {
+        return assertConstructorExists(type, Arrays.stream(matchers).reduce(Matcher.always(), Matcher::and));
     }
 
     @SafeVarargs
-    public static MethodLink method(TypeLink type, String methodName, Matcher<MethodLink>... matchers) {
-        return Assertions3.assertMethodExists(
+    public static FieldLink field(TypeLink type, String fieldName, Matcher<FieldLink>... matchers) {
+        return assertFieldExists(
             type,
-            Arrays.stream(matchers).reduce(MATCHER_FACTORY.matcher(methodName), Matcher::and)
+            Arrays.stream(matchers).reduce(MATCHER_FACTORY.matcher(fieldName), Matcher::and)
         );
     }
 
     @SafeVarargs
-    public static MethodLink method(Package p, Class<?> clazz, String methodName, Matcher<MethodLink>... matchers) {
-        return method(type(p, clazz), methodName, matchers);
+    public static MethodLink method(TypeLink type, String methodName, Matcher<MethodLink>... matchers) {
+        return assertMethodExists(
+            type,
+            Arrays.stream(matchers).reduce(MATCHER_FACTORY.matcher(methodName), Matcher::and)
+        );
     }
 
     public static List<TypeLink> parameters(Class<?>... classes) {

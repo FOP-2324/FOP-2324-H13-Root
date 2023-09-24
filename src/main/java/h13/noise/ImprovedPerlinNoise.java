@@ -15,7 +15,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     /**
      * The size of the permutation array.
      */
-    private static final int PERMUTATION_SIZE = 256;
+    public static final int PERMUTATION_SIZE = 256;
 
     /**
      * The permutation array used for accessing the gradient vectors.
