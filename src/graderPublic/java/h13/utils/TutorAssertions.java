@@ -18,11 +18,11 @@ public final class TutorAssertions {
     public static void assertEquals(
         double expected,
         double actual,
-        double epsilon,
+        double delta,
         Context context,
         PreCommentSupplier<? super ResultOfObject<Double>> preCommentSupplier) {
         Assertions2.<Double>testOfObjectBuilder()
-            .expected(ExpectedObject.of(expected, other -> Math.abs(expected - other) <= epsilon))
+            .expected(ExpectedObject.of(expected, other -> Math.abs(expected - other) <= delta))
             .build()
             .run(actual)
             .check(context, preCommentSupplier).object();
