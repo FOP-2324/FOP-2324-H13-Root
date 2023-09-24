@@ -109,7 +109,7 @@ public class AbstractPerlinNoiseTest {
         public void globalSetup() {
             List<TypeLink> parameters = parameters(int.class, int.class);
             Matcher<MethodLink> matcher = Matcher.of(m -> m.typeList().equals(parameters));
-            method = method(type, "createGradients", matcher);
+            method = method(type, "getGradient", matcher);
             field = field(type, "gradients");
         }
 
