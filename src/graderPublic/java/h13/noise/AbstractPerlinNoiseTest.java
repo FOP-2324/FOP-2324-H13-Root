@@ -5,12 +5,17 @@ import h13.serialization.Point2DArrayConverter;
 import h13.utils.TutorAssertions;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
+import org.junitpioneer.jupiter.json.JsonClasspathSource;
 import org.junitpioneer.jupiter.json.Property;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
@@ -28,6 +33,7 @@ import static h13.utils.Links.parameters;
 import static h13.utils.Links.type;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
 
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbstractPerlinNoiseTest {
 
@@ -42,6 +48,8 @@ public class AbstractPerlinNoiseTest {
     }
 
     @Nested
+    @Order(0)
+    @TestMethodOrder(MethodOrderer.DisplayName.class)
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     public class CreateGradientsTest {
 
@@ -56,7 +64,7 @@ public class AbstractPerlinNoiseTest {
 
         @DisplayName("createGradients(int, int) enhält nur Punkte innerhalb des Einheitskreises.")
         @ParameterizedTest(name = "{0}x{1}")
-        @Test
+        @JsonClasspathSource()
         public void testCoordinateRange(
             @Property("width") int width,
             @Property("height") int height
@@ -78,7 +86,7 @@ public class AbstractPerlinNoiseTest {
 
         @DisplayName("createGradients(int, int) gibt ein Array mit der korrekten Länge zurück.")
         @ParameterizedTest(name = "{0}x{1}")
-        @Test
+        @JsonClasspathSource()
         public void testArraySize(
             @Property("width") int width,
             @Property("height") int height,
@@ -99,6 +107,8 @@ public class AbstractPerlinNoiseTest {
     }
 
     @Nested
+    @Order(1)
+    @TestMethodOrder(MethodOrderer.DisplayName.class)
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     public class GetGradientTest {
 
@@ -114,8 +124,8 @@ public class AbstractPerlinNoiseTest {
         }
 
         @DisplayName("getGradient(int, int) gibt die korrekten Gradienten zurück.")
-        @ParameterizedTest(name = "{0}x{1}; g({2}, {3}) = gradients[{4}]")
-        @Test
+        @ParameterizedTest(name = "getGradient({2}, {3}) = gradients[{4}]")
+        @JsonClasspathSource()
         public void testCorrectElement(
             @Property("width") int width,
             @Property("height") int height,
