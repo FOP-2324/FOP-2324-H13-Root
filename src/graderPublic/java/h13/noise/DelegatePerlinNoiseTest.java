@@ -1,23 +1,26 @@
 package h13.noise;
 
 import h13.Package;
-import h13.utils.TutorAssertions;
 import javafx.geometry.Point2D;
+import javafx.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestInstance;
-import org.tudalgo.algoutils.tutor.general.assertions.Context;
+import org.tudalgo.algoutils.tutor.general.match.Matcher;
+import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
+import static h13.utils.Links.method;
+import static h13.utils.Links.parameters;
 import static h13.utils.Links.type;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertSame;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -25,20 +28,6 @@ public class DelegatePerlinNoiseTest {
 
     private static final Package PACKAGE = Package.NOISE;
     private static final Class<?> CLASS = DelegatePerlinNoise.class;
-    private static final double EPSILON = 1e-6;
-    private static final int WIDTH = 10;
-    private static final int HEIGHT = 100;
-
-    private static final double FREQUENCY = 1.5;
-    private static final Random SEED = new Random(0);
-
-    private static final double INTERPOLATE = Double.MAX_VALUE;
-
-    private static final double FADE = Double.MIN_VALUE;
-
-    private static final Point2D[] GRADIENTS = new Point2D[0];
-
-    private static final Point2D GRADIENT = new Point2D(0, 0);
 
     private TypeLink type;
 
@@ -49,130 +38,142 @@ public class DelegatePerlinNoiseTest {
 
     @DisplayName("Die Delegation der Implementierung wird korrekt an die PerlinNoise-Instanz weitergeleitet.")
     @Test
-    public void testDelegate() {
-        DelegatePerlinNoise noise = new MockDelegatePerlinNoise();
-        Context.Builder<?> context = contextBuilder().subject(type);
-        double actual = noise.getFrequency();
-        TutorAssertions.assertEquals(FREQUENCY, actual, EPSILON,
-            context.add("Frequency", FREQUENCY).add("Actual frequency", actual).build(),
-            result -> "The frequency was not correctly delegated to the underlying Perlin noise object.");
-        noise.setFrequency(2.0);
+    public void testDelegate() throws Exception {
+        InvokedPerlinNoise underlying = new InvokedPerlinNoise();
+        DelegatePerlinNoise noise = new DelegatePerlinNoise(underlying) {
 
-        actual = noise.getFrequency();
-        TutorAssertions.assertEquals(2.0, actual, EPSILON,
-            context.add("Frequency", 2.0).add("Actual frequency", actual).build(),
-            result -> "The frequency was not correctly delegated to the underlying Perlin noise object.");
+            @Override
+            public double compute(double x, double y) {
+                throw new UnsupportedOperationException();
+            }
 
-        double actualFade = noise.fade(0.0);
-        TutorAssertions.assertEquals(FADE, actualFade, EPSILON,
-            context.add("Fade", FADE).add("Actual fade", actualFade).build(),
-            result -> "The fade was not correctly delegated to the underlying Perlin noise object.");
+            @Override
+            public double compute(int x, int y) {
+                throw new UnsupportedOperationException();
+            }
+        };
 
-        double actualInterpolate = noise.interpolate(0.0, 0.0, 0.0);
-
-        TutorAssertions.assertEquals(INTERPOLATE, actualInterpolate, EPSILON,
-            context.add("Interpolate", INTERPOLATE).add("Actual interpolate", actualInterpolate).build(),
-            result -> "The interpolate was not correctly delegated to the underlying Perlin noise object.");
-
-        Random actualSeed = noise.getSeed();
-        assertSame(SEED, actualSeed,
-            context.add("Seed", SEED).add("Actual seed", actualSeed).build(),
-            result -> "The seed was not correctly delegated to the underlying Perlin noise object.");
-
-        Point2D[] actualGradients = noise.getGradients();
-        assertSame(GRADIENTS, actualGradients,
-            context.add("Gradients", GRADIENTS).add("Actual gradients", actualGradients).build(),
-            result -> "The gradients were not correctly delegated to the underlying Perlin noise object.");
-
-        Point2D actualGradient = noise.getGradient(0, 0);
-        assertSame(GRADIENT, actualGradient,
-            context.add("Gradient", GRADIENT).add("Actual gradient", actualGradient).build(),
-            result -> "The gradient was not correctly delegated to the underlying Perlin noise object.");
-
-        int actualWidth = noise.getWidth();
-        assertEquals(WIDTH, actualWidth,
-            context.add("Width", WIDTH).add("Actual width", actualWidth).build(),
-            result -> "The width was not correctly delegated to the underlying Perlin noise object.");
-
-        int actualHeight = noise.getHeight();
-        assertEquals(HEIGHT, actualHeight,
-            context.add("Height", HEIGHT).add("Actual height", actualHeight).build(),
-            result -> "The height was not correctly delegated to the underlying Perlin noise object.");
-    }
-
-
-    private static class MockDelegatePerlinNoise extends DelegatePerlinNoise {
-        public MockDelegatePerlinNoise() {
-            super(new PerlinNoise() {
-
-                private double frequency = 1.5;
-
-                @Override
-                public Random getSeed() {
-                    return SEED;
-                }
-
-                @Override
-                public Point2D[] getGradients() {
-                    return GRADIENTS;
-                }
-
-                @Override
-                public Point2D getGradient(int x, int y) {
-                    return GRADIENT;
-                }
-
-                @Override
-                public double getFrequency() {
-                    return frequency;
-                }
-
-                @Override
-                public void setFrequency(double frequency) {
-                    this.frequency = frequency;
-                }
-
-                @Override
-                public double fade(double t) {
-                    return FADE;
-                }
-
-                @Override
-                public double interpolate(double y1, double y2, double alpha) {
-                    return INTERPOLATE;
-                }
-
-                @Override
-                public double compute(double x, double y) {
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public int getWidth() {
-                    return WIDTH;
-                }
-
-                @Override
-                public int getHeight() {
-                    return HEIGHT;
-                }
-
-                @Override
-                public double compute(int x, int y) {
-                    throw new UnsupportedOperationException();
-                }
-            });
+        Map<String, Pair<MethodLink, Object[]>> methods = Map.of(
+            "getWidth()", new Pair<>(
+                method(type, "getWidth", Matcher.of(m -> m.typeList().isEmpty())),
+                new Object[0]
+            ),
+            "getHeight()", new Pair<>(
+                method(type, "getHeight", Matcher.of(m -> m.typeList().isEmpty())),
+                new Object[0]
+            ),
+            "getFrequency()", new Pair<>(
+                method(type, "getFrequency", Matcher.of(m -> m.typeList().isEmpty())),
+                new Object[0]
+            ),
+            "setFrequency(double)", new Pair<>(
+                method(type, "setFrequency", Matcher.of(m -> m.typeList().equals(parameters(double.class)))),
+                new Object[]{0}
+            ),
+            "getSeed()", new Pair<>(
+                method(type, "getSeed", Matcher.of(m -> m.typeList().isEmpty())),
+                new Object[0]
+            ),
+            "getGradients()", new Pair<>(
+                method(type, "getGradients", Matcher.of(m -> m.typeList().isEmpty())),
+                new Object[0]
+            ),
+            "getGradient(int,int)", new Pair<>(
+                method(type, "getGradient", Matcher.of(m -> m.typeList().equals(parameters(int.class, int.class)))),
+                new Object[]{0, 0}
+            ),
+            "fade(double)", new Pair<>(
+                method(type, "fade", Matcher.of(m -> m.typeList().equals(parameters(double.class)))),
+                new Object[]{0}
+            ),
+            "interpolate(double,double,double)", new Pair<>(
+                method(type, "interpolate",
+                    Matcher.of(m -> m.typeList().equals(parameters(double.class, double.class, double.class)))),
+                new Object[]{0, 0, 0}
+            )
+        );
+        for (Map.Entry<String, Pair<MethodLink, Object[]>> entry : methods.entrySet()) {
+            String name = entry.getKey();
+            MethodLink method = entry.getValue().getKey();
+            Object[] args = entry.getValue().getValue();
+            underlying.reset();
+            method.invoke(noise, args);
+            assertTrue(underlying.invoked.get(name), "The underlying method %s was not called.".formatted(name));
         }
 
+    }
+
+    private static class InvokedPerlinNoise implements PerlinNoise {
+
+        private final Map<String, Boolean> invoked = new HashMap<>();
+
+        @Override
+        public int getWidth() {
+            invoked.putIfAbsent("getWidth()", true);
+            return 0;
+        }
+
+        @Override
+        public int getHeight() {
+            invoked.putIfAbsent("getHeight()", true);
+            return 0;
+        }
 
         @Override
         public double compute(int x, int y) {
-            throw new UnsupportedOperationException();
+            invoked.putIfAbsent("compute(int,int)", true);
+            return 0;
+        }
+
+        @Override
+        public Random getSeed() {
+            invoked.putIfAbsent("getSeed()", true);
+            return null;
+        }
+
+        @Override
+        public Point2D[] getGradients() {
+            invoked.putIfAbsent("getGradients()", true);
+            return new Point2D[0];
+        }
+
+        @Override
+        public Point2D getGradient(int x, int y) {
+            invoked.putIfAbsent("getGradient(int,int)", true);
+            return null;
+        }
+
+        @Override
+        public double getFrequency() {
+            invoked.putIfAbsent("getFrequency()", true);
+            return 0;
+        }
+
+        @Override
+        public void setFrequency(double frequency) {
+            invoked.putIfAbsent("setFrequency(double)", true);
+        }
+
+        @Override
+        public double fade(double t) {
+            invoked.putIfAbsent("fade(double)", true);
+            return 0;
+        }
+
+        @Override
+        public double interpolate(double y1, double y2, double alpha) {
+            invoked.putIfAbsent("interpolate(double,double,double)", true);
+            return 0;
         }
 
         @Override
         public double compute(double x, double y) {
-            throw new UnsupportedOperationException();
+            invoked.putIfAbsent("compute(double,double)", true);
+            return 0;
+        }
+
+        public void reset() {
+            invoked.clear();
         }
     }
 }
