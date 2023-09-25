@@ -77,7 +77,7 @@ public class SimplePerlinNoiseTest {
             @Property("a") double a,
             @Property("b") double b,
             @Property("alpha") double alpha,
-            @Property("interpoalted") double interpolated,
+            @Property("interpolated") double interpolated,
             @Property("t") double t,
             @Property("faded") double faded
         ) {
