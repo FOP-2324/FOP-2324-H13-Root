@@ -34,7 +34,7 @@ import java.util.Set;
  *
  * @author Nhan Huynh
  */
-@DisplayName("H1.3: Permutationstabelle")
+@DisplayName("H2.1: Permutationstabelle")
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H2_1_TutorTests {

@@ -1,16 +1,17 @@
-package h13.old;
+package h13.test;
 
 import h13.Package;
 import h13.noise.DelegatePerlinNoise;
 import h13.noise.PerlinNoise;
+import h13.utils.Links;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
@@ -21,24 +22,48 @@ import java.util.Random;
 
 import static h13.utils.Links.convertParameters;
 import static h13.utils.Links.getMethod;
-import static h13.utils.Links.getType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+/**
+ * Defines unit tests for task H2.2.
+ *
+ * @author Nhan Huynh
+ */
+@DisplayName("H2.2: Delegation")
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DelegatePerlinNoiseTest {
+public class H2_2_TutorTests {
 
+
+    /**
+     * The package containing the methods to test.
+     */
     private static final Package PACKAGE = Package.NOISE;
+
+    /**
+     * The class containing the methods to test.
+     */
     private static final Class<?> CLASS = DelegatePerlinNoise.class;
 
+    /**
+     * The type link to the class containing the methods to test.
+     */
     private TypeLink type;
 
+    /**
+     * Sets up the needed components for the tests.
+     */
     @BeforeAll
     public void globalSetup() {
-        type = getType(PACKAGE, CLASS);
+        type = Links.getType(PACKAGE, CLASS);
     }
 
-    @DisplayName("Die Delegation der Implementierung wird korrekt an die PerlinNoise-Instanz weitergeleitet.")
+    /**
+     * Tests if all methods are delegated correctly.
+     *
+     * @throws Exception if an error occurs during a method invocation
+     */
+    @DisplayName("09 | Die Delegation der Implementierung wird korrekt an die PerlinNoise-Instanz weitergeleitet.")
     @Test
     public void testDelegate() throws Exception {
         InvokedPerlinNoise underlying = new InvokedPerlinNoise();
@@ -53,6 +78,7 @@ public class DelegatePerlinNoiseTest {
             public double compute(int x, int y) {
                 throw new UnsupportedOperationException();
             }
+
         };
 
         Map<String, Pair<MethodLink, Object[]>> methods = Map.of(
@@ -94,6 +120,7 @@ public class DelegatePerlinNoiseTest {
                 new Object[]{0, 0, 0}
             )
         );
+
         for (Map.Entry<String, Pair<MethodLink, Object[]>> entry : methods.entrySet()) {
             String name = entry.getKey();
             MethodLink method = entry.getValue().getKey();
@@ -102,9 +129,11 @@ public class DelegatePerlinNoiseTest {
             method.invoke(noise, args);
             assertTrue(underlying.invoked.get(name), "The underlying method %s was not called.".formatted(name));
         }
-
     }
 
+    /**
+     * A {@link PerlinNoise} implementation that tracks which methods were invoked.
+     */
     private static class InvokedPerlinNoise implements PerlinNoise {
 
         private final Map<String, Boolean> invoked = new HashMap<>();
@@ -174,8 +203,13 @@ public class DelegatePerlinNoiseTest {
             return 0;
         }
 
+        /**
+         * Resets the tracking of which methods were invoked.
+         */
         public void reset() {
             invoked.clear();
         }
+
     }
+
 }
