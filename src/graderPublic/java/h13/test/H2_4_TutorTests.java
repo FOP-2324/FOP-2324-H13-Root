@@ -1,7 +1,7 @@
 package h13.test;
 
 import h13.Package;
-import h13.noise.NormalizedPerlinNoise;
+import h13.noise.FractalPerlinNoise;
 import h13.noise.PerlinNoise;
 import h13.utils.Links;
 import h13.utils.TutorAssertions;
@@ -25,14 +25,14 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Defines unit tests for task H2.3.
+ * Defines unit tests for task H2.4.
  *
  * @author Nhan Huynh
  */
-@DisplayName("H2.3: Normalisierung")
+@DisplayName("H2.4: Fraktale")
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class H2_3_TutorTests {
+public class H2_4_TutorTests {
 
     /**
      * The package containing the methods to test.
@@ -42,7 +42,7 @@ public class H2_3_TutorTests {
     /**
      * The class containing the methods to test.
      */
-    private static final Class<?> CLASS = NormalizedPerlinNoise.class;
+    private static final Class<?> CLASS = FractalPerlinNoise.class;
 
     /**
      * The epsilon used for floating point comparisons.
@@ -55,14 +55,9 @@ public class H2_3_TutorTests {
     private TypeLink type;
 
     /**
-     * The method {@link NormalizedPerlinNoise#compute(int, int)} method to test.
+     * The method {@link FractalPerlinNoise#compute(double, double)} method to test.
      */
-    private MethodLink computeInt;
-
-    /**
-     * The method {@link NormalizedPerlinNoise#compute(double, double)} method to test.
-     */
-    private MethodLink computeDouble;
+    private MethodLink compute;
 
     /**
      * Sets up the needed components for the tests.
@@ -70,64 +65,60 @@ public class H2_3_TutorTests {
     @BeforeAll
     public void globalSetup() {
         type = Links.getType(PACKAGE, CLASS);
-        List<TypeLink> typesInt = Links.convertParameters(int.class, int.class);
-        List<TypeLink> typesDouble = Links.convertParameters(double.class, double.class);
-        computeInt = Links.getMethod(type, "compute", Matcher.of(m -> m.typeList().equals(typesInt)));
-        computeDouble = Links.getMethod(type, "compute", Matcher.of(m -> m.typeList().equals(typesDouble)));
+        List<TypeLink> parameters = Links.convertParameters(double.class, double.class);
+        compute = Links.getMethod(type, "compute", Matcher.of(m -> m.typeList().equals(parameters)));
     }
 
     /**
-     * Tests that the result of the compute methods is normalized.
+     * Tests that the {@link FractalPerlinNoise#compute(double, double)} method delegates to the underlying noise.
      *
-     * @param width          the width of the noise
-     * @param height         the height of the noise
-     * @param gradients      the gradients of the noise
-     * @param xInt           the integer x coordinate to test
-     * @param yInt           the integer y coordinate to test
-     * @param xDouble        the double x coordinate to test
-     * @param yDouble        the double y coordinate to test
-     * @param expectedInt    the expected noise value for the integer coordinates
-     * @param expectedDouble the expected noise value for the double coordinates
+     * @param width       the width of the underlying noise
+     * @param height      the height of the underlying noise
+     * @param gradients   the gradients of the underlying noise
+     * @param frequency   the frequency of the underlying noise
+     * @param amplitude   the amplitude of the underlying noise
+     * @param octaves     the octaves of the underlying noise
+     * @param lacunarity  the lacunarity of the underlying noise
+     * @param persistence the persistence of the underlying noise
+     * @param x           the x coordinate to test
+     * @param y           the y coordinate to test
+     * @param expected    the expected result
      */
-    @DisplayName("10 | compute(int, int) und compute(double, double) normalisieren die Werte korrekt.")
-    @ParameterizedTest(name = "compute({3}, {4}) = {7}, compute({5}, {6}) = {8}")
+    @DisplayName("11 | compute(double, double) berechnet den Rauschwert korrekt.")
+    @ParameterizedTest(name = "compute({8}, {9}) = {10}")
     @JsonClasspathSource()
     public void testResult(
         @Property("width") int width,
         @Property("height") int height,
         @Property("gradients") Point2D[] gradients,
-        @Property("xInt") int xInt,
-        @Property("yInt") int yInt,
-        @Property("xDouble") double xDouble,
-        @Property("yDouble") double yDouble,
-        @Property("expectedInt") int expectedInt,
-        @Property("expectedDouble") double expectedDouble
+        @Property("frequency") double frequency,
+        @Property("amplitude") double amplitude,
+        @Property("octaves") int octaves,
+        @Property("lacunarity") double lacunarity,
+        @Property("persistence") double persistence,
+        @Property("x") double x,
+        @Property("y") double y,
+        @Property("expected") double expected
     ) {
-        MockPerlinNoise underlying = new MockPerlinNoise(width, height);
+        MockPerlinNoise underlying = new MockPerlinNoise(width, height, frequency);
         underlying.gradients = gradients;
-        PerlinNoise noise = new NormalizedPerlinNoise(underlying);
+        PerlinNoise noise = new FractalPerlinNoise(underlying, amplitude, octaves, lacunarity, persistence);
 
-        double actualInt = noise.compute(xInt, yInt);
-        Context contextInt = Assertions2.contextBuilder()
-            .subject(computeInt)
-            .add("Gradients", Arrays.toString(gradients))
-            .add("x", xInt)
-            .add("y", yInt)
-            .add("Expected", expectedInt)
-            .add("Actual", actualInt)
-            .build();
-        TutorAssertions.assertWithin(expectedInt, actualInt, EPSILON, contextInt);
-
-        double actualDouble = noise.compute(xDouble, yDouble);
+        double actual = noise.compute(x, y);
         Context contextDouble = Assertions2.contextBuilder()
-            .subject(computeDouble)
+            .subject(compute)
             .add("Gradients", Arrays.toString(gradients))
-            .add("x", xDouble)
-            .add("y", yDouble)
-            .add("Expected", expectedDouble)
-            .add("Actual", actualDouble)
+            .add("Frequency", frequency)
+            .add("Amplitude", amplitude)
+            .add("Octaves", octaves)
+            .add("Lacunarity", lacunarity)
+            .add("Persistence", persistence)
+            .add("x", x)
+            .add("y", y)
+            .add("Expected", expected)
+            .add("Actual", actual)
             .build();
-        TutorAssertions.assertWithin(expectedDouble, actualDouble, EPSILON, contextDouble);
+        TutorAssertions.assertWithin(expected, actual, EPSILON, contextDouble);
     }
 
     /**
@@ -151,14 +142,21 @@ public class H2_3_TutorTests {
         private final int height;
 
         /**
+         * The frequency of the noise.
+         */
+        private final double frequency;
+
+        /**
          * Constructs a mock perlin noise object with the specified width and height.
          *
-         * @param width  the width of the noise
-         * @param height the height of the noise
+         * @param width     the width of the noise
+         * @param height    the height of the noise
+         * @param frequency the frequency of the noise
          */
-        public MockPerlinNoise(int width, int height) {
+        public MockPerlinNoise(int width, int height, double frequency) {
             this.width = width;
             this.height = height;
+            this.frequency = frequency;
         }
 
         @Override
@@ -193,7 +191,7 @@ public class H2_3_TutorTests {
 
         @Override
         public double getFrequency() {
-            throw new UnsupportedOperationException();
+            return frequency;
         }
 
         @Override
