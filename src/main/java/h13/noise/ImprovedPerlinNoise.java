@@ -61,9 +61,9 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
         }
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
             int j = seed.nextInt(0, PERMUTATION_SIZE);
-            int temp = permutation[i];
-            permutation[i] = permutation[j];
-            permutation[j] = temp;
+            int temp = permutation[i+ PERMUTATION_SIZE];
+            permutation[i+ PERMUTATION_SIZE] = permutation[j+ PERMUTATION_SIZE];
+            permutation[j+ PERMUTATION_SIZE] = temp;
         }
         return permutation;
     }

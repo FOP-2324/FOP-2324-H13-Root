@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static h13.utils.Links.getField;
-import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
-
 /**
  * Defines unit tests for task H1.3.
  *
@@ -81,7 +78,7 @@ public class H1_3_TutorTests {
         List<TypeLink> parameters = Links.convertParameters(double.class, double.class);
         method = Links.getMethod(type, "compute", Matcher.of(m -> m.typeList().equals(parameters)));
 
-        field = getField(type, "gradients");
+        field = Links.getField(type, "gradients");
     }
 
     /**
@@ -119,7 +116,7 @@ public class H1_3_TutorTests {
         field.set(noise, gradients);
         noise.compute(x, y);
 
-        Context context = contextBuilder()
+        Context context = Assertions2.contextBuilder()
             .subject(method)
             .add("Gradients", gradients)
             .add("x", x)
@@ -141,7 +138,7 @@ public class H1_3_TutorTests {
      * @param y         the y coordinate to compute
      * @param expected  the expected noise value
      */
-    @DisplayName("compute(double, double) berechnet den korrekten Rauschwert.")
+    @DisplayName("06 | compute(double, double) berechnet den korrekten Rauschwert.")
     @ParameterizedTest(name = "compute({3}, {4}) = {5}")
     @JsonClasspathSource()
     public void testResult(
@@ -156,7 +153,7 @@ public class H1_3_TutorTests {
         field.set(noise, gradients);
         double actual = noise.compute(x, y);
 
-        Context context = contextBuilder()
+        Context context = Assertions2.contextBuilder()
             .subject(method)
             .add("Gradients", gradients)
             .add("x", x)
