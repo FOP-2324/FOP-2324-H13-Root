@@ -1,6 +1,8 @@
-package h13.noise;
+package h13.old;
 
 import h13.Package;
+import h13.noise.DelegatePerlinNoise;
+import h13.noise.PerlinNoise;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static h13.utils.Links.method;
-import static h13.utils.Links.parameters;
-import static h13.utils.Links.type;
+import static h13.utils.Links.convertParameters;
+import static h13.utils.Links.getMethod;
+import static h13.utils.Links.getType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
@@ -33,7 +35,7 @@ public class DelegatePerlinNoiseTest {
 
     @BeforeAll
     public void globalSetup() {
-        type = type(PACKAGE, CLASS);
+        type = getType(PACKAGE, CLASS);
     }
 
     @DisplayName("Die Delegation der Implementierung wird korrekt an die PerlinNoise-Instanz weitergeleitet.")
@@ -55,40 +57,40 @@ public class DelegatePerlinNoiseTest {
 
         Map<String, Pair<MethodLink, Object[]>> methods = Map.of(
             "getWidth()", new Pair<>(
-                method(type, "getWidth", Matcher.of(m -> m.typeList().isEmpty())),
+                getMethod(type, "getWidth", Matcher.of(m -> m.typeList().isEmpty())),
                 new Object[0]
             ),
             "getHeight()", new Pair<>(
-                method(type, "getHeight", Matcher.of(m -> m.typeList().isEmpty())),
+                getMethod(type, "getHeight", Matcher.of(m -> m.typeList().isEmpty())),
                 new Object[0]
             ),
             "getFrequency()", new Pair<>(
-                method(type, "getFrequency", Matcher.of(m -> m.typeList().isEmpty())),
+                getMethod(type, "getFrequency", Matcher.of(m -> m.typeList().isEmpty())),
                 new Object[0]
             ),
             "setFrequency(double)", new Pair<>(
-                method(type, "setFrequency", Matcher.of(m -> m.typeList().equals(parameters(double.class)))),
+                getMethod(type, "setFrequency", Matcher.of(m -> m.typeList().equals(convertParameters(double.class)))),
                 new Object[]{0}
             ),
             "getSeed()", new Pair<>(
-                method(type, "getSeed", Matcher.of(m -> m.typeList().isEmpty())),
+                getMethod(type, "getSeed", Matcher.of(m -> m.typeList().isEmpty())),
                 new Object[0]
             ),
             "getGradients()", new Pair<>(
-                method(type, "getGradients", Matcher.of(m -> m.typeList().isEmpty())),
+                getMethod(type, "getGradients", Matcher.of(m -> m.typeList().isEmpty())),
                 new Object[0]
             ),
             "getGradient(int,int)", new Pair<>(
-                method(type, "getGradient", Matcher.of(m -> m.typeList().equals(parameters(int.class, int.class)))),
+                getMethod(type, "getGradient", Matcher.of(m -> m.typeList().equals(convertParameters(int.class, int.class)))),
                 new Object[]{0, 0}
             ),
             "fade(double)", new Pair<>(
-                method(type, "fade", Matcher.of(m -> m.typeList().equals(parameters(double.class)))),
+                getMethod(type, "fade", Matcher.of(m -> m.typeList().equals(convertParameters(double.class)))),
                 new Object[]{0}
             ),
             "interpolate(double,double,double)", new Pair<>(
-                method(type, "interpolate",
-                    Matcher.of(m -> m.typeList().equals(parameters(double.class, double.class, double.class)))),
+                getMethod(type, "interpolate",
+                    Matcher.of(m -> m.typeList().equals(convertParameters(double.class, double.class, double.class)))),
                 new Object[]{0, 0, 0}
             )
         );

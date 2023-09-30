@@ -1,6 +1,7 @@
-package h13.noise;
+package h13.old;
 
 import h13.Package;
+import h13.noise.AbstractPerlinNoise;
 import h13.serialization.Point2DArrayConverter;
 import h13.utils.TutorAssertions;
 import javafx.geometry.Point2D;
@@ -27,10 +28,10 @@ import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 import java.util.List;
 import java.util.Random;
 
-import static h13.utils.Links.field;
-import static h13.utils.Links.method;
-import static h13.utils.Links.parameters;
-import static h13.utils.Links.type;
+import static h13.utils.Links.convertParameters;
+import static h13.utils.Links.getField;
+import static h13.utils.Links.getMethod;
+import static h13.utils.Links.getType;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
@@ -44,7 +45,7 @@ public class AbstractPerlinNoiseTest {
 
     @BeforeAll
     public void globalSetup() {
-        type = type(PACKAGE, CLASS);
+        type = getType(PACKAGE, CLASS);
     }
 
     @Nested
@@ -57,9 +58,9 @@ public class AbstractPerlinNoiseTest {
 
         @BeforeAll
         public void globalSetup() {
-            List<TypeLink> parameters = parameters(int.class, int.class);
+            List<TypeLink> parameters = convertParameters(int.class, int.class);
             Matcher<MethodLink> matcher = Matcher.of(m -> m.typeList().equals(parameters));
-            method = method(type, "createGradients", matcher);
+            method = getMethod(type, "createGradients", matcher);
         }
 
         @DisplayName("createGradients(int, int) enhält nur Punkte innerhalb des Einheitskreises.")
@@ -117,10 +118,10 @@ public class AbstractPerlinNoiseTest {
 
         @BeforeAll
         public void globalSetup() {
-            List<TypeLink> parameters = parameters(int.class, int.class);
+            List<TypeLink> parameters = convertParameters(int.class, int.class);
             Matcher<MethodLink> matcher = Matcher.of(m -> m.typeList().equals(parameters));
-            method = method(type, "getGradient", matcher);
-            field = field(type, "gradients");
+            method = getMethod(type, "getGradient", matcher);
+            field = getField(type, "gradients");
         }
 
         @DisplayName("getGradient(int, int) gibt die korrekten Gradienten zurück.")

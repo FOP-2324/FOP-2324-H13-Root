@@ -1,6 +1,9 @@
-package h13.noise;
+package h13.old;
 
 import h13.Package;
+import h13.noise.AbstractPerlinNoise;
+import h13.noise.ImprovedPerlinNoise;
+import h13.noise.PerlinNoise;
 import h13.serialization.Point2DArrayConverter;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,10 +32,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static h13.utils.Links.constructor;
-import static h13.utils.Links.field;
-import static h13.utils.Links.parameters;
-import static h13.utils.Links.type;
+import static h13.utils.Links.convertParameters;
+import static h13.utils.Links.getConstructor;
+import static h13.utils.Links.getField;
+import static h13.utils.Links.getType;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertNotEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
@@ -48,7 +51,7 @@ public class ImprovedPerlinNoiseTest {
 
     @BeforeAll
     public void globalSetup() {
-        type = type(PACKAGE, CLASS);
+        type = getType(PACKAGE, CLASS);
     }
 
     @Nested
@@ -61,15 +64,15 @@ public class ImprovedPerlinNoiseTest {
 
         @BeforeAll
         public void globalSetup() {
-            field = field(type, "permutationTable");
+            field = getField(type, "permutationTable");
         }
 
         @DisplayName("Constructor(PerlinNoise) initialisiert die Permutationstabelle korrekt.")
         @Test
         public void testConstructor() {
-            List<TypeLink> parameters = parameters(PerlinNoise.class);
+            List<TypeLink> parameters = convertParameters(PerlinNoise.class);
             Matcher<ConstructorLink> matcher = Matcher.of(m -> m.typeList().equals(parameters));
-            ConstructorLink constructor = constructor(type, matcher);
+            ConstructorLink constructor = getConstructor(type, matcher);
             int[] table = field.get();
 
             Context.Builder<?> context = contextBuilder()
@@ -147,7 +150,7 @@ public class ImprovedPerlinNoiseTest {
                 }
             });
             field.set(noise, table);
-            FieldLink gs = field(type, "gradients");
+            FieldLink gs = getField(type, "gradients");
             gs.set(noise, gradients);
             Point2D gradient = noise.getGradient(x, y);
             Context context = contextBuilder()

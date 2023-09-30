@@ -27,7 +27,7 @@ public final class Links {
 
     }
 
-    public static TypeLink type(Package p, Class<?> clazz) {
+    public static TypeLink getType(Package p, Class<?> clazz) {
         return Assertions3.assertTypeExists(
             BasicPackageLink.of(p.toString()),
             MATCHER_FACTORY.matcher(clazz.getSimpleName())
@@ -35,12 +35,12 @@ public final class Links {
     }
 
     @SafeVarargs
-    public static ConstructorLink constructor(TypeLink type, Matcher<ConstructorLink>... matchers) {
+    public static ConstructorLink getConstructor(TypeLink type, Matcher<ConstructorLink>... matchers) {
         return assertConstructorExists(type, Arrays.stream(matchers).reduce(Matcher.always(), Matcher::and));
     }
 
     @SafeVarargs
-    public static FieldLink field(TypeLink type, String fieldName, Matcher<FieldLink>... matchers) {
+    public static FieldLink getField(TypeLink type, String fieldName, Matcher<FieldLink>... matchers) {
         return assertFieldExists(
             type,
             Arrays.stream(matchers).reduce(MATCHER_FACTORY.matcher(fieldName), Matcher::and)
@@ -48,14 +48,14 @@ public final class Links {
     }
 
     @SafeVarargs
-    public static MethodLink method(TypeLink type, String methodName, Matcher<MethodLink>... matchers) {
+    public static MethodLink getMethod(TypeLink type, String methodName, Matcher<MethodLink>... matchers) {
         return assertMethodExists(
             type,
             Arrays.stream(matchers).reduce(MATCHER_FACTORY.matcher(methodName), Matcher::and)
         );
     }
 
-    public static List<TypeLink> parameters(Class<?>... classes) {
+    public static List<TypeLink> convertParameters(Class<?>... classes) {
         return Arrays.stream(classes).<TypeLink>map(BasicTypeLink::of).toList();
     }
 

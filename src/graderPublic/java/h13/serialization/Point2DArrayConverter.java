@@ -9,6 +9,11 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 
 import java.util.stream.Stream;
 
+/**
+ * A JSON converter for {@link Point2D} arrays.
+ *
+ * @author Nhan Huynh
+ */
 public class Point2DArrayConverter implements ArgumentConverter {
 
     @Override

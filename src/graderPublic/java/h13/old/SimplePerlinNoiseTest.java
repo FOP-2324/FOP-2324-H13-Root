@@ -1,6 +1,7 @@
-package h13.noise;
+package h13.old;
 
 import h13.Package;
+import h13.noise.SimplePerlinNoise;
 import h13.serialization.Point2DArrayConverter;
 import h13.utils.TutorAssertions;
 import javafx.geometry.Point2D;
@@ -29,10 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static h13.utils.Links.field;
-import static h13.utils.Links.method;
-import static h13.utils.Links.parameters;
-import static h13.utils.Links.type;
+import static h13.utils.Links.convertParameters;
+import static h13.utils.Links.getField;
+import static h13.utils.Links.getMethod;
+import static h13.utils.Links.getType;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.assertEquals;
 import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.contextBuilder;
 
@@ -48,7 +49,7 @@ public class SimplePerlinNoiseTest {
 
     @BeforeAll
     public void globalSetup() {
-        type = type(PACKAGE, CLASS);
+        type = getType(PACKAGE, CLASS);
     }
 
     @Nested
@@ -64,13 +65,13 @@ public class SimplePerlinNoiseTest {
 
         @BeforeAll
         public void globalSetup() {
-            List<TypeLink> parameters1 = parameters(double.class, double.class, double.class);
+            List<TypeLink> parameters1 = convertParameters(double.class, double.class, double.class);
             Matcher<MethodLink> matcher1 = Matcher.of(m -> m.typeList().equals(parameters1));
-            method1 = method(type, "interpolate", matcher1);
+            method1 = getMethod(type, "interpolate", matcher1);
 
-            List<TypeLink> parameters2 = parameters(double.class);
+            List<TypeLink> parameters2 = convertParameters(double.class);
             Matcher<MethodLink> matcher2 = Matcher.of(m -> m.typeList().equals(parameters1));
-            method2 = method(type, "fade", matcher1);
+            method2 = getMethod(type, "fade", matcher1);
         }
 
         public void testResult(
@@ -120,11 +121,11 @@ public class SimplePerlinNoiseTest {
 
         @BeforeAll
         public void globalSetup() {
-            List<TypeLink> parameters = parameters(double.class, double.class);
+            List<TypeLink> parameters = convertParameters(double.class, double.class);
             Matcher<MethodLink> matcher = Matcher.of(m -> m.typeList().equals(parameters));
-            method = method(type, "compute", matcher);
+            method = getMethod(type, "compute", matcher);
 
-            field = field(type, "gradients");
+            field = getField(type, "gradients");
         }
 
         @DisplayName("compute(double, double) verwendet die korrekten Gradienten.")
