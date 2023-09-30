@@ -36,7 +36,7 @@ import static org.tudalgo.algoutils.tutor.general.assertions.Assertions2.context
  *
  * @author Nhan Huynh
  */
-@DisplayName("H1.3: Lineare Interpolation und Fading-Funktion")
+@DisplayName("H1.3: Simpler Perlin-Noise Algorithmus")
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H1_3_TutorTests {
