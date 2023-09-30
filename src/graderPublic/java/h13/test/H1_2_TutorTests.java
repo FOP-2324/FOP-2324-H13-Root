@@ -5,10 +5,10 @@ import h13.noise.SimplePerlinNoise;
 import h13.utils.Links;
 import h13.utils.TutorAssertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.TestClassOrder;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junitpioneer.jupiter.json.JsonClasspathSource;
 import org.junitpioneer.jupiter.json.Property;
@@ -27,7 +27,7 @@ import java.util.Random;
  * @author Nhan Huynh
  */
 @DisplayName("H1.2: Lineare Interpolation und Fading-Funktion")
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H1_2_TutorTests {
 
