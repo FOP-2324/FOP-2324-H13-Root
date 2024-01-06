@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author Nhan Huynh
  * @see PerlinNoise
  */
-public class FractalPerlinNoise extends DecoratorPerlinNoise implements PerlinNoise {
+public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinNoise {
 
     /**
      * The default amplitude to use for the noise.

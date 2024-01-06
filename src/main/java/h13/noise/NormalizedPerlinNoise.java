@@ -13,7 +13,7 @@ package h13.noise;
  * @author Nhan Huynh
  * @see PerlinNoise
  */
-public class NormalizedPerlinNoise extends DecoratorPerlinNoise implements PerlinNoise {
+public class NormalizedPerlinNoise extends DelegationPerlinNoise implements PerlinNoise {
 
     /**
      * Constructs a normalized Perlin object that normalizes the specified Perlin noise object.

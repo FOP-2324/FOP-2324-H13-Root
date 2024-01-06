@@ -10,17 +10,17 @@ import java.util.Random;
  * This class simplifies the implementation of new Perlin noise variations by providing a basic structure
  * and forwarding method calls to an existing Perlin noise object.
  *
- * <p>Subclasses of {@link  DecoratorPerlinNoise} can focus on implementing only the compute method
+ * <p>Subclasses of {@link  DelegationPerlinNoise} can focus on implementing only the compute method
  * while inheriting the default implementations of other methods from the PerlinNoise interface.
  *
- * <p>The {@link DecoratorPerlinNoise} class is designed to promote code reuse and modularity in Perlin noise algorithms.
+ * <p>The {@link DelegationPerlinNoise} class is designed to promote code reuse and modularity in Perlin noise algorithms.
  * It allows new Perlin noise variants to be created easily by extending this class and implementing specific
  * noise generation logic in the compute method.
  *
  * @author Nhan Huynh
  * @see PerlinNoise
  */
-public abstract class DecoratorPerlinNoise implements PerlinNoise {
+public abstract class DelegationPerlinNoise implements PerlinNoise {
 
     /**
      * The underlying Perlin noise object to which method calls are delegated.
@@ -32,7 +32,7 @@ public abstract class DecoratorPerlinNoise implements PerlinNoise {
      *
      * @param underlying the underlying Perlin noise object
      */
-    public DecoratorPerlinNoise(PerlinNoise underlying) {
+    public DelegationPerlinNoise(PerlinNoise underlying) {
         this.underlying = underlying;
     }
 
@@ -89,7 +89,7 @@ public abstract class DecoratorPerlinNoise implements PerlinNoise {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        DecoratorPerlinNoise that = (DecoratorPerlinNoise) o;
+        DelegationPerlinNoise that = (DelegationPerlinNoise) o;
         return Objects.equals(underlying, that.underlying);
     }
 

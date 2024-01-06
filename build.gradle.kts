@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.algomate)
-    alias(libs.plugins.style)
     alias(libs.plugins.javafxplugin)
 }
 
@@ -22,13 +21,6 @@ submission {
     requireTests = false
 }
 
-dependencies {
-    implementation(libs.annotations)
-    implementation(libs.algoutils.student)
-    testImplementation(libs.bundles.junit)
-}
-
-
 javafx {
     version = "17.0.1"
     modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
@@ -39,9 +31,6 @@ jagr {
         val graderPublic by getting {
             graderName.set("H13-Public")
             rubricProviderName.set("h13.H13_RubricProvider")
-            configureDependencies {
-                implementation(libs.algoutils.tutor)
-            }
         }
         val graderPrivate by creating {
             parent(graderPublic)
