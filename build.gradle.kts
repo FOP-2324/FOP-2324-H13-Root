@@ -3,9 +3,15 @@ plugins {
     application
     alias(libs.plugins.style)
     alias(libs.plugins.jagr.gradle)
+    alias(libs.plugins.javafxplugin)
 }
 
 version = file("version").readLines().first()
+
+javafx {
+    version = "17.0.1"
+    modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
+}
 
 jagr {
     assignmentId.set("h13")
@@ -34,7 +40,7 @@ jagr {
 dependencies {
     implementation(libs.annotations)
     implementation(libs.algoutils.student)
-    testImplementation(libs.junit.core)
+    testImplementation(libs.bundles.junit)
 }
 
 application {
