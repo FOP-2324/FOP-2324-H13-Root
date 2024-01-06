@@ -43,6 +43,7 @@ public class IntegerField extends NumberField {
 
     @Override
     public StringConverter<Number> getConverter() {
+        // TODO H3.2
         return new NumberStringConverter(value -> Integer.toString(value.intValue()), Integer::parseInt);
     }
 }

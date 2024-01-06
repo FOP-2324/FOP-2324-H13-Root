@@ -44,6 +44,7 @@ public class DoubleField extends NumberField {
 
     @Override
     public StringConverter<Number> getConverter() {
+        // TODO H3.2
         return new NumberStringConverter(value -> Double.toString(value.doubleValue()), Double::parseDouble);
     }
 }

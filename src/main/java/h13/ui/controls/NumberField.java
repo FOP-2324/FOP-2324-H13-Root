@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.regex.Pattern;
 
@@ -31,9 +32,11 @@ public abstract class NumberField extends TextField {
      *
      * @param formatter the formatter that is used to validate the input
      */
+    //@StudentImplementationRequired
     public NumberField(TextFormatter<Number> formatter) {
         this.formatter = formatter;
         this.setTextFormatter(formatter);
+        // TODO H3.2
         Bindings.bindBidirectional(textProperty(), this.value, getConverter());
     }
 
