@@ -1,5 +1,7 @@
 package h13.noise;
 
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+
 import java.util.Objects;
 
 /**
@@ -88,7 +90,9 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
     }
 
     @Override
+    @StudentImplementationRequired
     public double compute(int x, int y) {
+        // TODO H2.4
         return compute((double) x, y);
     }
 
@@ -101,7 +105,9 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
      * @return The computed fractal Perlin noise value at the specified noise domain coordinates.
      */
     @Override
+    @StudentImplementationRequired
     public double compute(double x, double y) {
+        // TODO H2.4
         double totalNoise = 0;
         // Starting frequency
         double f = getFrequency();

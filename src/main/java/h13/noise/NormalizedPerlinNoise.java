@@ -1,5 +1,7 @@
 package h13.noise;
 
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+
 /**
  * A class that wraps a Perlin noise object and provides a normalized version of the noise values. Normalization
  * ensures that the noise values are scaled to the range [0, 1] for better usability.
@@ -25,12 +27,16 @@ public class NormalizedPerlinNoise extends DelegationPerlinNoise implements Perl
     }
 
     @Override
+    @StudentImplementationRequired
     public double compute(int x, int y) {
+        // TODO H2.3
         return (underlying.compute(x, y) + 1) / 2;
     }
 
     @Override
+    @StudentImplementationRequired
     public double compute(double x, double y) {
+        // TODO H2.3
         return (underlying.compute(x, y) + 1) / 2;
     }
 }

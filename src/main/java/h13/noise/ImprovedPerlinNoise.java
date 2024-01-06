@@ -1,6 +1,7 @@
 package h13.noise;
 
 import javafx.geometry.Point2D;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -54,7 +55,9 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      *
      * @return the permutation array
      */
+    @StudentImplementationRequired
     private static int[] createPermutation(Random seed) {
+        // TODO H2.1
         int[] permutation = new int[PERMUTATION_SIZE * 2];
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
             permutation[i] = permutation[i + PERMUTATION_SIZE] = i;
@@ -69,7 +72,9 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     }
 
     @Override
+    @StudentImplementationRequired
     public Point2D getGradient(int x, int y) {
+        // TODO H2.1
         // Formula: p[x + p[y & (n - 1)] & (n - 1)]
         int index = permutationTable[(x + permutationTable[y & (PERMUTATION_SIZE - 1)]) & (PERMUTATION_SIZE - 1)];
         return getGradients()[index];
