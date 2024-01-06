@@ -7,7 +7,7 @@ package h13.ui.layout;
 public interface Initializable {
 
     /**
-     * Initializes this object.
+     * Initializes this object. This must be called only once.
      */
     void initialize();
 }

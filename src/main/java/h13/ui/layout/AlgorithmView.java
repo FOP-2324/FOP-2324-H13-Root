@@ -58,14 +58,19 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
     }
 
     /**
-     * Initializes the 'generate' button of the settings view which draws the algorithm on the canvas if it's pressed.
+     * Initializes the 'generate' button of the settings view which draws the algorithm on the canvas if it's pressed
+     * and the 'save' button which saves the canvas as an image.
      */
-    protected void initializeGenerate() {
+    protected void initializeButtons() {
         settings.getGenerate().setOnAction(event -> viewModel.draw(
             viewModel.getAlgorithm(),
             visualization.getGraphicsContext2D(),
             0, 0,
             (int) visualization.getWidth(), (int) visualization.getHeight())
+        );
+        settings.getSave().setOnAction(event -> viewModel.save(
+            (int) visualization.getWidth(),
+            (int) visualization.getHeight())
         );
     }
 
@@ -121,12 +126,8 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
     public void initialize() {
         root.setCenter(visualization);
         root.setRight(settings.getView());
-        initializeGenerate();
+        initializeButtons();
         initializeSize();
-        settings.getSave().setOnAction(event -> viewModel.save(
-            (int) visualization.getWidth(),
-            (int) visualization.getHeight())
-        );
     }
 
     /**
