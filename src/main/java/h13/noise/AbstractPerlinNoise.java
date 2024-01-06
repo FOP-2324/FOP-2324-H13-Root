@@ -1,6 +1,7 @@
 package h13.noise;
 
 import javafx.geometry.Point2D;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -119,7 +120,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      *
      * @return a random gradient vector within the unit circle
      */
-    private Point2D createGradient() {
+    @StudentImplementationRequired
+    protected Point2D createGradient() {
+        // TODO H1.1
         return new Point2D(seed.nextDouble(-1, 1), seed.nextDouble(-1, 1));
     }
 
@@ -149,7 +152,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      * @param height The height of the gradient array, which determines the vertical dimension of the noise domain.
      * @return random 2D gradient vectors with dimensions wrapping around on the noise dimension
      */
-    private Point2D[] createGradients(int width, int height) {
+    @StudentImplementationRequired
+    protected Point2D[] createGradients(int width, int height) {
+        // TODO H1.1
         Point2D[] gradients = new Point2D[width * height];
         for (int i = 0; i < gradients.length; i++) {
             gradients[i] = createGradient();
@@ -163,7 +168,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     @Override
+    @StudentImplementationRequired
     public Point2D getGradient(int x, int y) {
+        // TODO H1.1
         // Position of a 2D gradient (x, y) vector in a 1D array: (width + 2) * y + x
         // The +2 is because the gradient array is two units larger than the noise domain
         // (width + 2) * y =  first dimension of the 2D array, x = second dimension of the 2D array
