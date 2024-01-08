@@ -2,23 +2,46 @@ package h13.ui.layout;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.util.Pair;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * The view for settings the options related to parameters visibilities.
+ * The view for settings the options related to parameter visibilities.
  *
  * @author Nhan Huynh
  */
-public class SettingsView implements View {
+public class SettingsView extends AbstractView<SettingsView, VBox> implements View {
 
     /**
-     * The root of the view.
+     * The options of the view.
      */
-    private final VBox root;
+    private final Pair<Label, ChooserView> options;
+
+    /**
+     * The parameters of the view.
+     */
+    private final Pair<Label, ParameterView> parameters;
+
+    /**
+     * The button group for the view.
+     */
+    private final HBox buttonGroup = new HBox();
+
+    /**
+     * The button for generating some result of a task.
+     */
+    private final Button generate;
+
+    /**
+     * The button for saving the current settings.
+     */
+    private final Button save;
 
     /**
      * The view model of the view for handling the logic.
@@ -26,152 +49,125 @@ public class SettingsView implements View {
     private final SettingsViewModel viewModel;
 
     /**
-     * The label of the options.
+     * The configurations specifying when a parameter is visible.
      */
-    private final Label optionsLabel;
-
-    /**
-     * The view for choosing the options.
-     */
-    private final ChooserView options;
-
-    /**
-     * The label of the parameters.
-     */
-    private final Label parametersLabel;
-
-    /**
-     * The view for showing the parameters.
-     */
-    private final ParameterView parameters;
-
-    /**
-     * The button for submitting the options and parameters.
-     */
-    private final Button submitButton;
+    private final Map<String, Set<String>> visibilities;
 
     /**
      * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
      * visible.
      *
-     * @param root            the root of the view
-     * @param optionsLabel    the label of the options
-     * @param options         the view for choosing the options
-     * @param parametersLabel the label of the parameters
-     * @param parameters      the view for showing the parameters
-     * @param submitButton    the button for submitting the options and parameters
-     * @param configurations  the configurations specifying when a parameter is visible
+     * @param options       the view for choosing the options
+     * @param parameters    the view for showing the parameters
+     * @param visibilities  the configurations specifying when a parameter is visible
+     * @param configuration the configuration of the view
      */
     public SettingsView(
-        VBox root,
-        Label optionsLabel,
-        ChooserView options,
-        Label parametersLabel,
-        ParameterView parameters,
-        Button submitButton,
-        Map<String, Set<String>> configurations
+        Pair<String, ChooserView> options,
+        Pair<String, ParameterView> parameters,
+        Map<String, Set<String>> visibilities,
+        ViewConfiguration<SettingsView> configuration
     ) {
-        this.root = root;
-        this.optionsLabel = optionsLabel;
-        this.options = options;
-        this.parametersLabel = parametersLabel;
-        this.parameters = parameters;
-        this.submitButton = submitButton;
-        this.viewModel = new SettingsViewModel(options.getOptions().values());
-        viewModel.addVisibilityListener(configurations, parameters.getParameters());
-
-        root.getChildren().addAll(optionsLabel, options.view(), parametersLabel, parameters.view(), submitButton);
+        this(new VBox(), options, parameters, visibilities, configuration);
     }
 
     /**
      * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
      * visible.
      *
-     * @param root            the root of the view
-     * @param optionsLabel    the label of the options
-     * @param options         the view for choosing the options
-     * @param parametersLabel the label of the parameters
-     * @param parameters      the view for showing the parameters
-     * @param submitButton    the button for submitting the options and parameters
-     * @param configurations  the configurations specifying when a parameter is visible
+     * @param root          the root of the view
+     * @param options       the view for choosing the options
+     * @param parameters    the view for showing the parameters
+     * @param visibilities  the configurations specifying when a parameter is visible
+     * @param configuration the configuration of the view
      */
     public SettingsView(
         VBox root,
-        String optionsLabel,
-        ChooserView options,
-        String parametersLabel,
-        ParameterView parameters,
-        String submitButton,
-        Map<String, Set<String>> configurations
+        Pair<String, ChooserView> options,
+        Pair<String, ParameterView> parameters,
+        Map<String, Set<String>> visibilities,
+        ViewConfiguration<SettingsView> configuration
     ) {
-        this(
-            root,
-            new Label(optionsLabel), options,
-            new Label(parametersLabel), parameters,
-            new Button(submitButton),
-            configurations
+        super(root, configuration);
+        this.options = new Pair<>(new Label(options.getKey()), options.getValue());
+        this.parameters = new Pair<>(new Label(parameters.getKey()), parameters.getValue());
+        this.generate = new Button("Generate");
+        this.save = new Button("Save");
+        this.viewModel = new SettingsViewModel(
+            options.getValue().selectedProperties(),
+            parameters.getValue().disableProperties()
         );
+        this.visibilities = visibilities;
+        initialize();
+        config(this);
     }
 
     @Override
-    public VBox view() {
-        return root;
+    @StudentImplementationRequired
+    public void initialize() {
+        // TODO H4.4
+        root.getChildren().addAll(
+            options.getKey(), options.getValue().getView(),
+            parameters.getKey(), parameters.getValue().getView(),
+            buttonGroup
+        );
+        buttonGroup.getChildren().addAll(generate, save);
+        viewModel.addVisibilityListener(visibilities);
     }
 
     /**
-     * Returns the label of the options.
+     * Returns the options of the view.
      *
-     * @return the label of the options
+     * @return the options of the view
      */
-    public Label getOptionsLabel() {
-        return optionsLabel;
-    }
-
-    /**
-     * Returns the view for choosing the options.
-     *
-     * @return the view for choosing the options
-     */
-    public ChooserView getOptions() {
+    public Pair<Label, ChooserView> getOptions() {
         return options;
     }
 
     /**
-     * Returns the label of the parameters.
+     * Returns the parameters of the view.
      *
-     * @return the label of the parameters
+     * @return the parameters of the view
      */
-    public Label getParametersLabel() {
-        return parametersLabel;
-    }
-
-    /**
-     * Returns the view for showing the parameters.
-     *
-     * @return the view for showing the parameters
-     */
-    public ParameterView getParameters() {
+    public Pair<Label, ParameterView> getParameters() {
         return parameters;
     }
 
     /**
-     * Returns the button for submitting the options and parameters.
+     * Returns the button group of the view.
      *
-     * @return the button for submitting the options and parameters
+     * @return the button group of the view
      */
-    public Button getSubmitButton() {
-        return submitButton;
+    public HBox getButtonGroup() {
+        return buttonGroup;
     }
 
     /**
-     * Sets the font of the headers in this view.
+     * Returns the button for generating some result of a task.
      *
-     * @param font the font of the headers in this view
+     * @return the button for generating some result of a task
+     */
+    public Button getGenerate() {
+        return generate;
+    }
+
+    /**
+     * Returns the button for saving the current settings.
+     *
+     * @return the button for saving the current settings
+     */
+    public Button getSave() {
+        return save;
+    }
+
+    /**
+     * Sets the header font of the view.
+     *
+     * @param font the font to use
      */
     public void setHeaderFont(Font font) {
-        for (Label label : new Label[]{optionsLabel, parametersLabel}) {
+        for (Label label : new Label[]{options.getKey(), parameters.getKey()}) {
             label.setFont(font);
         }
     }
-
 }

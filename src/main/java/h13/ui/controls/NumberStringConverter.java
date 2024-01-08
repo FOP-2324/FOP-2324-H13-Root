@@ -26,7 +26,7 @@ public class NumberStringConverter extends StringConverter<Number> {
      * {@link String} and vice versa.
      *
      * @param stringifier a function that converts a {@link Number} to a {@link String}
-     * @param numericizer  a function that converts a {@link String} to a {@link Number}
+     * @param numericizer a function that converts a {@link String} to a {@link Number}
      */
     public NumberStringConverter(Function<Number, String> stringifier, Function<String, Number> numericizer) {
         this.stringifier = stringifier;
@@ -52,5 +52,4 @@ public class NumberStringConverter extends StringConverter<Number> {
 
         return value.equals("-") ? numericizer.apply("-1") : numericizer.apply(value);
     }
-
 }

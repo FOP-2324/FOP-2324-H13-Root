@@ -59,5 +59,4 @@ public interface GradientNoise {
     default double[][] compute() {
         return compute(0, 0, getWidth(), getHeight());
     }
-
 }

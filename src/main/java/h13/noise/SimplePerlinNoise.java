@@ -1,6 +1,7 @@
 package h13.noise;
 
 import javafx.geometry.Point2D;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Random;
 
@@ -26,9 +27,9 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     /**
      * Constructs a simple Perlin noise object with the specified noise domain width, height and seed.
      *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param seed      the random seed for generating gradient vectors
+     * @param width  the width of the noise domain
+     * @param height the height of the noise domain
+     * @param seed   the random seed for generating gradient vectors
      */
     public SimplePerlinNoise(int width, int height, Random seed) {
         super(width, height, seed);
@@ -41,7 +42,9 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     }
 
     @Override
+    @StudentImplementationRequired
     public double compute(double x, double y) {
+        // TODO H1.3
         // Compute the coordinates of the gradient vector grid cell
         int x0 = (int) Math.floor(x);
         int y0 = (int) Math.floor(y);
@@ -75,7 +78,9 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     }
 
     @Override
+    @StudentImplementationRequired
     public double fade(double t) {
+        // TODO H1.2
         return t * t * t * (t * (t * 6 - 15) + 10);
     }
 
@@ -88,8 +93,9 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
      * @return the interpolated value
      */
     @Override
+    @StudentImplementationRequired
     public double interpolate(double a, double b, double alpha) {
+        // TODO H1.2
         return a + alpha * (b - a);
     }
-
 }

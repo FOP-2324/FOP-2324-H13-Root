@@ -62,7 +62,7 @@ public interface PerlinNoise extends GradientNoise {
 
     /**
      * Returns the gradient vector associated with the specified noise domain coordinates. Since the gradient vectors
-     * wrap around the noise domain, the starting point of the gradients domain is at (0, 0) and the ending point
+     * wrap around the noise domain, the starting point of the gradient domain is at (0, 0) and the ending point
      * is at (width + 1, height + 1) of the noise domain.
      *
      * @param x the x coordinate of the gradient domain
@@ -112,7 +112,7 @@ public interface PerlinNoise extends GradientNoise {
      * Computes the gradient noise value at the specified noise domain coordinates.
      * It's recommended to multiply the coordinates by the frequency to achieve visible results.
      *
-     * <p>If you use a lower frequency value, the noise pattern will have larger features and appear more
+     * <p>If you use a lower frequency value, the noise pattern will have larger features and appear to more
      * spread out. This can create smoother variations in the noise and give a sense of large-scale structure.
      *
      * <p>If you use a higher frequency value, the noise pattern will have smaller and more frequent
@@ -124,5 +124,4 @@ public interface PerlinNoise extends GradientNoise {
      * @return The computed gradient noise value at the specified noise domain coordinates.
      */
     double compute(double x, double y);
-
 }

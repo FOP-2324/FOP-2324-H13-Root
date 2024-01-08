@@ -1,16 +1,11 @@
 package h13.ui.layout;
 
-import h13.ui.controls.NumberField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.util.Pair;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,32 +18,35 @@ import java.util.Set;
 public class SettingsViewModel {
 
     /**
-     * The available options.
+     * The options that can be selected.
      */
     private final Map<String, BooleanProperty> options;
 
     /**
-     * Creates a settings view model with the given available options.
-     *
-     * @param options the available options
+     * The parameters that can be visible.
      */
-    public SettingsViewModel(Collection<CheckBox> options) {
-        this.options = new HashMap<>(options.size());
+    private final Map<String, BooleanProperty> parameters;
 
-        for (CheckBox option : options) {
-            this.options.put(option.getText(), option.selectedProperty());
-        }
+    /**
+     * Creates a new view model with the given options and parameters.
+     *
+     * @param options    the options that can be selected
+     * @param parameters the parameters that can be visible
+     */
+    public SettingsViewModel(Map<String, BooleanProperty> options, Map<String, BooleanProperty> parameters) {
+        this.options = options;
+        this.parameters = parameters;
     }
 
     /**
      * Adds visibility listeners to the given parameters based on the given configurations.
      *
      * @param configurations the configurations that specify which parameters are visible for which options
-     * @param parameters     the parameters to add visibility listeners to
      */
-    public void addVisibilityListener(Map<String, Set<String>> configurations, Map<String, Pair<Label, NumberField>> parameters) {
+    @StudentImplementationRequired
+    public void addVisibilityListener(Map<String, Set<String>> configurations) {
+        // TODO H4.3
         Map<String, BooleanBinding> visibilities = new HashMap<>(parameters.size());
-
         // Create state binding for parameters when an option is selected, the binding is true
         for (var parameter : parameters.entrySet()) {
             String parameterName = parameter.getKey();
@@ -59,7 +57,7 @@ public class SettingsViewModel {
                     return Bindings.createBooleanBinding(never::get, never);
                 }
             );
-            for (var option : configurations.entrySet()) {
+            for (Map.Entry<String, Set<String>> option : configurations.entrySet()) {
                 String optionName = option.getKey();
                 BooleanProperty state = options.get(optionName);
                 Set<String> visibleParameters = option.getValue();
@@ -73,13 +71,10 @@ public class SettingsViewModel {
 
         // Since the binding is true when an option is selected, the parameter is disabled when the binding is false
         for (var visibility : visibilities.entrySet()) {
-            var parameterName = visibility.getKey();
-            var visible = visibility.getValue();
-            var fields = parameters.get(parameterName);
-            for (var node : new Node[]{fields.getKey(), fields.getValue()}) {
-                node.disableProperty().bind(visible.not());
-            }
+            String parameterName = visibility.getKey();
+            BooleanBinding visible = visibility.getValue();
+            BooleanProperty fields = parameters.get(parameterName);
+            fields.bind(visible.not());
         }
     }
-
 }

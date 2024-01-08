@@ -1,28 +1,22 @@
 package h13.ui.layout;
 
 import h13.noise.PerlinNoise;
-import h13.ui.controls.NumberField;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 /**
  * A {@link PerlinNoise} algorithm visualization view.
  *
  * @author Nhan Huynh
  */
-public class AlgorithmView implements View {
-
-    /**
-     * The root layout.
-     */
-    private final BorderPane root;
+public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> implements View {
 
     /**
      * The view model of the view for handling the logic.
@@ -49,30 +43,51 @@ public class AlgorithmView implements View {
     public AlgorithmView(
         BorderPane root,
         SettingsView settings,
-        BiFunction<Map<String, BooleanProperty>, Map<String, NumberField>, AlgorithmViewModel> factory) {
-        this.root = root;
+        BiFunction<Map<String, BooleanProperty>, Map<String, Property<Number>>, AlgorithmViewModel> factory,
+        ViewConfiguration<AlgorithmView> configuration) {
+        super(root, configuration);
         this.visualization = new Canvas();
         this.settings = settings;
+        this.viewModel = factory.apply(
+            settings.getOptions().getValue().selectedProperties(),
+            settings.getParameters().getValue().valueProperties()
+        );
 
-        // Layout
+        initialize();
+        config(this);
+    }
+
+    @Override
+    public void initialize() {
         root.setCenter(visualization);
-        root.setRight(settings.view());
+        root.setRight(settings.getView());
+        initializeButtons();
+        initializeSize();
+    }
 
-        // View model
-        var options = settings.getOptions().getOptions().entrySet()
-            .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().selectedProperty()));
-        var parameters = settings.getParameters().getParameters().entrySet()
-            .stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getValue()));
-        this.viewModel = factory.apply(options, parameters);
-
-        // Bindings
-        settings.getSubmitButton().setOnAction(event -> viewModel.draw(
+    /**
+     * Initializes the 'generate' button of the settings view which draws the algorithm on the canvas if it's pressed
+     * and the 'save' button which saves the canvas as an image.
+     */
+    protected void initializeButtons() {
+        // TODO H5.2
+        settings.getGenerate().setOnAction(event -> viewModel.draw(
             viewModel.getAlgorithm(),
             visualization.getGraphicsContext2D(),
             0, 0,
             (int) visualization.getWidth(), (int) visualization.getHeight())
         );
+        settings.getSave().setOnAction(event -> viewModel.save(
+            (int) visualization.getWidth(),
+            (int) visualization.getHeight())
+        );
+    }
 
+    /**
+     * Initializes the size of the canvas and binds it to the size of the root layout.
+     */
+    protected void initializeSize() {
+        // H5.2
         visualization.widthProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue.intValue() >= newValue.intValue()) {
                 return;
@@ -99,11 +114,11 @@ public class AlgorithmView implements View {
 
         visualization.widthProperty().bind(
             root.widthProperty()
-                .subtract(settings.view().widthProperty())
+                .subtract(settings.getView().widthProperty())
         );
 
-        // Bindings for padding since they can be changed dynamically. Therefore, we need to listen to changes in
-        // order th adjust the height of the canvas accordingly.
+        // Bindings for padding since they can be changed dynamically.
+        // Therefore, we need to listen to changes to adjust the height of the canvas accordingly.
         DoubleProperty paddingTop = new SimpleDoubleProperty();
         DoubleProperty paddingBottom = new SimpleDoubleProperty();
 
@@ -115,11 +130,6 @@ public class AlgorithmView implements View {
         visualization.heightProperty().bind(
             root.heightProperty().subtract(paddingTop).subtract(paddingBottom)
         );
-    }
-
-    @Override
-    public BorderPane view() {
-        return root;
     }
 
     /**
@@ -139,5 +149,4 @@ public class AlgorithmView implements View {
     public SettingsView getSettings() {
         return settings;
     }
-
 }

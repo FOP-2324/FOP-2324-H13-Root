@@ -16,11 +16,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.Map;
 import java.util.Set;
@@ -57,26 +57,28 @@ public class PerlinNoiseApp extends Application {
      * The header font.
      */
     private static final Font HEADER;
+    /**
+     * The coloring of the noise.
+     */
+    private static final Coloring COLORING = Coloring.MOUNTAIN;
 
     static {
         Font font = Font.getDefault();
         HEADER = Font.font(font.getName(), FontWeight.BOLD, font.getSize() * 1.25);
     }
 
-    /**
-     * The coloring of the noise.
-     */
-    private static final Coloring COLORING = Coloring.MOUNTAIN;
-
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Perlin Noise");
 
         // Algorithms - Specify the available algorithms
-        ChooserView options = new ChooserView(new GridPane(), 3);
-        options.view().setPadding(PADDING);
-        options.view().setHgap(HGAP);
-        options.view().setVgap(VGAP);
+        ChooserView options = new ChooserView(new GridPane(), 3, view -> {
+            var underlying = view.getView();
+            underlying.setPadding(PADDING);
+            underlying.setHgap(HGAP);
+            underlying.setVgap(VGAP);
+        });
+
         for (var algorithm : Algorithm.values()) {
             options.add(algorithm.toString());
         }
@@ -86,10 +88,12 @@ public class PerlinNoiseApp extends Application {
         defaultOption.setDisable(true);
 
         // Parameters - Specify the available parameters
-        ParameterView parameters = new ParameterView(new GridPane());
-        parameters.view().setPadding(PADDING);
-        parameters.view().setHgap(HGAP);
-        parameters.view().setVgap(VGAP);
+        ParameterView parameters = new ParameterView(new GridPane(), view -> {
+            var underlying = view.getView();
+            underlying.setPadding(PADDING);
+            underlying.setHgap(HGAP);
+            underlying.setVgap(VGAP);
+        });
         for (Parameter parameter : Parameter.values()) {
             var field = switch (parameter) {
                 case SEED -> new LongField(LongField.POSITIVE_ONLY);
@@ -103,41 +107,47 @@ public class PerlinNoiseApp extends Application {
 
         // Settings - Specify, when parameters are enabled
         SettingsView settings = new SettingsView(
-            new VBox(),
-            "Algorithms", options,
-            "Parameters", parameters,
-            "Generate",
+            new Pair<>("Algorithms", options),
+            new Pair<>("Parameters", parameters),
             Map.of(
                     Algorithm.SIMPLE, Set.of(Parameter.SEED, Parameter.FREQUENCY),
-                    Algorithm.IMPROVED, Set.of(Parameter.SEED, Parameter.FREQUENCY), Algorithm.FRACTAL,
-                    Set.of(
+                    Algorithm.IMPROVED, Set.of(Parameter.SEED, Parameter.FREQUENCY),
+                    Algorithm.FRACTAL, Set.of(
                         Parameter.SEED, Parameter.FREQUENCY, Parameter.AMPLITUDE,
                         Parameter.OCTAVES, Parameter.LACUNARITY, Parameter.PERSISTENCE)
                 ).entrySet().stream()
-                .collect(
-                    Collectors.toMap(
-                        entry -> entry.getKey().toString(),
-                        entry -> entry.getValue().stream().map(Parameter::toString)
-                            .collect(Collectors.toSet()))
-                )
+                .map(entry -> new Pair<>(
+                        entry.getKey().toString(),
+                        entry.getValue().stream().map(Parameter::toString).collect(Collectors.toSet())
+                    )
+                ).collect(Collectors.toMap(Pair::getKey, Pair::getValue)),
+            view -> {
+                var underlying = view.getView();
+                underlying.setPadding(PADDING);
+                underlying.setSpacing(SPACING);
+                underlying.setAlignment(Pos.CENTER_LEFT);
+                var buttons = view.getButtonGroup();
+                buttons.setPadding(PADDING);
+                buttons.setSpacing(SPACING);
+                buttons.setAlignment(Pos.CENTER_LEFT);
+                view.setHeaderFont(HEADER);
+            }
         );
-        settings.view().setPadding(PADDING);
-        settings.view().setSpacing(SPACING);
-        settings.view().setAlignment(Pos.CENTER_LEFT);
-        settings.setHeaderFont(HEADER);
 
         // Main view
         AlgorithmView root = new AlgorithmView(
             new BorderPane(),
             settings,
-            (o, p) -> new PerlinNoiseViewModel(o, p, COLORING.getMapper(), 10)
+            (o, p) -> new PerlinNoiseViewModel(o, p, COLORING.getMapper(), 10),
+            view -> {
+                view.getView().setPadding(PADDING);
+            }
         );
-        root.view().setPadding(PADDING);
 
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
         int width = (int) screen.getWidth() / 2;
         int height = (int) screen.getHeight() / 2;
-        Scene scene = new Scene(root.view(), width, height);
+        Scene scene = new Scene(root.getView(), width, height);
 
         primaryStage.setMinHeight(height);
         primaryStage.setMinWidth(width);
@@ -146,5 +156,4 @@ public class PerlinNoiseApp extends Application {
 
         primaryStage.show();
     }
-
 }

@@ -27,34 +27,38 @@ public abstract class NumberField extends TextField {
     private final Property<Number> value = new SimpleObjectProperty<>(this, "NumericValue");
 
     /**
+     * Creates a number field with the given pattern and converter.
+     *
+     * @param pattern the pattern that is used to validate the input
+     */
+    public NumberField(Pattern pattern) {
+        this(new TextFormatter<>(change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
+    }
+
+    /**
      * Creates a number field with the given formatter and converter.
      *
      * @param formatter the formatter that is used to validate the input
-     * @param converter the converter that is used to convert the input to a number
      */
-    public NumberField(TextFormatter<Number> formatter, StringConverter<Number> converter) {
+    //@StudentImplementationRequired
+    public NumberField(TextFormatter<Number> formatter) {
         this.formatter = formatter;
         this.setTextFormatter(formatter);
-        Bindings.bindBidirectional(textProperty(), this.value, converter);
+        // TODO H3.2
+        Bindings.bindBidirectional(textProperty(), this.value, getConverter());
     }
 
     /**
-     * Creates a number field with the given pattern and converter.
+     * Returns the converter used to convert the input to a number.
      *
-     * @param pattern   the pattern that is used to validate the input
-     * @param converter the converter that is used to convert the input to a number
+     * @return the converter used to convert the input to a number
      */
-    public NumberField(Pattern pattern, StringConverter<Number> converter) {
-        this(
-            new TextFormatter<>(change -> pattern.matcher(change.getControlNewText()).matches() ? change : null),
-            converter
-        );
-    }
+    public abstract StringConverter<Number> getConverter();
 
     /**
-     * Returns the formatter that is used to validate the input.
+     * Returns the formatter used to validate the input.
      *
-     * @return the formatter that is used to validate the input
+     * @return the formatter used to validate the input
      */
     public TextFormatter<Number> getFormatter() {
         return formatter;
@@ -67,6 +71,15 @@ public abstract class NumberField extends TextField {
      */
     public Property<Number> valueProperty() {
         return value;
+    }
+
+    /**
+     * Returns the value of the field.
+     *
+     * @return the value of the field
+     */
+    public Number getValue() {
+        return value.getValue();
     }
 
     /**
@@ -86,5 +99,4 @@ public abstract class NumberField extends TextField {
     public void setPromptValue(Number value) {
         this.setPromptText(value.toString());
     }
-
 }

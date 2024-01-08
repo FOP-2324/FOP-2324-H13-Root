@@ -1,5 +1,7 @@
 package h13.ui.controls;
 
+import javafx.util.StringConverter;
+
 import java.util.regex.Pattern;
 
 /**
@@ -25,19 +27,24 @@ public class DoubleField extends NumberField {
     public static final Pattern ANY = Pattern.compile("-?" + POSITIVE_ONLY.pattern());
 
     /**
-     * Creates a double field with the given pattern.
-     *
-     * @param pattern The pattern to use for validating the input.
-     */
-    public DoubleField(Pattern pattern) {
-        super(pattern, new NumberStringConverter(value -> Double.toString(value.doubleValue()), Double::parseDouble));
-    }
-
-    /**
      * Creates a double field that accepts any {@link Double} value.
      */
     public DoubleField() {
         this(ANY);
     }
 
+    /**
+     * Creates a double field with the given pattern.
+     *
+     * @param pattern The pattern to use for validating the input.
+     */
+    public DoubleField(Pattern pattern) {
+        super(pattern);
+    }
+
+    @Override
+    public StringConverter<Number> getConverter() {
+        // TODO H3.2
+        return new NumberStringConverter(value -> Double.toString(value.doubleValue()), Double::parseDouble);
+    }
 }

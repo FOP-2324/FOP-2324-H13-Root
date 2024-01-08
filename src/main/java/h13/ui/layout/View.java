@@ -14,6 +14,5 @@ public interface View {
      *
      * @return the view node
      */
-    Parent view();
-
+    Parent getView();
 }

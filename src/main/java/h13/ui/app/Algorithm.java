@@ -3,7 +3,7 @@ package h13.ui.app;
 import h13.noise.FractalPerlinNoise;
 import h13.noise.ImprovedPerlinNoise;
 import h13.noise.SimplePerlinNoise;
-import h13.utils.Strings;
+import h13.util.Strings;
 
 /**
  * The algorithm to use for the {@link PerlinNoiseApp}.

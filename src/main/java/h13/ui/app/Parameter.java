@@ -1,6 +1,6 @@
 package h13.ui.app;
 
-import h13.utils.Strings;
+import h13.util.Strings;
 
 /**
  * The parameters that can be used in the {@link PerlinNoiseApp} and Perlin Noise {@link Algorithm}s.

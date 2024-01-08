@@ -26,13 +26,10 @@ public class IntegerField extends NumberField {
 
 
     /**
-     * Creates an integer field with the given pattern and converter.
-     *
-     * @param pattern   the pattern to use for validating the input
-     * @param converter the converter to use for converting the input to a number
+     * Creates an integer field that accepts any {@link Integer} value.
      */
-    protected IntegerField(Pattern pattern, StringConverter<Number> converter) {
-        super(pattern, converter);
+    public IntegerField() {
+        this(ANY);
     }
 
     /**
@@ -41,14 +38,12 @@ public class IntegerField extends NumberField {
      * @param pattern The pattern to use for validating the input.
      */
     public IntegerField(Pattern pattern) {
-        this(pattern, new NumberStringConverter(value -> Integer.toString(value.intValue()), Integer::parseInt));
+        super(pattern);
     }
 
-    /**
-     * Creates an integer field that accepts any {@link Integer} value.
-     */
-    public IntegerField() {
-        this(ANY);
+    @Override
+    public StringConverter<Number> getConverter() {
+        // TODO H3.2
+        return new NumberStringConverter(value -> Integer.toString(value.intValue()), Integer::parseInt);
     }
-
 }
