@@ -75,11 +75,6 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
                         nextColumn = 0;
                         nextRow++;
                     }
-<<<<<<< HEAD
-                    return;
-                }
-                throw new UnsupportedOperationException("Not supported yet.");
-=======
                 } else if (change.wasRemoved()) {
                     nextColumn--;
                     if (nextColumn == -1) {
@@ -88,19 +83,10 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
                     }
                     root.getChildren().remove(change.getValueRemoved());
                 }
->>>>>>> origin/feature/solution-rework
             }
         );
     }
 
-<<<<<<< HEAD
-    @Override
-    public GridPane view() {
-        return root;
-    }
-
-=======
->>>>>>> origin/feature/solution-rework
     /**
      * Returns the maximum number of columns in a row.
      *
@@ -111,53 +97,6 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
     }
 
     /**
-<<<<<<< HEAD
-     * Returns {@code true} if this view contains the given option.
-     *
-     * @param option the option to check
-     * @return {@code true} if this view contains the given option
-     */
-    public boolean contains(String option) {
-        return options.containsKey(option);
-    }
-
-    /**
-     * Returns {@code true} if this view contains the given option.
-     *
-     * @param option the option to check
-     * @return {@code true} if this view contains the given option
-     */
-    public boolean contains(CheckBox option) {
-        return contains(option.getText());
-    }
-
-    /**
-     * Returns {@code true} if the view added the option and returns {@code false} if the view already contained the
-     * option.
-     *
-     * @param option the option to add
-     * @return {@code true} if the view added the option and returns {@code false} if the view already contained the
-     * option
-     */
-    public boolean add(CheckBox option) {
-        if (contains(option)) {
-            return false;
-        }
-        options.put(option.getText(), option);
-        return true;
-    }
-
-    /**
-     * Returns {@code true} if the view added the option and returns {@code false} if the view already contained the
-     * option.
-     *
-     * @param option the option to add
-     * @return {@code true} if the view added the option and returns {@code false} if the view already contained the
-     * option
-     */
-    public boolean add(String option) {
-        return add(new CheckBox(option));
-=======
      * Adds the given option to this chooser view.
      *
      * @param text the name of the option
@@ -187,7 +126,6 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
      */
     public @Nullable CheckBox remove(String text) {
         return options.remove(text);
->>>>>>> origin/feature/solution-rework
     }
 
     /**
