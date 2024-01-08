@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,9 @@ public class SettingsViewModel {
      *
      * @param configurations the configurations that specify which parameters are visible for which options
      */
+    @StudentImplementationRequired
     public void addVisibilityListener(Map<String, Set<String>> configurations) {
+        // TODO H4.3
         Map<String, BooleanBinding> visibilities = new HashMap<>(parameters.size());
         // Create state binding for parameters when an option is selected, the binding is true
         for (var parameter : parameters.entrySet()) {

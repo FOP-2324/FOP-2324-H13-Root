@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.regex.Pattern;
 
@@ -28,6 +27,15 @@ public abstract class NumberField extends TextField {
     private final Property<Number> value = new SimpleObjectProperty<>(this, "NumericValue");
 
     /**
+     * Creates a number field with the given pattern and converter.
+     *
+     * @param pattern the pattern that is used to validate the input
+     */
+    public NumberField(Pattern pattern) {
+        this(new TextFormatter<>(change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
+    }
+
+    /**
      * Creates a number field with the given formatter and converter.
      *
      * @param formatter the formatter that is used to validate the input
@@ -38,15 +46,6 @@ public abstract class NumberField extends TextField {
         this.setTextFormatter(formatter);
         // TODO H3.2
         Bindings.bindBidirectional(textProperty(), this.value, getConverter());
-    }
-
-    /**
-     * Creates a number field with the given pattern and converter.
-     *
-     * @param pattern the pattern that is used to validate the input
-     */
-    public NumberField(Pattern pattern) {
-        this(new TextFormatter<>(change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
 
     /**

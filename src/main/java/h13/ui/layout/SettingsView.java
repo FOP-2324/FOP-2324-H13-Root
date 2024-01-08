@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Pair;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Map;
 import java.util.Set;
@@ -33,14 +34,14 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
     private final HBox buttonGroup = new HBox();
 
     /**
-     * The button for generating some result of a task
+     * The button for generating some result of a task.
      */
-    private final Button generate = new Button("Generate");
+    private final Button generate;
 
     /**
      * The button for saving the current settings.
      */
-    private final Button save = new Button("Save");
+    private final Button save;
 
     /**
      * The view model of the view for handling the logic.
@@ -51,6 +52,24 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
      * The configurations specifying when a parameter is visible.
      */
     private final Map<String, Set<String>> visibilities;
+
+    /**
+     * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
+     * visible.
+     *
+     * @param options       the view for choosing the options
+     * @param parameters    the view for showing the parameters
+     * @param visibilities  the configurations specifying when a parameter is visible
+     * @param configuration the configuration of the view
+     */
+    public SettingsView(
+        Pair<String, ChooserView> options,
+        Pair<String, ParameterView> parameters,
+        Map<String, Set<String>> visibilities,
+        ViewConfiguration<SettingsView> configuration
+    ) {
+        this(new VBox(), options, parameters, visibilities, configuration);
+    }
 
     /**
      * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
@@ -72,36 +91,21 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
         super(root, configuration);
         this.options = new Pair<>(new Label(options.getKey()), options.getValue());
         this.parameters = new Pair<>(new Label(parameters.getKey()), parameters.getValue());
+        this.generate = new Button("Generate");
+        this.save = new Button("Save");
         this.viewModel = new SettingsViewModel(
-            options.getValue().selectedProperties()
-            , parameters.getValue().disableProperties()
+            options.getValue().selectedProperties(),
+            parameters.getValue().disableProperties()
         );
         this.visibilities = visibilities;
         initialize();
         config(this);
     }
 
-    /**
-     * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
-     * visible.
-     *
-     * @param options       the view for choosing the options
-     * @param parameters    the view for showing the parameters
-     * @param visibilities  the configurations specifying when a parameter is visible
-     * @param configuration the configuration of the view
-     */
-    public SettingsView(
-        Pair<String, ChooserView> options,
-        Pair<String, ParameterView> parameters,
-        Map<String, Set<String>> visibilities,
-        ViewConfiguration<SettingsView> configuration
-    ) {
-        this(new VBox(), options, parameters, visibilities, configuration);
-    }
-
-
     @Override
+    @StudentImplementationRequired
     public void initialize() {
+        // TODO H4.4
         root.getChildren().addAll(
             options.getKey(), options.getValue().getView(),
             parameters.getKey(), parameters.getValue().getView(),

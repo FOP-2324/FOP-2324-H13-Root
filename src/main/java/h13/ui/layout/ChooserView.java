@@ -7,6 +7,7 @@ import javafx.collections.ObservableMap;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import org.jetbrains.annotations.Nullable;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,6 +40,16 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
     private int nextColumn;
 
     /**
+     * Creates a new chooser view the given maximum number of columns in a row.
+     *
+     * @param columnSize    the maximum number of columns in a row
+     * @param configuration the configuration for this view
+     */
+    public ChooserView(int columnSize, ViewConfiguration<ChooserView> configuration) {
+        this(new GridPane(), columnSize, configuration);
+    }
+
+    /**
      * Creates a new chooser view with the given root pane and the given maximum number of columns in a row.
      *
      * @param root          the root pane
@@ -52,21 +63,10 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
         config(this);
     }
 
-    /**
-     * Creates a new chooser view the given maximum number of columns in a row.
-     *
-     * @param columnSize    the maximum number of columns in a row
-     * @param configuration the configuration for this view
-     */
-    public ChooserView(int columnSize, ViewConfiguration<ChooserView> configuration) {
-        super(new GridPane(), configuration);
-        this.columnSize = columnSize;
-        initialize();
-        config(this);
-    }
-
     @Override
+    @StudentImplementationRequired
     public void initialize() {
+        // TODO H4.1
         options.addListener(
             (MapChangeListener.Change<? extends String, ? extends CheckBox> change) -> {
                 if (change.wasAdded()) {
@@ -75,9 +75,14 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
                         nextColumn = 0;
                         nextRow++;
                     }
-                    return;
+                } else if (change.wasRemoved()) {
+                    nextColumn--;
+                    if (nextColumn == -1) {
+                        nextColumn = columnSize - 1;
+                        nextRow--;
+                    }
+                    root.getChildren().remove(change.getValueRemoved());
                 }
-                throw new UnsupportedOperationException("Not supported yet.");
             }
         );
     }
@@ -92,16 +97,6 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
     }
 
     /**
-     * Returns whether the given option is contained in this chooser view.
-     *
-     * @param text the name of the option
-     * @return {@code true} if the given option is contained in this chooser view
-     */
-    public boolean contains(String text) {
-        return options.containsKey(text);
-    }
-
-    /**
      * Adds the given option to this chooser view.
      *
      * @param text the name of the option
@@ -111,6 +106,16 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
             throw new IllegalArgumentException("Checkbox Group: duplicate option added: " + text);
         }
         options.put(text, new CheckBox(text));
+    }
+
+    /**
+     * Returns whether the given option is contained in this chooser view.
+     *
+     * @param text the name of the option
+     * @return {@code true} if the given option is contained in this chooser view
+     */
+    public boolean contains(String text) {
+        return options.containsKey(text);
     }
 
     /**
@@ -146,7 +151,6 @@ public class ChooserView extends AbstractView<ChooserView, GridPane> implements 
         return options.entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().selectedProperty()));
     }
-
 
     /**
      * Returns the next column for a new option.

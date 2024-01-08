@@ -57,24 +57,22 @@ public class PerlinNoiseApp extends Application {
      * The header font.
      */
     private static final Font HEADER;
+    /**
+     * The coloring of the noise.
+     */
+    private static final Coloring COLORING = Coloring.MOUNTAIN;
 
     static {
         Font font = Font.getDefault();
         HEADER = Font.font(font.getName(), FontWeight.BOLD, font.getSize() * 1.25);
     }
 
-    /**
-     * The coloring of the noise.
-     */
-    private static final Coloring COLORING = Coloring.MOUNTAIN;
-
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Perlin Noise");
 
         // Algorithms - Specify the available algorithms
-        ChooserView options = new ChooserView(new GridPane(), 3, view ->
-        {
+        ChooserView options = new ChooserView(new GridPane(), 3, view -> {
             var underlying = view.getView();
             underlying.setPadding(PADDING);
             underlying.setHgap(HGAP);
@@ -90,8 +88,7 @@ public class PerlinNoiseApp extends Application {
         defaultOption.setDisable(true);
 
         // Parameters - Specify the available parameters
-        ParameterView parameters = new ParameterView(new GridPane(), view ->
-        {
+        ParameterView parameters = new ParameterView(new GridPane(), view -> {
             var underlying = view.getView();
             underlying.setPadding(PADDING);
             underlying.setHgap(HGAP);

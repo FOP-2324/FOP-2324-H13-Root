@@ -26,19 +26,19 @@ public class IntegerField extends NumberField {
 
 
     /**
+     * Creates an integer field that accepts any {@link Integer} value.
+     */
+    public IntegerField() {
+        this(ANY);
+    }
+
+    /**
      * Creates an integer field with the given pattern.
      *
      * @param pattern The pattern to use for validating the input.
      */
     public IntegerField(Pattern pattern) {
         super(pattern);
-    }
-
-    /**
-     * Creates an integer field that accepts any {@link Integer} value.
-     */
-    public IntegerField() {
-        this(ANY);
     }
 
     @Override

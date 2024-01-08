@@ -10,19 +10,19 @@ import java.util.regex.Pattern;
 public class LongField extends IntegerField {
 
     /**
+     * Creates a long field that accepts any {@link Long} value.
+     */
+    public LongField() {
+        this(ANY);
+    }
+
+    /**
      * Creates a long field with the given pattern.
      *
      * @param pattern The pattern to use for validating the input.
      */
     public LongField(Pattern pattern) {
         super(pattern);
-    }
-
-    /**
-     * Creates a long field that accepts any {@link Long} value.
-     */
-    public LongField() {
-        this(ANY);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package h13.ui.layout;
 
-import javafx.scene.Parent;
-
 /**
  * A functional interface for configuring a view.
  *

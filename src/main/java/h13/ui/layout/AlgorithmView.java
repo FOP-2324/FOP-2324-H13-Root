@@ -57,11 +57,20 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
         config(this);
     }
 
+    @Override
+    public void initialize() {
+        root.setCenter(visualization);
+        root.setRight(settings.getView());
+        initializeButtons();
+        initializeSize();
+    }
+
     /**
      * Initializes the 'generate' button of the settings view which draws the algorithm on the canvas if it's pressed
      * and the 'save' button which saves the canvas as an image.
      */
     protected void initializeButtons() {
+        // TODO H5.2
         settings.getGenerate().setOnAction(event -> viewModel.draw(
             viewModel.getAlgorithm(),
             visualization.getGraphicsContext2D(),
@@ -78,6 +87,7 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
      * Initializes the size of the canvas and binds it to the size of the root layout.
      */
     protected void initializeSize() {
+        // H5.2
         visualization.widthProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue.intValue() >= newValue.intValue()) {
                 return;
@@ -120,14 +130,6 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
         visualization.heightProperty().bind(
             root.heightProperty().subtract(paddingTop).subtract(paddingBottom)
         );
-    }
-
-    @Override
-    public void initialize() {
-        root.setCenter(visualization);
-        root.setRight(settings.getView());
-        initializeButtons();
-        initializeSize();
     }
 
     /**

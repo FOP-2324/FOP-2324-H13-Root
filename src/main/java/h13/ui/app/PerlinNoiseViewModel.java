@@ -59,28 +59,9 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
         this.cacheImprovedNoise = new LRUCache<>(cacheSize);
     }
 
-    /**
-     * Returns the number property to the given parameter.
-     *
-     * @param parameter the parameter to get the number property to
-     * @return the number property to the given parameter
-     */
-    private Property<Number> getParameter(Parameter parameter) {
-        return parameters.get(parameter.toString());
-    }
-
-    /**
-     * Returns the boolean property to the given algorithm.
-     *
-     * @param algorithm the algorithm to get the boolean property to
-     * @return the boolean property to the given algorithm
-     */
-    private BooleanProperty getOption(Algorithm algorithm) {
-        return options.get(algorithm.toString());
-    }
-
     @Override
     protected @Nullable PerlinNoise getAlgorithm() {
+        // TODO H6
         return run(
             () -> {
                 // Simple algorithm will always be used
@@ -129,5 +110,25 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
             "Illegal frequency",
             Throwable::getMessage
         );
+    }
+
+    /**
+     * Returns the number property to the given parameter.
+     *
+     * @param parameter the parameter to get the number property to
+     * @return the number property to the given parameter
+     */
+    private Property<Number> getParameter(Parameter parameter) {
+        return parameters.get(parameter.toString());
+    }
+
+    /**
+     * Returns the boolean property to the given algorithm.
+     *
+     * @param algorithm the algorithm to get the boolean property to
+     * @return the boolean property to the given algorithm
+     */
+    private BooleanProperty getOption(Algorithm algorithm) {
+        return options.get(algorithm.toString());
     }
 }

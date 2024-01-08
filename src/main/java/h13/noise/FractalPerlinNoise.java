@@ -51,6 +51,24 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
      * parameters.
      *
      * @param noise       the underlying Perlin noise object
+     * @param octaves     the number of octaves, determining the number of noise layers to combine
+     * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
+     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
+     */
+    public FractalPerlinNoise(
+        PerlinNoise noise,
+        int octaves,
+        double lacunarity,
+        double persistence
+    ) {
+        this(noise, DEFAULT_AMPLITUDE, octaves, lacunarity, persistence);
+    }
+
+    /**
+     * Constructs a fractal Perlin noise object with the specified underlying Perlin noise object and fractal
+     * parameters.
+     *
+     * @param noise       the underlying Perlin noise object
      * @param amplitude   the amplitude of the noise, controlling the range of values for each octave
      * @param octaves     the number of octaves, determining the number of noise layers to combine
      * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
@@ -69,24 +87,6 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
         this.octaves = octaves;
         this.lacunarity = lacunarity;
         this.persistence = persistence;
-    }
-
-    /**
-     * Constructs a fractal Perlin noise object with the specified underlying Perlin noise object and fractal
-     * parameters.
-     *
-     * @param noise       the underlying Perlin noise object
-     * @param octaves     the number of octaves, determining the number of noise layers to combine
-     * @param lacunarity  the lacunarity of the noise, controlling the change in frequency between octaves
-     * @param persistence the persistence of the noise, influencing the amplitude of each successive octave
-     */
-    public FractalPerlinNoise(
-        PerlinNoise noise,
-        int octaves,
-        double lacunarity,
-        double persistence
-    ) {
-        this(noise, DEFAULT_AMPLITUDE, octaves, lacunarity, persistence);
     }
 
     @Override
@@ -126,6 +126,29 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
         return totalNoise;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        FractalPerlinNoise that = (FractalPerlinNoise) o;
+        return Double.compare(amplitude, that.amplitude) == 0
+            && octaves == that.octaves
+            && Double.compare(lacunarity, that.lacunarity) == 0
+            && Double.compare(persistence, that.persistence) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getAmplitude(), getOctaves(), getPersistence(), getLacunarity());
+    }
+
     /**
      * Returns the amplitude of the noise, controlling the range of values for each octave.
      *
@@ -163,6 +186,15 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
     }
 
     /**
+     * Returns the persistence value which determines the amplitude decrease factor between octaves.
+     *
+     * @return the persistence value
+     */
+    public double getPersistence() {
+        return persistence;
+    }
+
+    /**
      * Returns the lacunarity value which determines the frequency increase factor between octaves.
      *
      * @return the lacunarity value
@@ -181,44 +213,12 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
     }
 
     /**
-     * Returns the persistence value which determines the amplitude decrease factor between octaves.
-     *
-     * @return the persistence value
-     */
-    public double getPersistence() {
-        return persistence;
-    }
-
-    /**
      * Sets the persistence value which determines the amplitude decrease factor between octaves.
      *
      * @param persistence the new persistence value
      */
     public void setPersistence(double persistence) {
         this.persistence = persistence;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        FractalPerlinNoise that = (FractalPerlinNoise) o;
-        return Double.compare(amplitude, that.amplitude) == 0
-            && octaves == that.octaves
-            && Double.compare(lacunarity, that.lacunarity) == 0
-            && Double.compare(persistence, that.persistence) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getAmplitude(), getOctaves(), getPersistence(), getLacunarity());
     }
 }
 

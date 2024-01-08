@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -35,6 +36,16 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
     /**
      * Creates a new parameter view.
      *
+     * @param configuration the configuration of this view
+     */
+    public ParameterView(ViewConfiguration<ParameterView> configuration) {
+        this(new GridPane(), configuration);
+    }
+
+
+    /**
+     * Creates a new parameter view.
+     *
      * @param root          the root pane of this view
      * @param configuration the configuration of this view
      */
@@ -44,18 +55,10 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
         config(this);
     }
 
-
-    /**
-     * Creates a new parameter view.
-     *
-     * @param configuration the configuration of this view
-     */
-    public ParameterView(ViewConfiguration<ParameterView> configuration) {
-        super(new GridPane(), configuration);
-    }
-
     @Override
+    @StudentImplementationRequired
     public void initialize() {
+        // TODO H4.2
         parameters.addListener(
             (MapChangeListener.Change<? extends String, ? extends Pair<Label, NumberField>> change) -> {
                 if (change.wasAdded()) {
@@ -66,16 +69,6 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         );
-    }
-
-    /**
-     * Returns {@code true} if this view contains a parameter with the given label.
-     *
-     * @param text the label of the parameter
-     * @return {@code true} if this view contains a parameter with the given label
-     */
-    public boolean contains(String text) {
-        return parameters.containsKey(text);
     }
 
     /**
@@ -90,6 +83,16 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
         }
         Label label = new Label(text);
         parameters.put(text, new Pair<>(label, field));
+    }
+
+    /**
+     * Returns {@code true} if this view contains a parameter with the given label.
+     *
+     * @param text the label of the parameter
+     * @return {@code true} if this view contains a parameter with the given label
+     */
+    public boolean contains(String text) {
+        return parameters.containsKey(text);
     }
 
     /**

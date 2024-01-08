@@ -36,21 +36,30 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      */
 
     private final int height;
-
+    /**
+     * The array of gradient vectors where each vector is associated with a grid cell.
+     */
+    private final Point2D[] gradients;
+    /**
+     * The hash code of this Perlin noise object used for caching.
+     */
+    protected int hashCode = -1;
     /**
      * The frequency of the Perlin noise.
      */
     private double frequency;
 
     /**
-     * The array of gradient vectors where each vector is associated with a grid cell.
+     * Constructs an abstract Perlin noise with the specified noise domain and seed.
+     *
+     * @param width  the width of the noise domain
+     * @param height the height of the noise domain
+     * @param seed   the random seed for generating gradient vectors
+     * @throws IllegalArgumentException if the width or height is negative
      */
-    private final Point2D[] gradients;
-
-    /**
-     * The hash code of this Perlin noise object used for caching.
-     */
-    protected int hashCode = -1;
+    public AbstractPerlinNoise(int width, int height, Random seed) {
+        this(width, height, DEFAULT_FREQUENCY, seed);
+    }
 
     /**
      * Constructs an abstract Perlin noise with the specified noise domain, frequency and seed.
@@ -73,57 +82,6 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         setFrequency(frequency);
         this.seed = seed;
         this.gradients = createGradients(width + 2, height + 2);
-    }
-
-    /**
-     * Constructs an abstract Perlin noise with the specified noise domain and seed.
-     *
-     * @param width  the width of the noise domain
-     * @param height the height of the noise domain
-     * @param seed   the random seed for generating gradient vectors
-     * @throws IllegalArgumentException if the width or height is negative
-     */
-    public AbstractPerlinNoise(int width, int height, Random seed) {
-        this(width, height, DEFAULT_FREQUENCY, seed);
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public double getFrequency() {
-        return frequency;
-    }
-
-    @Override
-    public void setFrequency(double frequency) {
-        if (frequency < 0 || frequency > 1) {
-            throw new IllegalArgumentException("Frequency must be between 0 and 1");
-        }
-        this.frequency = frequency;
-    }
-
-    @Override
-    public Random getSeed() {
-        return seed;
-    }
-
-    /**
-     * Generates a random 2D gradient vector within the unit circle.
-     *
-     * @return a random gradient vector within the unit circle
-     */
-    @StudentImplementationRequired
-    protected Point2D createGradient() {
-        // TODO H1.1
-        return new Point2D(seed.nextDouble(-1, 1), seed.nextDouble(-1, 1));
     }
 
     /**
@@ -160,6 +118,45 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
             gradients[i] = createGradient();
         }
         return gradients;
+    }
+
+    /**
+     * Generates a random 2D gradient vector within the unit circle.
+     *
+     * @return a random gradient vector within the unit circle
+     */
+    @StudentImplementationRequired
+    protected Point2D createGradient() {
+        // TODO H1.1
+        return new Point2D(seed.nextDouble(-1, 1), seed.nextDouble(-1, 1));
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public double getFrequency() {
+        return frequency;
+    }
+
+    @Override
+    public void setFrequency(double frequency) {
+        if (frequency < 0 || frequency > 1) {
+            throw new IllegalArgumentException("Frequency must be between 0 and 1");
+        }
+        this.frequency = frequency;
+    }
+
+    @Override
+    public Random getSeed() {
+        return seed;
     }
 
     @Override

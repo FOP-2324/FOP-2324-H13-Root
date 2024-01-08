@@ -27,19 +27,19 @@ public class DoubleField extends NumberField {
     public static final Pattern ANY = Pattern.compile("-?" + POSITIVE_ONLY.pattern());
 
     /**
+     * Creates a double field that accepts any {@link Double} value.
+     */
+    public DoubleField() {
+        this(ANY);
+    }
+
+    /**
      * Creates a double field with the given pattern.
      *
      * @param pattern The pattern to use for validating the input.
      */
     public DoubleField(Pattern pattern) {
         super(pattern);
-    }
-
-    /**
-     * Creates a double field that accepts any {@link Double} value.
-     */
-    public DoubleField() {
-        this(ANY);
     }
 
     @Override

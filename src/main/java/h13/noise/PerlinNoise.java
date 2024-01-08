@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public interface PerlinNoise extends GradientNoise {
 
-  /**
+    /**
      * Returns an improved version of the specified Perlin noise object.
      *
      * @param noise the Perlin noise object to improve
@@ -108,7 +108,7 @@ public interface PerlinNoise extends GradientNoise {
      */
     double interpolate(double y1, double y2, double alpha);
 
-        /**
+    /**
      * Computes the gradient noise value at the specified noise domain coordinates.
      * It's recommended to multiply the coordinates by the frequency to achieve visible results.
      *

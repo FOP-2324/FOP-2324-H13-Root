@@ -88,29 +88,6 @@ public abstract class AlgorithmViewModel {
     }
 
     /**
-     * Creates an image using the given algorithm and starting position and size.
-     *
-     * @param algorithm the algorithm to use
-     * @param x         the starting x coordinate of the image
-     * @param y         the starting y coordinate of the image
-     * @param w         the width of the image
-     * @param h         the height of the image
-     * @return the created image using the given algorithm and starting position and size
-     */
-    protected Image createImage(PerlinNoise algorithm, int x, int y, int w, int h) {
-        WritableImage image = new WritableImage(w, h);
-        PixelWriter writer = image.getPixelWriter();
-        double[][] noises = algorithm.compute(x, y, w, h);
-        for (int xi = 0; xi < noises.length; xi++) {
-            for (int yi = 0; yi < noises[xi].length; yi++) {
-                Color color = colorMapper.apply(noises[xi][yi]);
-                writer.setColor(xi, yi, color);
-            }
-        }
-        return image;
-    }
-
-    /**
      * Draws the given algorithm on the given graphics context at the given position and size. If the given algorithm
      * is {@code null}, nothing will be drawn. The algorithm will be normalized if it is not already normalized.
      *
@@ -122,6 +99,7 @@ public abstract class AlgorithmViewModel {
      * @param h         the height of the image
      */
     public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
+        // TODO H5.2
         if (algorithm == null) {
             return;
         }
@@ -137,35 +115,6 @@ public abstract class AlgorithmViewModel {
                 return null;
             },
             "Illegal parameter(s)",
-            Throwable::getMessage
-        );
-    }
-
-    /**
-     * Saves the last drawn image to a file.
-     *
-     * @param width  the width of the image
-     * @param height the height of the image
-     */
-    public void save(int width, int height) {
-        if (lastAlgorithm == null) {
-            return;
-        }
-        run(() -> {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.getExtensionFilters()
-                    .add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png"));
-                File file = fileChooser.showSaveDialog(null);
-                if (file != null) {
-                    // Allows saving with a transparent background
-                    SnapshotParameters parameters = new SnapshotParameters();
-                    parameters.setFill(Color.TRANSPARENT);
-                    Image image = createImage(lastAlgorithm, 0, 0, width, height);
-                    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-                }
-                return null;
-            },
-            "Error saving image",
             Throwable::getMessage
         );
     }
@@ -189,5 +138,59 @@ public abstract class AlgorithmViewModel {
             alert.showAndWait();
             return null;
         }
+    }
+
+    /**
+     * Creates an image using the given algorithm and starting position and size.
+     *
+     * @param algorithm the algorithm to use
+     * @param x         the starting x coordinate of the image
+     * @param y         the starting y coordinate of the image
+     * @param w         the width of the image
+     * @param h         the height of the image
+     * @return the created image using the given algorithm and starting position and size
+     */
+    protected Image createImage(PerlinNoise algorithm, int x, int y, int w, int h) {
+        // TODO H5.1
+        WritableImage image = new WritableImage(w, h);
+        PixelWriter writer = image.getPixelWriter();
+        double[][] noises = algorithm.compute(x, y, w, h);
+        for (int xi = 0; xi < noises.length; xi++) {
+            for (int yi = 0; yi < noises[xi].length; yi++) {
+                Color color = colorMapper.apply(noises[xi][yi]);
+                writer.setColor(xi, yi, color);
+            }
+        }
+        return image;
+    }
+
+    /**
+     * Saves the last drawn image to a file.
+     *
+     * @param width  the width of the image
+     * @param height the height of the image
+     */
+    public void save(int width, int height) {
+        // TODO H5.3
+        if (lastAlgorithm == null) {
+            return;
+        }
+        run(() -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters()
+                    .add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png"));
+                File file = fileChooser.showSaveDialog(null);
+                if (file != null) {
+                    // Allows saving with a transparent background
+                    SnapshotParameters parameters = new SnapshotParameters();
+                    parameters.setFill(Color.TRANSPARENT);
+                    Image image = createImage(lastAlgorithm, 0, 0, width, height);
+                    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                }
+                return null;
+            },
+            "Error saving image",
+            Throwable::getMessage
+        );
     }
 }

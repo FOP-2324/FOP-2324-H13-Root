@@ -26,6 +26,15 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     /**
      * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
      *
+     * @param noise the underlying Perlin noise object
+     */
+    public ImprovedPerlinNoise(PerlinNoise noise) {
+        this(noise, createPermutation(noise.getSeed()));
+    }
+
+    /**
+     * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
+     *
      * @param noise            the underlying Perlin noise object
      * @param permutationTable the permutation array used for accessing the gradient vectors
      * @throws IllegalArgumentException if the permutation array does not have the size {@value #PERMUTATION_SIZE} * 2
@@ -36,15 +45,6 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
             throw new IllegalArgumentException("The permutation array must have the size %d * 2.".formatted(PERMUTATION_SIZE));
         }
         this.permutationTable = permutationTable;
-    }
-
-    /**
-     * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
-     *
-     * @param noise the underlying Perlin noise object
-     */
-    public ImprovedPerlinNoise(PerlinNoise noise) {
-        this(noise, createPermutation(noise.getSeed()));
     }
 
     /**
