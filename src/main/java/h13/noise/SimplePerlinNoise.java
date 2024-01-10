@@ -87,15 +87,15 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     /**
      * Performs linear interpolation between two values.
      *
-     * @param a     The first value.
-     * @param b     The second value.
+     * @param x1     The first value.
+     * @param x2     The second value.
      * @param alpha The interpolation factor, typically in the range [0, 1].
      * @return the interpolated value
      */
     @Override
     @StudentImplementationRequired
-    public double interpolate(double a, double b, double alpha) {
+    public double interpolate(double x1, double x2, double alpha) {
         // TODO H1.2
-        return a + alpha * (b - a);
+        return x1 + alpha * (x2 - x1);
     }
 }
