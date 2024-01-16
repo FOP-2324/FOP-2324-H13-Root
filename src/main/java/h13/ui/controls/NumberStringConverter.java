@@ -1,6 +1,7 @@
 package h13.ui.controls;
 
 import javafx.util.StringConverter;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.function.Function;
 
@@ -34,12 +35,16 @@ public class NumberStringConverter extends StringConverter<Number> {
     }
 
     @Override
+    @StudentImplementationRequired
     public String toString(Number value) {
+        // TODO H3.1
         return value == null ? "" : stringifier.apply(value);
     }
 
     @Override
+    @StudentImplementationRequired
     public Number fromString(String value) {
+        // TODO H3.1
         if (value == null) {
             return null;
         }

@@ -171,7 +171,6 @@ public abstract class AlgorithmViewModel {
      * @param height the height of the image
      */
     public void save(int width, int height) {
-        // TODO H5.3
         if (lastAlgorithm == null) {
             return;
         }
