@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.jagr)
     alias(libs.plugins.algomate)
     alias(libs.plugins.style)
     alias(libs.plugins.javafxplugin)
@@ -20,6 +21,20 @@ submission {
 
     // Optionally require own tests for mainBuildSubmission task. Default is false
     requireTests = false
+}
+
+configurations.all {
+    resolutionStrategy {
+        configurations.all {
+            resolutionStrategy {
+                force(
+                    libs.algoutils.student,
+                    libs.algoutils.tutor,
+                    libs.junit.pioneer,
+                )
+            }
+        }
+    }
 }
 
 javafx {
