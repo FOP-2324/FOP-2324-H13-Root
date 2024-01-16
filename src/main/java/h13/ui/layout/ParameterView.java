@@ -42,7 +42,6 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
         this(new GridPane(), configuration);
     }
 
-
     /**
      * Creates a new parameter view.
      *
@@ -64,9 +63,11 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
                 if (change.wasAdded()) {
                     var fields = change.getValueAdded();
                     root.addRow(nextRow++, fields.getKey(), fields.getValue());
-                    return;
+                } else if (change.wasRemoved()) {
+                    var fields = change.getValueRemoved();
+                    root.getChildren().removeAll(fields.getKey(), fields.getValue());
+                    nextRow--;
                 }
-                throw new UnsupportedOperationException("Not supported yet.");
             }
         );
     }

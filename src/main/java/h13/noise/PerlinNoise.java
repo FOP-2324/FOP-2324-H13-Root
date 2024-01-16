@@ -18,6 +18,17 @@ public interface PerlinNoise extends GradientNoise {
     /**
      * Returns an improved version of the specified Perlin noise object.
      *
+     * @param noise            the Perlin noise object to improve
+     * @param permutationTable the permutation table used to improve the Perlin noise
+     * @return an improved version of the specified Perlin noise object
+     */
+    static PerlinNoise improved(PerlinNoise noise, int[] permutationTable) {
+        return new ImprovedPerlinNoise(noise, permutationTable);
+    }
+
+    /**
+     * Returns an improved version of the specified Perlin noise object.
+     *
      * @param noise the Perlin noise object to improve
      * @return an improved version of the specified Perlin noise object
      */
