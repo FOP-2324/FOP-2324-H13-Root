@@ -99,7 +99,7 @@ public abstract class AlgorithmViewModel {
      * @param h         the height of the image
      */
     public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
-        // TODO H5.2
+        // TODO H5.1
         if (algorithm == null) {
             return;
         }
