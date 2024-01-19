@@ -85,13 +85,13 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
     /**
      * Returns the permutation table for the improved Perlin noise algorithm.
      *
-     * @param seed the seed to use
+     * @param randomGenerator the random generator used to generate the permutation array
      * @return the permutation table for the improved Perlin noise algorithm
      */
-    private int[] getPermutationTable(Random seed) {
+    private int[] getPermutationTable(Random randomGenerator) {
         int[] otherHalf = IntStream.range(0, PERMUTATION_TABLE.length).toArray();
         for (int i = 0; i < otherHalf.length; i++) {
-            int j = seed.nextInt(otherHalf.length);
+            int j = randomGenerator.nextInt(otherHalf.length);
             int temp = otherHalf[i];
             otherHalf[i] = otherHalf[j];
             otherHalf[j] = temp;

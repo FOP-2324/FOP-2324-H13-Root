@@ -29,7 +29,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      * @param noise the underlying Perlin noise object
      */
     public ImprovedPerlinNoise(PerlinNoise noise) {
-        this(noise, createPermutation(noise.getSeed()));
+        this(noise, createPermutation(noise.getRandomGenerator()));
     }
 
     /**
@@ -40,7 +40,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      * @throws IllegalArgumentException if the permutation array does not have the size {@value #PERMUTATION_SIZE} * 2
      */
     public ImprovedPerlinNoise(PerlinNoise noise, int[] permutationTable) {
-        super(noise.getWidth(), noise.getHeight(), noise.getFrequency(), noise.getSeed());
+        super(noise.getWidth(), noise.getHeight(), noise.getFrequency(), noise.getRandomGenerator());
         if (permutationTable.length != PERMUTATION_SIZE * 2) {
             throw new IllegalArgumentException("The permutation array must have the size %d * 2.".formatted(PERMUTATION_SIZE));
         }
@@ -53,17 +53,18 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      * {@value #PERMUTATION_SIZE} elements are the same as the first {@value #PERMUTATION_SIZE} elements but ordered in
      * ascending order.
      *
+     * @param randomGenerator the random generator used for generating the permutation array
      * @return the permutation array
      */
     @StudentImplementationRequired
-    private static int[] createPermutation(Random seed) {
+    private static int[] createPermutation(Random randomGenerator) {
         // TODO H2.1
         int[] permutation = new int[PERMUTATION_SIZE * 2];
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
             permutation[i] = permutation[i + PERMUTATION_SIZE] = i;
         }
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
-            int j = seed.nextInt(0, PERMUTATION_SIZE);
+            int j = randomGenerator.nextInt(0, PERMUTATION_SIZE);
             int temp = permutation[i + PERMUTATION_SIZE];
             permutation[i + PERMUTATION_SIZE] = permutation[j + PERMUTATION_SIZE];
             permutation[j + PERMUTATION_SIZE] = temp;

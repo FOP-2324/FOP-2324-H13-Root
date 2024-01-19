@@ -53,9 +53,9 @@ public abstract class DelegationPerlinNoise implements PerlinNoise {
 
     @Override
     @StudentImplementationRequired
-    public Random getSeed() {
+    public Random getRandomGenerator() {
         // TODO H2.2
-        return underlying.getSeed();
+        return underlying.getRandomGenerator();
     }
 
     @Override

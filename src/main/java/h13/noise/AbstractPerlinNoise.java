@@ -22,9 +22,9 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     public static final double DEFAULT_FREQUENCY = 0.005;
 
     /**
-     * The random seed used for generating gradient vectors.
+     * The random generator used for generating gradient vectors.
      */
-    private final Random seed;
+    private final Random randomGenerator;
 
     /**
      * The width of the noise domain.
@@ -50,27 +50,27 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     private double frequency;
 
     /**
-     * Constructs an abstract Perlin noise with the specified noise domain and seed.
+     * Constructs an abstract Perlin noise with the specified noise domain and randomGenerator.
      *
-     * @param width  the width of the noise domain
-     * @param height the height of the noise domain
-     * @param seed   the random seed for generating gradient vectors
+     * @param width           the width of the noise domain
+     * @param height          the height of the noise domain
+     * @param randomGenerator the random generator used for generating gradient vectors
      * @throws IllegalArgumentException if the width or height is negative
      */
-    public AbstractPerlinNoise(int width, int height, Random seed) {
-        this(width, height, DEFAULT_FREQUENCY, seed);
+    public AbstractPerlinNoise(int width, int height, Random randomGenerator) {
+        this(width, height, DEFAULT_FREQUENCY, randomGenerator);
     }
 
     /**
-     * Constructs an abstract Perlin noise with the specified noise domain, frequency and seed.
+     * Constructs an abstract Perlin noise with the specified noise domain, frequency and randomGenerator.
      *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param frequency the frequency of the Perlin noise
-     * @param seed      the random seed for generating gradient vectors
+     * @param width           the width of the noise domain
+     * @param height          the height of the noise domain
+     * @param frequency       the frequency of the Perlin noise
+     * @param randomGenerator the random generator used for generating gradient vectors
      * @throws IllegalArgumentException if the width or height is negative, or if the frequency is not between 0 and 1
      */
-    public AbstractPerlinNoise(int width, int height, double frequency, Random seed) {
+    public AbstractPerlinNoise(int width, int height, double frequency, Random randomGenerator) {
         if (width < 0) {
             throw new IllegalArgumentException("Width cannot be negative");
         }
@@ -80,13 +80,13 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         }
         this.height = height;
         setFrequency(frequency);
-        this.seed = seed;
+        this.randomGenerator = randomGenerator;
         this.gradients = createGradients(width + 2, height + 2);
     }
 
     /**
      * Generates an array of random 2D gradient vectors with dimensions wrapping around on the noise dimension, which
-     * means that the width and height of the gradient array is two units larger than the noise domain.
+     * means that the width and height of the gradient domain is two units larger than the noise domain.
      *
      * <p>Each point in the noise domain is associated with four corner gradient vectors.
      *
@@ -106,8 +106,8 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
      *
      * }</pre>
      *
-     * @param width  The width of the gradient array, which determines the horizontal dimension of the noise domain.
-     * @param height The height of the gradient array, which determines the vertical dimension of the noise domain.
+     * @param width  the width of the gradient domain, which determines the horizontal dimension of the noise domain.
+     * @param height the height of the gradient domain, which determines the vertical dimension of the noise domain.
      * @return random 2D gradient vectors with dimensions wrapping around on the noise dimension
      */
     @StudentImplementationRequired
@@ -128,7 +128,7 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @StudentImplementationRequired
     protected Point2D createGradient() {
         // TODO H1.1
-        return new Point2D(seed.nextDouble(-1, 1), seed.nextDouble(-1, 1));
+        return new Point2D(randomGenerator.nextDouble(-1, 1), randomGenerator.nextDouble(-1, 1));
     }
 
     @Override
@@ -155,8 +155,8 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     }
 
     @Override
-    public Random getSeed() {
-        return seed;
+    public Random getRandomGenerator() {
+        return randomGenerator;
     }
 
     @Override

@@ -48,17 +48,17 @@ public interface PerlinNoise extends GradientNoise {
     }
 
     /**
-     * Returns the seed used by this Perlin noise object.
+     * Returns the random generator used by this Perlin noise object.
      *
-     * @return the seed used by this Perlin noise object
+     * @return the random generator used by this Perlin noise object.
      */
-    Random getSeed();
+    Random getRandomGenerator();
 
     /**
      * Returns the gradient vectors associated with the specified noise domain coordinates. Since the gradient vectors
      * wrap around the noise domain.
      *
-     * <p>Visual representation of the gradients of a noise point (x,y):
+     * <p>Visual representation of a noise point (x, y) with its gradients:
      * <pre>{@code
      * (x0, y1)          (x1, y1)
      *          ---------
@@ -72,9 +72,9 @@ public interface PerlinNoise extends GradientNoise {
     Point2D[] getGradients();
 
     /**
-     * Returns the gradient vector associated with the specified noise domain coordinates. Since the gradient vectors
+     * Returns the gradient vector associated with the specified gradient domain coordinates. Since the gradient vectors
      * wrap around the noise domain, the starting point of the gradient domain is at (0, 0) and the ending point
-     * is at (width + 1, height + 1) of the noise domain.
+     * is at (width + 1, height + 1).
      *
      * @param x the x coordinate of the gradient domain
      * @param y the y coordinate of the gradient domain

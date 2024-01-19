@@ -15,24 +15,24 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     /**
      * Constructs a simple Perlin noise object with the specified noise domain width, height, frequency and seed.
      *
-     * @param width     the width of the noise domain
-     * @param height    the height of the noise domain
-     * @param frequency the frequency of the Perlin noise
-     * @param seed      the random seed for generating gradient vectors
+     * @param width           the width of the noise domain
+     * @param height          the height of the noise domain
+     * @param frequency       the frequency of the Perlin noise
+     * @param randomGenerator the random generator used for generating gradient vectors
      */
-    public SimplePerlinNoise(int width, int height, double frequency, Random seed) {
-        super(width, height, frequency, seed);
+    public SimplePerlinNoise(int width, int height, double frequency, Random randomGenerator) {
+        super(width, height, frequency, randomGenerator);
     }
 
     /**
      * Constructs a simple Perlin noise object with the specified noise domain width, height and seed.
      *
-     * @param width  the width of the noise domain
-     * @param height the height of the noise domain
-     * @param seed   the random seed for generating gradient vectors
+     * @param width           the width of the noise domain
+     * @param height          the height of the noise domain
+     * @param randomGenerator the random generator used for generating gradient vectors
      */
-    public SimplePerlinNoise(int width, int height, Random seed) {
-        super(width, height, seed);
+    public SimplePerlinNoise(int width, int height, Random randomGenerator) {
+        super(width, height, randomGenerator);
     }
 
     @Override
@@ -87,8 +87,8 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
     /**
      * Performs linear interpolation between two values.
      *
-     * @param y1     The first value.
-     * @param y2     The second value.
+     * @param y1    The first value.
+     * @param y2    The second value.
      * @param alpha The interpolation factor, typically in the range [0, 1].
      * @return the interpolated value
      */
