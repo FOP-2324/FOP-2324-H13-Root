@@ -95,9 +95,9 @@ public abstract class DelegationPerlinNoise implements PerlinNoise {
 
     @Override
     @StudentImplementationRequired
-    public double interpolate(double y1, double y2, double alpha) {
+    public double interpolate(double x1, double x2, double alpha) {
         // TODO H2.2
-        return underlying.interpolate(y1, y2, alpha);
+        return underlying.interpolate(x1, x2, alpha);
     }
 
     @Override

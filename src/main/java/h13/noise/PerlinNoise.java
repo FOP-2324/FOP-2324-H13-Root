@@ -112,12 +112,12 @@ public interface PerlinNoise extends GradientNoise {
      * Performs an interpolation between two values based on a given alpha (weight) value which is typically in the
      * range [0, 1].
      *
-     * @param y1    The first value.
-     * @param y2    The second value.
+     * @param x1    The first value.
+     * @param x2    The second value.
      * @param alpha The interpolation factor, typically in the range [0, 1].
-     * @return the interpolated value between y1 and y2.
+     * @return the interpolated value between x1 and x2.
      */
-    double interpolate(double y1, double y2, double alpha);
+    double interpolate(double x1, double x2, double alpha);
 
     /**
      * Computes the gradient noise value at the specified noise domain coordinates.
