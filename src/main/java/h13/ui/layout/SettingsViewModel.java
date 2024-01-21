@@ -20,22 +20,25 @@ public class SettingsViewModel {
     /**
      * The options that can be selected.
      */
-    private final Map<String, BooleanProperty> options;
+    private final Map<String, BooleanProperty> algorithmsOptions;
 
     /**
      * The parameters that can be visible.
      */
-    private final Map<String, BooleanProperty> parameters;
+    private final Map<String, BooleanProperty> availableParameters;
 
     /**
      * Creates a new view model with the given options and parameters.
      *
-     * @param options    the options that can be selected
-     * @param parameters the parameters that can be visible
+     * @param algorithmsOptions   the options that can be selected
+     * @param availableParameters the parameters that can be visible
      */
-    public SettingsViewModel(Map<String, BooleanProperty> options, Map<String, BooleanProperty> parameters) {
-        this.options = options;
-        this.parameters = parameters;
+    public SettingsViewModel(
+        Map<String, BooleanProperty> algorithmsOptions,
+        Map<String, BooleanProperty> availableParameters
+    ) {
+        this.algorithmsOptions = algorithmsOptions;
+        this.availableParameters = availableParameters;
     }
 
     /**
@@ -46,9 +49,9 @@ public class SettingsViewModel {
     @StudentImplementationRequired
     public void addVisibilityListener(Map<String, Set<String>> configurations) {
         // TODO H4.3
-        Map<String, BooleanBinding> visibilities = new HashMap<>(parameters.size());
+        Map<String, BooleanBinding> visibilities = new HashMap<>(availableParameters.size());
         // Create state binding for parameters when an option is selected, the binding is true
-        for (var parameter : parameters.entrySet()) {
+        for (var parameter : availableParameters.entrySet()) {
             String parameterName = parameter.getKey();
             BooleanBinding current = visibilities.computeIfAbsent(
                 parameterName,
@@ -59,7 +62,7 @@ public class SettingsViewModel {
             );
             for (Map.Entry<String, Set<String>> option : configurations.entrySet()) {
                 String optionName = option.getKey();
-                BooleanProperty state = options.get(optionName);
+                BooleanProperty state = algorithmsOptions.get(optionName);
                 Set<String> visibleParameters = option.getValue();
                 // Selected options are visible
                 if (visibleParameters.contains(parameterName)) {
@@ -73,7 +76,7 @@ public class SettingsViewModel {
         for (var visibility : visibilities.entrySet()) {
             String parameterName = visibility.getKey();
             BooleanBinding visible = visibility.getValue();
-            BooleanProperty fields = parameters.get(parameterName);
+            BooleanProperty fields = availableParameters.get(parameterName);
             fields.bind(visible.not());
         }
     }
