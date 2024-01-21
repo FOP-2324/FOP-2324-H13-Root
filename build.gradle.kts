@@ -38,7 +38,7 @@ configurations.all {
 }
 
 javafx {
-    version = "17.0.1"
+    version = libs.versions.javafx.get()
     modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
 }
 
