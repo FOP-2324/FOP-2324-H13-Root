@@ -46,11 +46,15 @@ jagr {
     graders {
         val graderPublic by getting {
             graderName.set("H13-Public")
-            rubricProviderName.set("h13.H13_RubricProvider")
+            rubricProviderName.set("h13.H13_RubricProviderPublic")
+            configureDependencies {
+                implementation(libs.bundles.testfx)
+            }
         }
         val graderPrivate by creating {
             parent(graderPublic)
             graderName.set("H13-Private")
+             rubricProviderName.set("h13.H13_RubricProviderPrivate")
         }
     }
 }
