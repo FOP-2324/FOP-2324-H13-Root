@@ -109,7 +109,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
             () -> {
                 // Simple algorithm will always be used
                 Property<Number> seed = getParameter(Parameter.SEED);
-                Long seedValue = seed.getValue().longValue();
+                long seedValue = seed.getValue().longValue();
                 double frequency = getParameter(Parameter.FREQUENCY).getValue().doubleValue();
                 Random random = new Random(seedValue);
                 PerlinNoise algorithm = cacheSimpleNoise.computeIfAbsent(seedValue, k -> {
@@ -122,8 +122,8 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
                     );
                 });
 
-                // CCheck if the improved algorithm is enabled.
-                if (getOption(Algorithm.IMPROVED).getValue()) {
+                // Check if the improved algorithm is enabled.
+                if (getAlgorithm(Algorithm.IMPROVED).getValue()) {
                     PerlinNoise tmp = algorithm;
                     algorithm = cacheImprovedNoise.computeIfAbsent(
                         algorithm,
@@ -132,7 +132,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
                 }
 
                 // Check if the fractal algorithm is enabled.
-                if (getOption(Algorithm.FRACTAL).getValue()) {
+                if (getAlgorithm(Algorithm.FRACTAL).getValue()) {
                     algorithm = new FractalPerlinNoise(
                         algorithm,
                         getParameter(Parameter.AMPLITUDE).getValue().doubleValue(),
@@ -174,7 +174,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
      * @param algorithm the algorithm to get the boolean property to
      * @return the boolean property to the given algorithm
      */
-    private BooleanProperty getOption(Algorithm algorithm) {
+    private BooleanProperty getAlgorithm(Algorithm algorithm) {
         return options.get(algorithm.toString());
     }
 }
