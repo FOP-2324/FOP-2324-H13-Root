@@ -56,25 +56,25 @@ public class SimplePerlinNoise extends AbstractPerlinNoise implements PerlinNois
         double dy = y - y0;
 
         // Get gradient vectors at four corners of the cell
-        Point2D gradient00 = getGradient(x0, y0);
-        Point2D gradient01 = getGradient(x0, y1);
-        Point2D gradient10 = getGradient(x1, y0);
-        Point2D gradient11 = getGradient(x1, y1);
+        Point2D g00 = getGradient(x0, y0);
+        Point2D g01 = getGradient(x0, y1);
+        Point2D g10 = getGradient(x1, y0);
+        Point2D g11 = getGradient(x1, y1);
 
         // Compute dot products between gradient vectors and offset vectors
-        double dot00 = gradient00.dotProduct(dx, dy);
-        double dot01 = gradient01.dotProduct(dx, dy - 1);
-        double dot10 = gradient10.dotProduct(dx - 1, dy);
-        double dot11 = gradient11.dotProduct(dx - 1, dy - 1);
+        double s00 = g00.dotProduct(dx, dy);
+        double s01 = g01.dotProduct(dx, dy - 1);
+        double s10 = g10.dotProduct(dx - 1, dy);
+        double s11 = g11.dotProduct(dx - 1, dy - 1);
 
         // Compute weights for x and y-axis
-        double u = fade(dx);
-        double v = fade(dy);
+        double fdx = fade(dx);
+        double fdy = fade(dy);
 
-        double interpolateX0 = interpolate(dot00, dot10, u);
-        double interpolateX1 = interpolate(dot01, dot11, u);
+        double lx0 = interpolate(s00, s10, fdx);
+        double lx1 = interpolate(s01, s11, fdx);
 
-        return interpolate(interpolateX0, interpolateX1, v);
+        return interpolate(lx0, lx1, fdy);
     }
 
     @Override

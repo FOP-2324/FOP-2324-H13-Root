@@ -19,7 +19,7 @@ import java.util.Objects;
  * @author Nhan Huynh
  * @see PerlinNoise
  */
-public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinNoise {
+public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoise {
 
     /**
      * The default amplitude to use for the noise.
@@ -116,7 +116,7 @@ public class FractalPerlinNoise extends DelegationPerlinNoise implements PerlinN
 
         // Combine noise values from multiple octaves
         for (int i = 0; i < octaves; i++) {
-            totalNoise += underlying.compute(x * f, y * f) * a;
+            totalNoise += delegate.compute(x * f, y * f) * a;
             // Increase frequency for the next octave
             f *= lacunarity;
             // Adjust amplitude for the next octave

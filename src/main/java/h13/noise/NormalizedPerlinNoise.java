@@ -15,7 +15,7 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
  * @author Nhan Huynh
  * @see PerlinNoise
  */
-public class NormalizedPerlinNoise extends DelegationPerlinNoise implements PerlinNoise {
+public class NormalizedPerlinNoise extends DelegatePerlinNoise implements PerlinNoise {
 
     /**
      * Constructs a normalized Perlin object that normalizes the specified Perlin noise object.
@@ -30,13 +30,13 @@ public class NormalizedPerlinNoise extends DelegationPerlinNoise implements Perl
     @StudentImplementationRequired
     public double compute(int x, int y) {
         // TODO H2.3
-        return (underlying.compute(x, y) + 1) / 2;
+        return (delegate.compute(x, y) + 1) / 2;
     }
 
     @Override
     @StudentImplementationRequired
     public double compute(double x, double y) {
         // TODO H2.3
-        return (underlying.compute(x, y) + 1) / 2;
+        return (delegate.compute(x, y) + 1) / 2;
     }
 }

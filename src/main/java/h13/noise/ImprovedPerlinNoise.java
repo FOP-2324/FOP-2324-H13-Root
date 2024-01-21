@@ -21,7 +21,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     /**
      * The permutation array used for accessing the gradient vectors.
      */
-    private final int[] permutationTable;
+    private final int[] p;
 
     /**
      * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
@@ -36,15 +36,15 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      * Constructs an improved Perlin noise with wrapping the underlying Perlin noise object.
      *
      * @param noise            the underlying Perlin noise object
-     * @param permutationTable the permutation array used for accessing the gradient vectors
+     * @param p the permutation array used for accessing the gradient vectors
      * @throws IllegalArgumentException if the permutation array does not have the size {@value #PERMUTATION_SIZE} * 2
      */
-    public ImprovedPerlinNoise(PerlinNoise noise, int[] permutationTable) {
+    public ImprovedPerlinNoise(PerlinNoise noise, int[] p) {
         super(noise.getWidth(), noise.getHeight(), noise.getFrequency(), noise.getRandomGenerator());
-        if (permutationTable.length != PERMUTATION_SIZE * 2) {
+        if (p.length != PERMUTATION_SIZE * 2) {
             throw new IllegalArgumentException("The permutation array must have the size %d * 2.".formatted(PERMUTATION_SIZE));
         }
-        this.permutationTable = permutationTable;
+        this.p = p;
     }
 
     /**
@@ -59,17 +59,17 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     @StudentImplementationRequired
     private static int[] createPermutation(Random randomGenerator) {
         // TODO H2.1
-        int[] permutation = new int[PERMUTATION_SIZE * 2];
+        int[] p = new int[PERMUTATION_SIZE * 2];
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
-            permutation[i] = permutation[i + PERMUTATION_SIZE] = i;
+            p[i] = p[i + PERMUTATION_SIZE] = i;
         }
         for (int i = 0; i < PERMUTATION_SIZE; i++) {
             int j = randomGenerator.nextInt(0, PERMUTATION_SIZE);
-            int temp = permutation[i + PERMUTATION_SIZE];
-            permutation[i + PERMUTATION_SIZE] = permutation[j + PERMUTATION_SIZE];
-            permutation[j + PERMUTATION_SIZE] = temp;
+            int temp = p[i + PERMUTATION_SIZE];
+            p[i + PERMUTATION_SIZE] = p[j + PERMUTATION_SIZE];
+            p[j + PERMUTATION_SIZE] = temp;
         }
-        return permutation;
+        return p;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
     public Point2D getGradient(int x, int y) {
         // TODO H2.1
         // Formula: p[x + p[y & (n - 1)] & (n - 1)]
-        int index = permutationTable[(x + permutationTable[y & (PERMUTATION_SIZE - 1)]) & (PERMUTATION_SIZE - 1)];
+        int index = p[(x + p[y & (PERMUTATION_SIZE - 1)]) & (PERMUTATION_SIZE - 1)];
         return getGradients()[index];
     }
 
@@ -86,8 +86,8 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
      *
      * @return the permutation array used for accessing the gradient vectors
      */
-    public int[] getPermutationTable() {
-        return permutationTable;
+    public int[] getP() {
+        return p;
     }
 
     @Override
@@ -102,13 +102,13 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
             return false;
         }
         var that = (ImprovedPerlinNoise) o;
-        return Arrays.equals(permutationTable, that.permutationTable);
+        return Arrays.equals(p, that.p);
     }
 
     @Override
     public int hashCode() {
         if (hashCode == -1) {
-            hashCode = 31 * super.hashCode() + Arrays.hashCode(permutationTable);
+            hashCode = 31 * super.hashCode() + Arrays.hashCode(p);
         }
         return hashCode;
     }
