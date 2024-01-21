@@ -21,7 +21,7 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
     /**
      * The options of the view.
      */
-    private final Pair<Label, ChooserView> options;
+    private final Pair<Label, ChooserView> algorithms;
 
     /**
      * The parameters of the view.
@@ -57,18 +57,18 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
      * Creates a setting view with the given options and parameters and configurations specifying when a parameter is
      * visible.
      *
-     * @param options       the view for choosing the options
+     * @param algorithms       the view for choosing the options
      * @param parameters    the view for showing the parameters
      * @param visibilities  the configurations specifying when a parameter is visible
      * @param configuration the configuration of the view
      */
     public SettingsView(
-        Pair<String, ChooserView> options,
+        Pair<String, ChooserView> algorithms,
         Pair<String, ParameterView> parameters,
         Map<String, Set<String>> visibilities,
         ViewConfiguration<SettingsView> configuration
     ) {
-        this(new VBox(), options, parameters, visibilities, configuration);
+        this(new VBox(), algorithms, parameters, visibilities, configuration);
     }
 
     /**
@@ -76,25 +76,25 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
      * visible.
      *
      * @param root          the root of the view
-     * @param options       the view for choosing the options
+     * @param algorithms       the view for choosing the options
      * @param parameters    the view for showing the parameters
      * @param visibilities  the configurations specifying when a parameter is visible
      * @param configuration the configuration of the view
      */
     public SettingsView(
         VBox root,
-        Pair<String, ChooserView> options,
+        Pair<String, ChooserView> algorithms,
         Pair<String, ParameterView> parameters,
         Map<String, Set<String>> visibilities,
         ViewConfiguration<SettingsView> configuration
     ) {
         super(root, configuration);
-        this.options = new Pair<>(new Label(options.getKey()), options.getValue());
+        this.algorithms = new Pair<>(new Label(algorithms.getKey()), algorithms.getValue());
         this.parameters = new Pair<>(new Label(parameters.getKey()), parameters.getValue());
         this.generate = new Button("Generate");
         this.save = new Button("Save");
         this.viewModel = new SettingsViewModel(
-            options.getValue().selectedProperties(),
+            algorithms.getValue().selectedProperties(),
             parameters.getValue().disableProperties()
         );
         this.visibilities = visibilities;
@@ -107,7 +107,7 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
     public void initialize() {
         // TODO H4.4
         root.getChildren().addAll(
-            options.getKey(), options.getValue().getView(),
+            algorithms.getKey(), algorithms.getValue().getView(),
             parameters.getKey(), parameters.getValue().getView(),
             buttonGroup
         );
@@ -120,8 +120,8 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
      *
      * @return the options of the view
      */
-    public Pair<Label, ChooserView> getOptions() {
-        return options;
+    public Pair<Label, ChooserView> getAlgorithms() {
+        return algorithms;
     }
 
     /**
@@ -166,7 +166,7 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
      * @param font the font to use
      */
     public void setHeaderFont(Font font) {
-        for (Label label : new Label[]{options.getKey(), parameters.getKey()}) {
+        for (Label label : new Label[]{algorithms.getKey(), parameters.getKey()}) {
             label.setFont(font);
         }
     }

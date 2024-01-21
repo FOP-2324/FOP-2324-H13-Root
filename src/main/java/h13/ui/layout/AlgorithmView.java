@@ -49,7 +49,7 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
         this.visualization = new Canvas();
         this.settings = settings;
         this.viewModel = factory.apply(
-            settings.getOptions().getValue().selectedProperties(),
+            settings.getAlgorithms().getValue().selectedProperties(),
             settings.getParameters().getValue().valueProperties()
         );
 
