@@ -96,7 +96,7 @@ public class PerlinNoiseApp extends Application {
         });
         for (Parameter parameter : Parameter.values()) {
             var field = switch (parameter) {
-                case SEED -> new LongField(LongField.POSITIVE_ONLY);
+                case SEED -> new LongField(LongField.ANY);
                 case OCTAVES -> new IntegerField(IntegerField.POSITIVE_ONLY);
                 default -> new DoubleField(DoubleField.POSITIVE_ONLY);
             };

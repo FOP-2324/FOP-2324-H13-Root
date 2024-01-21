@@ -96,7 +96,6 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
             otherHalf[i] = otherHalf[j];
             otherHalf[j] = temp;
         }
-        System.out.println(PERMUTATION_TABLE.length);
         int[] p = new int[PERMUTATION_TABLE.length * 2];
         System.arraycopy(PERMUTATION_TABLE, 0, p, 0, PERMUTATION_TABLE.length);
         System.arraycopy(otherHalf, 0, p, PERMUTATION_TABLE.length, otherHalf.length);
