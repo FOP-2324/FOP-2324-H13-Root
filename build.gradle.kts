@@ -1,64 +1,56 @@
 plugins {
-    java
-    application
+    alias(libs.plugins.jagr)
+    alias(libs.plugins.algomate)
     alias(libs.plugins.style)
-    alias(libs.plugins.jagr.gradle)
+    alias(libs.plugins.javafxplugin)
 }
 
 version = file("version").readLines().first()
 
-jagr {
+exercise {
     assignmentId.set("h13")
-    submissions {
-        val main by creating {
-            studentId.set("ab12cdef")
-            firstName.set("sol_first")
-            lastName.set("sol_last")
+}
+
+submission {
+    // ACHTUNG!
+    // Setzen Sie im folgenden Bereich Ihre TU-ID (NICHT Ihre Matrikelnummer!), Ihren Nachnamen und Ihren Vornamen
+    // in Anführungszeichen (z.B. "ab12cdef" für Ihre TU-ID) ein!
+    studentId = "ab12cdef"
+    firstName = "sol_first"
+    lastName = "sol_last"
+
+    // Optionally require own tests for mainBuildSubmission task. Default is false
+    requireTests = false
+}
+
+configurations.all {
+    resolutionStrategy {
+        configurations.all {
+            resolutionStrategy {
+                force(
+                    libs.algoutils.student,
+                    libs.algoutils.tutor,
+                    libs.junit.pioneer,
+                )
+            }
         }
     }
+}
+
+javafx {
+    version = libs.versions.javafx.get()
+    modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
+}
+
+jagr {
     graders {
-        val graderPublic by creating {
+        val graderPublic by getting {
             graderName.set("H13-Public")
             rubricProviderName.set("h13.H13_RubricProvider")
-            configureDependencies {
-                implementation(libs.algoutils.tutor)
-            }
         }
         val graderPrivate by creating {
             parent(graderPublic)
             graderName.set("H13-Private")
         }
-    }
-}
-
-dependencies {
-    implementation(libs.annotations)
-    implementation(libs.algoutils.student)
-    testImplementation(libs.junit.core)
-}
-
-application {
-    mainClass.set("h13.Main")
-}
-
-tasks {
-    val runDir = File("build/run")
-    withType<JavaExec> {
-        doFirst {
-            runDir.mkdirs()
-        }
-        workingDir = runDir
-    }
-    test {
-        doFirst {
-            runDir.mkdirs()
-        }
-        workingDir = runDir
-        useJUnitPlatform()
-    }
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
     }
 }
