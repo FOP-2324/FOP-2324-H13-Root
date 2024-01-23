@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -55,7 +54,6 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
     }
 
     @Override
-    @StudentImplementationRequired
     public void initialize() {
         parameters.addListener(
             (MapChangeListener.Change<? extends String, ? extends Pair<Label, NumberField>> change) -> {
