@@ -159,16 +159,6 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
     }
 
     /**
-     * Returns the number property to the given parameter.
-     *
-     * @param parameter the parameter to get the number property to
-     * @return the number property to the given parameter
-     */
-    private Property<Number> getParameter(Parameter parameter) {
-        return parameters.get(parameter.toString());
-    }
-
-    /**
      * Returns the boolean property to the given algorithm.
      *
      * @param algorithm the algorithm to get the boolean property to
@@ -176,5 +166,15 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
      */
     private BooleanProperty getAlgorithm(Algorithm algorithm) {
         return options.get(algorithm.toString());
+    }
+    
+    /**
+     * Returns the number property to the given parameter.
+     *
+     * @param parameter the parameter to get the number property to
+     * @return the number property to the given parameter
+     */
+    private Property<Number> getParameter(Parameter parameter) {
+        return parameters.get(parameter.toString());
     }
 }

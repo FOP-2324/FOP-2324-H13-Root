@@ -29,14 +29,12 @@ public class NormalizedPerlinNoise extends DelegatePerlinNoise implements Perlin
     @Override
     @StudentImplementationRequired
     public double compute(int x, int y) {
-        // TODO H2.3
         return (delegate.compute(x, y) + 1) / 2;
     }
 
     @Override
     @StudentImplementationRequired
     public double compute(double x, double y) {
-        // TODO H2.3
         return (delegate.compute(x, y) + 1) / 2;
     }
 }

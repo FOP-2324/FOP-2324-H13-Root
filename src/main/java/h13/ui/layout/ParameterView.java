@@ -57,7 +57,6 @@ public class ParameterView extends AbstractView<ParameterView, GridPane> impleme
     @Override
     @StudentImplementationRequired
     public void initialize() {
-        // TODO H4.2
         parameters.addListener(
             (MapChangeListener.Change<? extends String, ? extends Pair<Label, NumberField>> change) -> {
                 if (change.wasAdded()) {
