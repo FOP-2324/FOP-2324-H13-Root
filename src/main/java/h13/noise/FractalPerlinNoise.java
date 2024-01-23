@@ -90,7 +90,6 @@ public class FractalPerlinNoise extends DelegatePerlinNoise implements PerlinNoi
     }
 
     @Override
-    @StudentImplementationRequired
     public double compute(int x, int y) {
         return compute((double) x, y);
     }
