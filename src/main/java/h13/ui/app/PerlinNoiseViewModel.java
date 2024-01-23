@@ -123,7 +123,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
                 });
 
                 // Check if the improved algorithm is enabled.
-                if (getAlgorithm(Algorithm.IMPROVED).getValue()) {
+                if (getAlgorithm(Algorithm.IMPROVED).get()) {
                     PerlinNoise tmp = algorithm;
                     algorithm = cacheImprovedNoise.computeIfAbsent(
                         algorithm,
@@ -132,7 +132,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
                 }
 
                 // Check if the fractal algorithm is enabled.
-                if (getAlgorithm(Algorithm.FRACTAL).getValue()) {
+                if (getAlgorithm(Algorithm.FRACTAL).get()) {
                     algorithm = new FractalPerlinNoise(
                         algorithm,
                         getParameter(Parameter.AMPLITUDE).getValue().doubleValue(),
@@ -167,7 +167,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
     private BooleanProperty getAlgorithm(Algorithm algorithm) {
         return options.get(algorithm.toString());
     }
-    
+
     /**
      * Returns the number property to the given parameter.
      *
