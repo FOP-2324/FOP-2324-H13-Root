@@ -48,7 +48,7 @@ public class SettingsViewModel {
      */
     @StudentImplementationRequired
     public void addVisibilityListener(Map<String, Set<String>> configurations) {
-        // TODO H4.3
+        // TODO H4.2
         Map<String, BooleanBinding> visibilities = new HashMap<>(parameters.size());
         // Create state binding for parameters when an option is selected, the binding is true
         for (var parameter : parameters.entrySet()) {

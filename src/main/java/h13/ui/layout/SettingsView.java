@@ -105,7 +105,7 @@ public class SettingsView extends AbstractView<SettingsView, VBox> implements Vi
     @Override
     @StudentImplementationRequired
     public void initialize() {
-        // TODO H4.4
+        // TODO H4.3
         root.getChildren().addAll(
             algorithms.getKey(), algorithms.getValue().getView(),
             parameters.getKey(), parameters.getValue().getView(),

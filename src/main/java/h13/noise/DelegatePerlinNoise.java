@@ -1,7 +1,6 @@
 package h13.noise;
 
 import javafx.geometry.Point2D;
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.Objects;
 import java.util.Random;
@@ -38,65 +37,47 @@ public abstract class DelegatePerlinNoise implements PerlinNoise {
     }
 
     @Override
-    @StudentImplementationRequired
     public int getWidth() {
-        // TODO H2.2
         return delegate.getWidth();
     }
 
     @Override
-    @StudentImplementationRequired
     public int getHeight() {
-        // TODO H2.2
         return delegate.getHeight();
     }
 
     @Override
-    @StudentImplementationRequired
     public Random getRandomGenerator() {
-        // TODO H2.2
         return delegate.getRandomGenerator();
     }
 
     @Override
-    @StudentImplementationRequired
     public Point2D[] getGradients() {
-        // TODO H2.2
         return delegate.getGradients();
     }
 
     @Override
-    @StudentImplementationRequired
     public Point2D getGradient(int x, int y) {
-        // TODO H2.2
         return delegate.getGradient(x, y);
     }
 
     @Override
-    @StudentImplementationRequired
     public double getFrequency() {
-        // TODO H2.2
         return delegate.getFrequency();
     }
 
     @Override
-    @StudentImplementationRequired
     public void setFrequency(double frequency) {
-        // TODO H2.2
         delegate.setFrequency(frequency);
     }
 
     @Override
-    @StudentImplementationRequired
     public double fade(double t) {
-        // TODO H2.2
         return delegate.fade(t);
     }
 
     @Override
-    @StudentImplementationRequired
     public double interpolate(double x1, double x2, double alpha) {
-        // TODO H2.2
         return delegate.interpolate(x1, x2, alpha);
     }
 
