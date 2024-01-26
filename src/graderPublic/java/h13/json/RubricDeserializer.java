@@ -52,7 +52,7 @@ public class RubricDeserializer extends JsonDeserializer<Criterion[]> {
     public Criterion[] deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         JsonNode node = parser.getCodec().readTree(parser);
         if (!node.isArray()) {
-            throw new IOException("Expected array of criteria");
+            throw new IOException("Expected array of criteria, but got %s".formatted(node));
         }
         CheckedFunction<JsonNode, Criterion> deserializer = this::deserializeCriterion;
         return Streams.stream(node).map(deserializer).toArray(Criterion[]::new);
@@ -68,23 +68,39 @@ public class RubricDeserializer extends JsonDeserializer<Criterion[]> {
      */
     private Criterion deserializeCriterion(JsonNode node) throws IOException {
         if (!node.has("title")) {
-            throw new IOException("Missing title");
+            throw new IOException("Node %s is missing title".formatted(node));
         }
         String title = node.get("title").asText();
-        if (!node.has("tasks")) {
-            throw new IOException("Missing tasks");
+        if (!node.has("tasks") && !node.has("criteria")) {
+            throw new IOException("Node %s is missing tasks or criteria".formatted(node));
         }
-        JsonNode tasks = node.get("tasks");
-        if (!(tasks instanceof ArrayNode tasksNode)) {
-            throw new IOException("Expected array of criteria");
+        if (node.has("tasks")) {
+            JsonNode tasks = node.get("tasks");
+            if (!(tasks instanceof ArrayNode tasksNode)) {
+                throw new IOException("Expected array of criteria");
+            }
+            CheckedFunction<JsonNode, Criterion> deserializer = this::deserializeTask;
+            return Criterion.builder()
+                .shortDescription(title)
+                .addChildCriteria(Streams.stream(tasksNode)
+                    .map(deserializer)
+                    .toArray(Criterion[]::new)
+                ).build();
+        } else {
+            JsonNode criteria = node.get("criteria");
+            if (!(criteria instanceof ArrayNode criteriaNode)) {
+                throw new IOException("Expected array of criteria, but got %s".formatted(criteria));
+            }
+            CheckedFunction<JsonNode, Map.Entry<Integer, Criterion>> deserializer = this::deserializeSubCriterion;
+            return Criterion.builder()
+                .shortDescription(title)
+                .addChildCriteria(Streams.stream(criteriaNode)
+                    .map(deserializer)
+                    .sorted(Map.Entry.comparingByKey())
+                    .map(Map.Entry::getValue)
+                    .toArray(Criterion[]::new)
+                ).build();
         }
-        CheckedFunction<JsonNode, Criterion> deserializer = this::deserializeTask;
-        return Criterion.builder()
-            .shortDescription(title)
-            .addChildCriteria(Streams.stream(tasksNode)
-                .map(deserializer)
-                .toArray(Criterion[]::new)
-            ).build();
     }
 
     /**
@@ -97,15 +113,15 @@ public class RubricDeserializer extends JsonDeserializer<Criterion[]> {
      */
     private Criterion deserializeTask(JsonNode node) throws IOException {
         if (!node.has("name")) {
-            throw new IOException("Missing name");
+            throw new IOException("Node %s is missing name".formatted(node));
         }
         String name = node.get("name").asText();
         if (!node.has("criteria")) {
-            throw new IOException("Missing criteria");
+            throw new IOException("Node %s is missing criteria".formatted(node));
         }
         JsonNode criteria = node.get("criteria");
         if (!(criteria instanceof ArrayNode criteriaNode)) {
-            throw new IOException("Expected array of criteria");
+            throw new IOException("Expected array of criteria, but got %s".formatted(criteria));
         }
         CheckedFunction<JsonNode, Map.Entry<Integer, Criterion>> deserializer = this::deserializeSubCriterion;
         return Criterion.builder()
@@ -143,18 +159,15 @@ public class RubricDeserializer extends JsonDeserializer<Criterion[]> {
      */
     private Map.Entry<Integer, Criterion> deserializeSubCriterion(JsonNode node) throws IOException {
         if (!node.has("order")) {
-            throw new IOException("Missing order");
+            throw new IOException("Node %s is missing order".formatted(node));
         }
         int order = node.get("order").asInt();
         if (!node.has("title")) {
-            throw new IOException("Missing title");
+            throw new IOException("Node %s is missing title".formatted(node));
         }
         String title = node.get("title").asText();
         if (!node.has("class")) {
-            throw new IOException("Missing class");
-        }
-        if (!node.has("class")) {
-            throw new IOException("Missing class");
+            throw new IOException("Node %s is missing class".formatted(node));
         }
         String className = node.get("class").asText();
         Class<?> clazz;
