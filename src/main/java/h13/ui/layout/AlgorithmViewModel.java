@@ -109,7 +109,7 @@ public abstract class AlgorithmViewModel {
         lastAlgorithm = algorithm;
 
         @Nullable PerlinNoise toDraw = algorithm;
-        run(() -> {
+        onError(() -> {
                 Image image = createImage(toDraw, x, y, w, h);
                 context.drawImage(image, x, y);
                 return null;
@@ -127,7 +127,7 @@ public abstract class AlgorithmViewModel {
      * @param <T>   the type of the result
      * @return the result of the input
      */
-    protected <T> @Nullable T run(Callable<T> input, String text, Function<Throwable, String> content) {
+    protected <T> @Nullable T onError(Callable<T> input, String text, Function<Throwable, String> content) {
         try {
             return input.call();
         } catch (Throwable e) {
@@ -174,7 +174,7 @@ public abstract class AlgorithmViewModel {
         if (lastAlgorithm == null) {
             return;
         }
-        run(() -> {
+        onError(() -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters()
                     .add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png"));
