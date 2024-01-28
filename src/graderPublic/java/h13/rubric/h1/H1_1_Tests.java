@@ -44,7 +44,7 @@ public class H1_1_Tests extends H1_Tests {
     @Order(1)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H1_1_Criterion_01.json", customConverters = CONVERTERS_FIELD_NAME)
-    public void testCreateGradients(JsonParameterSet parameters) throws Throwable {
+    public void testCreateGradient(JsonParameterSet parameters) throws Throwable {
         int n = parameters.get("n");
         MethodLink methodLink = Links.getMethod(getTypeLink(), "createGradient");
         FieldLink fieldLink = Links.getField(getTypeLink(), "randomGenerator");
@@ -53,6 +53,30 @@ public class H1_1_Tests extends H1_Tests {
         Context context = contextBuilder(methodLink, "H1_1_Criterion_01.json").add("n", n).build();
         for (int i = 0; i < n; i++) {
             Point2D gradient = methodLink.invoke(noise);
+            assertWithinUnitCircle(gradient, context);
+        }
+    }
+
+    @DisplayName("Die Methode createGradients(int, int) gibt einen Array von Gradienten zurück.")
+    @Order(2)
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H1_1_Criterion_02.json", customConverters = CONVERTERS_FIELD_NAME)
+    public void testCreateGradients(JsonParameterSet parameters) throws Throwable {
+        int width = parameters.get("width");
+        int height = parameters.get("height");
+        int n = width * height;
+        MethodLink methodLink = Links.getMethod(getTypeLink(), "createGradients");
+        FieldLink fieldLink = Links.getField(getTypeLink(), "randomGenerator");
+        AbstractPerlinNoise noise = Mockito.mock(AbstractPerlinNoise.class, Answers.CALLS_REAL_METHODS);
+        fieldLink.set(noise, new Random(0));
+        Context context = contextBuilder(methodLink, "H1_1_Criterion_02.json")
+            .add("width", width)
+            .add("height", height)
+            .add("n", "width * height  = %s".formatted(n))
+            .build();
+        Point2D[] gradients = methodLink.invoke(noise, width, height);
+        Assertions2.assertEquals(n, gradients.length, context, result -> "The array length is not correct.");
+        for (Point2D gradient : gradients) {
             assertWithinUnitCircle(gradient, context);
         }
     }
