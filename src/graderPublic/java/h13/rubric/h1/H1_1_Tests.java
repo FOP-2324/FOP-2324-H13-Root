@@ -50,7 +50,7 @@ public class H1_1_Tests extends H1_Tests {
         FieldLink fieldLink = Links.getField(getTypeLink(), "randomGenerator");
         AbstractPerlinNoise noise = Mockito.mock(AbstractPerlinNoise.class, Answers.CALLS_REAL_METHODS);
         fieldLink.set(noise, new Random(0));
-        Context context = contextBuilder(methodLink, "H1_1_Criterion_01.json").add("n", n).build();
+        Context context = contextBuilder(methodLink, "testCreateGradient").add("n", n).build();
         for (int i = 0; i < n; i++) {
             Point2D gradient = methodLink.invoke(noise);
             assertWithinUnitCircle(gradient, context);
@@ -69,7 +69,7 @@ public class H1_1_Tests extends H1_Tests {
         FieldLink fieldLink = Links.getField(getTypeLink(), "randomGenerator");
         AbstractPerlinNoise noise = Mockito.mock(AbstractPerlinNoise.class, Answers.CALLS_REAL_METHODS);
         fieldLink.set(noise, new Random(0));
-        Context context = contextBuilder(methodLink, "H1_1_Criterion_02.json")
+        Context context = contextBuilder(methodLink, "testCreateGradients")
             .add("width", width)
             .add("height", height)
             .add("n", "width * height  = %s".formatted(n))

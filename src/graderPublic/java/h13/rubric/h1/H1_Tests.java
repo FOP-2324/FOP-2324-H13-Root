@@ -2,10 +2,9 @@ package h13.rubric.h1;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h13.json.JsonConverters;
+import h13.rubric.ContextInformaton;
 import h13.rubric.H13_Tests;
 import h13.util.Links;
-import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
-import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.reflections.Link;
 import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
@@ -23,13 +22,13 @@ public abstract class H1_Tests extends H13_Tests {
         "n", JsonConverters::toInt
     );
 
-    @Override
-    protected Context.Builder<?> contextBuilderTestDataStructure() {
-        return Assertions2.contextBuilder()
-            .add("width", "The width of the noise domain")
-            .add("height", "The height of the noise domain")
-            .add("n", "The number of gradients to generate");
-    }
+    protected static final Map<String, String> INFORMATION = Map.of(
+        "width", "The width of the noise domain",
+        "height", "The height of the noise domain",
+        "n", "The number of gradients to generate",
+        "Package", "The package of the tested method",
+        "Type", "The class of the tested method"
+    );
 
     @Override
     public PackageLink getPackageLink() {
@@ -38,8 +37,9 @@ public abstract class H1_Tests extends H13_Tests {
 
     public abstract TypeLink getTypeLink();
 
-    @Override
-    protected Context.Builder<?> contextBuilder(Link subject, String resourcePath) {
-        return super.contextBuilder(subject, resourcePath).add("Type", getTypeLink().reflection().getName());
+    protected ContextInformaton contextBuilder(Link subject, String methodName) {
+        return contextBuilder(subject, methodName, INFORMATION)
+            .add("Package", getPackageLink().name())
+            .add("Type", getTypeLink().reflection().getName());
     }
 }

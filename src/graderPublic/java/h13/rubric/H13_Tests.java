@@ -1,10 +1,12 @@
 package h13.rubric;
 
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
-import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.Link;
 import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
+
+import java.util.Arrays;
+import java.util.Map;
 
 public abstract class H13_Tests {
 
@@ -12,13 +14,16 @@ public abstract class H13_Tests {
 
     protected static final String CONVERTERS_FIELD_NAME = "CONVERTERS";
 
-    protected abstract Context.Builder<?> contextBuilderTestDataStructure();
-
     protected abstract PackageLink getPackageLink();
 
-    protected Context.Builder<?> contextBuilder(Link subject, String resourcePath) {
-        return Assertions2.contextBuilder().subject(subject)
-            .add("Test data structure", contextBuilderTestDataStructure().add("Test resource", resourcePath).build())
-            .add("Package", getPackageLink().name());
+    protected ContextInformaton contextBuilder(Link subject, String methodName, Map<String, String> information) {
+        return new ContextInformaton(
+            Assertions2.contextBuilder().subject(subject),
+            information,
+            Arrays.stream(getClass().getDeclaredMethods())
+                .filter(method -> method.getName().equals(methodName))
+                .findFirst()
+                .orElseThrow()
+        );
     }
 }
