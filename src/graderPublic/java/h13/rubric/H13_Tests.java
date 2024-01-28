@@ -10,6 +10,8 @@ public abstract class H13_Tests {
 
     protected static final PackageLink PACKAGE_LINK = BasicPackageLink.of("h13");
 
+    protected static final String CONVERTERS_FIELD_NAME = "CONVERTERS";
+
     protected abstract Context.Builder<?> contextBuilderTestDataStructure();
 
     protected abstract PackageLink getPackageLink();
@@ -17,6 +19,6 @@ public abstract class H13_Tests {
     protected Context.Builder<?> contextBuilder(Link subject, String resourcePath) {
         return Assertions2.contextBuilder().subject(subject)
             .add("Test data structure", contextBuilderTestDataStructure().add("Test resource", resourcePath).build())
-            .add("Package", getPackageLink());
+            .add("Package", getPackageLink().name());
     }
 }
