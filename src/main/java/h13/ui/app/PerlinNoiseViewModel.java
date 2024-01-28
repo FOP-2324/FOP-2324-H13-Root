@@ -105,7 +105,7 @@ public class PerlinNoiseViewModel extends AlgorithmViewModel {
     @Override
     protected @Nullable PerlinNoise getAlgorithm() {
         // TODO H6
-        return run(
+        return onError(
             () -> {
                 // Simple algorithm will always be used
                 Property<Number> seed = getParameter(Parameter.SEED);
