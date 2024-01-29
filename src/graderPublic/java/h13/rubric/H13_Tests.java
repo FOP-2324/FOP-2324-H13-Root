@@ -16,10 +16,12 @@ public abstract class H13_Tests {
 
     protected abstract PackageLink getPackageLink();
 
-    protected ContextInformaton contextBuilder(Link subject, String methodName, Map<String, String> information) {
+    protected abstract Map<String, String> getContextInformation();
+
+    protected ContextInformaton contextBuilder(Link subject, String methodName) {
         return new ContextInformaton(
             Assertions2.contextBuilder().subject(subject),
-            information,
+            getContextInformation(),
             Arrays.stream(getClass().getDeclaredMethods())
                 .filter(method -> method.getName().equals(methodName))
                 .findFirst()
