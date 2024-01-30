@@ -81,12 +81,12 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
         this.height = height;
         setFrequency(frequency);
         this.randomGenerator = randomGenerator;
-        this.gradients = createGradients(width + 2, height + 2);
+        this.gradients = createGradients(width + 1, height + 1);
     }
 
     /**
      * Generates an array of random 2D gradient vectors with dimensions wrapping around on the noise dimension, which
-     * means that the width and height of the gradient domain is two units larger than the noise domain.
+     * means that the width and height of the gradient domain is one unit larger than the noise domain.
      *
      * <p>Each point in the noise domain is associated with four corner gradient vectors.
      *
@@ -168,10 +168,10 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @StudentImplementationRequired
     public Point2D getGradient(int x, int y) {
         // TODO H1.1
-        // Position of a 2D gradient (x, y) vector in a 1D array: (width + 2) * y + x
-        // The +2 is because the gradient array is two units larger than the noise domain
-        // (width + 2) * y =  first dimension of the 2D array, x = second dimension of the 2D array
-        return gradients[(width + 2) * y + x];
+        // Position of a 2D gradient (x, y) vector in a 1D array: (width + 1) * y + x
+        // The 12 is because the gradient array is one units larger than the noise domain
+        // (width + 1) * y =  first dimension of the 2D array, x = second dimension of the 2D array
+        return gradients[(width + 1) * y + x];
     }
 
     @Override
