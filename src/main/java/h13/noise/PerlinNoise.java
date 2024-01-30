@@ -74,7 +74,7 @@ public interface PerlinNoise extends GradientNoise {
     /**
      * Returns the gradient vector associated with the specified gradient domain coordinates. Since the gradient vectors
      * wrap around the noise domain, the starting point of the gradient domain is at (0, 0) and the ending point
-     * is at (width + 1, height + 1).
+     * is at (width, height).
      *
      * @param x the x coordinate of the gradient domain
      * @param y the y coordinate of the gradient domain
