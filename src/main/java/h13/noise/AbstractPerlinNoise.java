@@ -128,7 +128,8 @@ public abstract class AbstractPerlinNoise implements PerlinNoise {
     @StudentImplementationRequired
     protected Point2D createGradient() {
         // TODO H1.1
-        return new Point2D(randomGenerator.nextDouble() * 2 - 1, randomGenerator.nextDouble() * 2 - 1);
+        // It's okay if we do not get 1
+        return new Point2D(randomGenerator.nextDouble(-1, 1), randomGenerator.nextDouble(-1, 1));
     }
 
     @Override
