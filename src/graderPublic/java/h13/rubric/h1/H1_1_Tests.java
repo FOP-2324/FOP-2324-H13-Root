@@ -33,12 +33,12 @@ import java.util.stream.Collectors;
 public class H1_1_Tests extends H1_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
-        "width", JsonConverters::toInt,
-        "height", JsonConverters::toInt,
-        "n", JsonConverters::toInt,
+        "width", JsonNode::asInt,
+        "height", JsonNode::asInt,
+        "n", JsonNode::asInt,
         "gradients", JsonConverters::toGradients,
-        "x", JsonConverters::toInt,
-        "y", JsonConverters::toInt,
+        "x", JsonNode::asInt,
+        "y", JsonNode::asInt,
         "expected", JsonConverters::toGradient
     );
 

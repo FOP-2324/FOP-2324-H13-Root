@@ -17,13 +17,6 @@ public class JsonConverters extends org.tudalgo.algoutils.tutor.general.json.Jso
 
     }
 
-    public static int toInt(JsonNode node) {
-        if (!node.isInt()) {
-            throw new IllegalArgumentException("Node %s is not an integer".formatted(node.getNodeType()));
-        }
-        return node.asInt();
-    }
-
     public static Point2D toGradient(JsonNode node) {
         if (!node.has("x") || !node.get("x").isDouble()) {
             throw new IllegalArgumentException("Node %s does not have a field x of type double".formatted(node));
