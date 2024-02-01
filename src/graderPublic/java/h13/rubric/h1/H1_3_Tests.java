@@ -128,7 +128,7 @@ public class H1_3_Tests extends H1_Tests {
             .add("x", x)
             .add("y", y)
             .build();
-        List<Double> expected = parameters.get("expectedInterpolations");
+        List<Double> expected = parameters.get("testCorrectInterpolations");
         TutorAssertions.assertContains(expected, actual, context);
     }
 
@@ -142,7 +142,7 @@ public class H1_3_Tests extends H1_Tests {
         double x = parameters.get("x");
         double y = parameters.get("y");
         double actual = noise.compute(x, y);
-        Context context = contextBuilder(methodLink, "testCorrectInterpolations")
+        Context context = contextBuilder(methodLink, "testResult")
             .add("x", x)
             .add("y", y)
             .build();
