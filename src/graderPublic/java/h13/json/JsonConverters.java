@@ -33,4 +33,11 @@ public class JsonConverters extends org.tudalgo.algoutils.tutor.general.json.Jso
         }
         return toList(node, JsonConverters::toGradient).toArray(Point2D[]::new);
     }
+
+    public static int[] toPermutation(JsonNode node) {
+        if (!node.isArray()) {
+            throw new IllegalArgumentException("Node %s is not an array".formatted(node.getNodeType()));
+        }
+        return toList(node, JsonNode::asInt).stream().mapToInt(i -> i).toArray();
+    }
 }

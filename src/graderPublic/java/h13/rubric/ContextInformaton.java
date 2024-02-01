@@ -33,17 +33,24 @@ public class ContextInformaton implements Context.Builder<ContextInformaton> {
                 information.add(entry.getKey(), entry.getValue());
             }
         }
-        information.add("Resource data path", method.getAnnotation(JsonParameterSetTest.class).value());
-
+        if (method.isAnnotationPresent(JsonParameterSetTest.class)) {
+            information.add("Resource data path", method.getAnnotation(JsonParameterSetTest.class).value());
+        }
         Context actual = delegate.build();
 
         Context.Builder<?> testCase = Assertions2.contextBuilder();
         testCase.add(actual.properties().toArray(Property[]::new));
 
-        return Assertions2.contextBuilder().subject(actual.subject())
-            .add("Test Information", information.build())
-            .add("Test case", testCase.build())
-            .build();
+        Context.Builder<?> builder = Assertions2.contextBuilder().subject(actual.subject());
+        Context contextInformation = information.build();
+        if (!contextInformation.properties().isEmpty()) {
+            builder.add("Test Information", contextInformation);
+        }
+        Context contextCase = testCase.build();
+        if (!contextCase.properties().isEmpty()) {
+            builder.add("Test case", testCase.build());
+        }
+        return builder.build();
     }
 
     @Override

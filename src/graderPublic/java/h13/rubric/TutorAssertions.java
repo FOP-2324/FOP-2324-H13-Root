@@ -4,10 +4,11 @@ import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class TutorAssertions {
+public final class TutorAssertions {
 
     private static final double EPSILON = 1e-6;
 
@@ -25,7 +26,7 @@ public class TutorAssertions {
         assertEquals(expected, actual, EPSILON, context);
     }
 
-    public static void assertContains(List<Double> expected, List<Double> actual, double epsilon, Context context) {
+    public static void assertContains(Collection<Double> expected, Collection<Double> actual, double epsilon, Context context) {
         List<Double> expectedCopy = new ArrayList<>(expected);
         List<Double> actualCopy = new ArrayList<>(actual);
         Iterator<Double> expectedIterator = expectedCopy.iterator();

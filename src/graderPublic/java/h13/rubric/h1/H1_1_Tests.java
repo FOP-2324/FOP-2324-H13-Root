@@ -3,6 +3,7 @@ package h13.rubric.h1;
 import com.fasterxml.jackson.databind.JsonNode;
 import h13.json.JsonConverters;
 import h13.noise.AbstractPerlinNoise;
+import h13.rubric.TutorUtils;
 import h13.util.Links;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.DisplayName;
@@ -22,11 +23,9 @@ import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @DisplayName("H1.1 | Gradienten")
 @TestForSubmission
@@ -139,9 +138,7 @@ public class H1_1_Tests extends H1_Tests {
         heightLink.set(noise, height);
 
         Context context = contextBuilder(methodLink, "testGetGradient")
-            .add("gradients", Arrays.stream(gradients)
-                .map(g -> "(%s, %s)".formatted(g.getX(), g.getY()))
-                .collect(Collectors.joining(", ")))
+            .add("gradients", TutorUtils.toString(gradients))
             .add("x", x)
             .add("y", "y")
             .add("Expected gradient", expected)

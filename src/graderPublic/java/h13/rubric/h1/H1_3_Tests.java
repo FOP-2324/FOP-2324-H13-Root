@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import h13.json.JsonConverters;
 import h13.noise.SimplePerlinNoise;
 import h13.rubric.TutorAssertions;
+import h13.rubric.TutorUtils;
 import h13.util.Links;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeAll;
@@ -94,6 +95,7 @@ public class H1_3_Tests extends H1_Tests {
         double y = parameters.get("y");
         noise.compute(x, y);
         Context context = contextBuilder(methodLink, "testCorrectGradients")
+            .add("gradients", TutorUtils.toString(parameters.get("gradients")))
             .add("x", x)
             .add("y", y)
             .build();
@@ -125,6 +127,7 @@ public class H1_3_Tests extends H1_Tests {
         double y = parameters.get("y");
         noise.compute(x, y);
         Context context = contextBuilder(methodLink, "testCorrectInterpolations")
+            .add("gradients", TutorUtils.toString(parameters.get("gradients")))
             .add("x", x)
             .add("y", y)
             .build();
@@ -143,6 +146,7 @@ public class H1_3_Tests extends H1_Tests {
         double y = parameters.get("y");
         double actual = noise.compute(x, y);
         Context context = contextBuilder(methodLink, "testResult")
+            .add("gradients", TutorUtils.toString(parameters.get("gradients")))
             .add("x", x)
             .add("y", y)
             .build();
