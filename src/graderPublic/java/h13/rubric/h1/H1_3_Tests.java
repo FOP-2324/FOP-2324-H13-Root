@@ -128,7 +128,7 @@ public class H1_3_Tests extends H1_Tests {
             .add("x", x)
             .add("y", y)
             .build();
-        List<Double> expected = parameters.get("testCorrectInterpolations");
+        List<Double> expected = parameters.get("expectedInterpolations");
         TutorAssertions.assertContains(expected, actual, context);
     }
 
