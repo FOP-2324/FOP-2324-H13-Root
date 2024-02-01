@@ -9,8 +9,10 @@ import h13.util.Links;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
@@ -31,6 +33,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 @DisplayName("H1.2 | Lineare Interpolation und Fading-Funktion")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H1_3_Tests extends H1_Tests {

@@ -6,8 +6,10 @@ import h13.rubric.TutorAssertions;
 import h13.util.Links;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Mockito;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
@@ -22,6 +24,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @DisplayName("H1.2 | Lineare Interpolation und Fading-Funktion")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H1_2_Tests extends H1_Tests {

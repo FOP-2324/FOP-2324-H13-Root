@@ -1,0 +1,32 @@
+[
+  {
+    "frequency": 0.125,
+    "amplitude": 1.0,
+    "octaves": 4,
+    "persistence": 2,
+    "lacunarity": 0.5,
+    "x": 6.9,
+    "y": 9.6,
+    "expected": 1.9406249999999998
+  },
+  {
+    "frequency": 0.69,
+    "amplitude": 0.69,
+    "octaves": 8,
+    "persistence": 0.5,
+    "lacunarity": 0.5,
+    "x": 1.2,
+    "y": 0.4,
+    "expected": 0.18021064068717954
+  },
+  {
+    "frequency": 0.1,
+    "amplitude": 1.2,
+    "octaves": 8,
+    "persistence": 0.3,
+    "lacunarity": 0.4,
+    "x": 5.6,
+    "y": 7.8,
+    "expected": 0.5505882352786025
+  }
+]

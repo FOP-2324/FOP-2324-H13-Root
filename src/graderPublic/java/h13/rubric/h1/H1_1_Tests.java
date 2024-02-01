@@ -7,7 +7,9 @@ import h13.rubric.TutorUtils;
 import h13.util.Links;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Answers;
 import org.mockito.Mockito;
@@ -28,6 +30,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 @DisplayName("H1.1 | Gradienten")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 public class H1_1_Tests extends H1_Tests {
 

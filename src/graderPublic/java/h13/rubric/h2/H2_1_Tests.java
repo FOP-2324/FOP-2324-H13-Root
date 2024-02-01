@@ -8,6 +8,9 @@ import h13.rubric.TutorUtils;
 import h13.util.Links;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.Mockito;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
@@ -29,24 +32,29 @@ import java.util.Random;
 import java.util.function.Function;
 
 @DisplayName("H2.1 | Permutationstabelle")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 public class H2_1_Tests extends H2_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
-        Map.entry("x", JsonNode::asInt),
-        Map.entry("y", JsonNode::asInt),
+        Map.entry("width", JsonNode::asInt),
+        Map.entry("height", JsonNode::asInt),
         Map.entry("gradients", JsonConverters::toGradients),
         Map.entry("permutation", JsonConverters::toPermutation),
+        Map.entry("x", JsonNode::asInt),
+        Map.entry("y", JsonNode::asInt),
         Map.entry("expected", JsonConverters::toGradient)
     );
 
     @Override
     protected Map<String, String> getContextInformation() {
         return Map.ofEntries(
-            Map.entry("x", "The x-coordinate of the gradient"),
-            Map.entry("y", "The y-coordinate of the gradient"),
+            Map.entry("width", "The width of the noise domain"),
+            Map.entry("height", "The height of the noise domain"),
             Map.entry("gradients", "The gradients of a noise domain"),
             Map.entry("permutation", "The permutation of the improved algorithm"),
+            Map.entry("x", "The x-coordinate of the gradient"),
+            Map.entry("y", "The y-coordinate of the gradient"),
             Map.entry("expected", "The expected result of the compute method")
         );
     }
@@ -65,6 +73,7 @@ public class H2_1_Tests extends H2_Tests {
     }
 
     @DisplayName("Die Methode createPermutation(Random seed) erstellt eine korrekte Permutationstabelle.")
+    @Order(8)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H2_1_Criterion_01.json", customConverters = CONVERTERS_FIELD_NAME)
     public void testCreatePermutation(JsonParameterSet parameters) throws Throwable {
@@ -97,6 +106,7 @@ public class H2_1_Tests extends H2_Tests {
     }
 
     @DisplayName("Die Methode getGradient(int, int) gibt den korrekten Gradienten an der Koordinate (x, y) zurück.")
+    @Order(9)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H2_1_Criterion_02.json", customConverters = CONVERTERS_FIELD_NAME)
     public void testGetGradient(JsonParameterSet parameters) {
