@@ -26,8 +26,6 @@ import java.util.function.Function;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class H1_2_Tests extends H1_Tests {
 
-    private static final double EPSILON = 1e-6;
-
     private SimplePerlinNoise noise;
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
