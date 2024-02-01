@@ -49,9 +49,9 @@ public class ImprovedPerlinNoise extends SimplePerlinNoise implements PerlinNois
 
     /**
      * Creates a permutation array of the size {@value #PERMUTATION_SIZE} * 2, where the first {@value #PERMUTATION_SIZE}
-     * elements are the values from 0 to {@value #PERMUTATION_SIZE} randomly shuffled and the last
-     * {@value #PERMUTATION_SIZE} elements are the same as the first {@value #PERMUTATION_SIZE} elements but ordered in
-     * ascending order.
+     * elements are the values from 0 to {@value #PERMUTATION_SIZE} ordered in ascending order and the last
+     * {@value #PERMUTATION_SIZE} elements are the same as the first {@value #PERMUTATION_SIZE} elements but randomly
+     * shuffled.
      *
      * @param randomGenerator the random generator used for generating the permutation array
      * @return the permutation array
