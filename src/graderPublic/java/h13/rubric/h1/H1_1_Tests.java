@@ -32,28 +32,28 @@ import java.util.stream.Collectors;
 @TestForSubmission
 public class H1_1_Tests extends H1_Tests {
 
-    public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
-        "width", JsonNode::asInt,
-        "height", JsonNode::asInt,
-        "n", JsonNode::asInt,
-        "gradients", JsonConverters::toGradients,
-        "x", JsonNode::asInt,
-        "y", JsonNode::asInt,
-        "expected", JsonConverters::toGradient
+    public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
+        Map.entry("width", JsonNode::asInt),
+        Map.entry("height", JsonNode::asInt),
+        Map.entry("n", JsonNode::asInt),
+        Map.entry("gradients", JsonConverters::toGradients),
+        Map.entry("x", JsonNode::asInt),
+        Map.entry("y", JsonNode::asInt),
+        Map.entry("expected", JsonConverters::toGradient)
     );
 
     @Override
     protected Map<String, String> getContextInformation() {
-        return Map.of(
-            "Package", "The package of the tested method",
-            "Type", "The class of the tested method",
-            "width", "The width of the noise domain",
-            "height", "The height of the noise domain",
-            "n", "The number of gradients to generate",
-            "gradients", "The gradients of a noise domain",
-            "x", "The x-coordinate of the gradient in the gradient domain",
-            "y", "The y-coordinate of the gradient in the gradient domain",
-            "expected", "The expected gradient to retrieve from g(x, y)"
+        return Map.ofEntries(
+            Map.entry("Package", "The package of the tested method"),
+            Map.entry("Type", "The class of the tested method"),
+            Map.entry("width", "The width of the noise domain"),
+            Map.entry("height", "The height of the noise domain"),
+            Map.entry("n", "The number of gradients to generate"),
+            Map.entry("gradients", "The gradients of a noise domain"),
+            Map.entry("x", "The x-coordinate of the gradient in the gradient domain"),
+            Map.entry("y", "The y-coordinate of the gradient in the gradient domain"),
+            Map.entry("expected", "The expected gradient to retrieve from g(x, y)")
         );
     }
 
@@ -71,7 +71,8 @@ public class H1_1_Tests extends H1_Tests {
         Assertions2.assertTrue(y <= 1.0 && y >= -1.0, context, comment);
     }
 
-    @DisplayName("Die Methode createGradient() gibt einen Gradienten mit zufälligen Koordinaten im Einheitskreis zurück.")
+    @DisplayName("Die Methode createGradient() gibt einen Gradienten mit zufälligen Koordinaten im Einheitskreis "
+        + "zurück.")
     @Order(1)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H1_1_Criterion_01.json", customConverters = CONVERTERS_FIELD_NAME)
