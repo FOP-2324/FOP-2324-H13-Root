@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.mockito.Mockito;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
@@ -18,7 +19,6 @@ import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -35,13 +35,17 @@ public class H3_1_Tests extends H3_Tests {
         typeLink = Links.getType(PACKAGE_LINK, NumberStringConverter.class);
     }
 
-    @Override
-    public Map<String, String> getContextInformation() {
-        return Map.of();
+    @SuppressWarnings("unchecked")
+    private NumberStringConverter createConverter(String stringValue, Number numericValue) {
+        Function<Number, String> stringifier = Mockito.mock(Function.class);
+        Mockito.when(stringifier.apply(numericValue)).thenReturn(stringValue);
+        Function<String, Number> numericizer = Mockito.mock(Function.class);
+        Mockito.when(numericizer.apply(stringValue)).thenReturn(numericValue);
+        return new NumberStringConverter(stringifier, numericizer);
     }
 
     private void assertToString(Number value, String expected) {
-        NumberStringConverter converter = new NumberStringConverter(Object::toString, null);
+        NumberStringConverter converter = createConverter(expected, value);
         String actual = converter.toString(value);
 
         List<TypeLink> parameterLinks = Stream.of(Number.class).<TypeLink>map(BasicTypeLink::of).toList();
@@ -65,8 +69,8 @@ public class H3_1_Tests extends H3_Tests {
         assertToString(1L, "1");
     }
 
-    private void assertFromValue(Function<String, Number> numericizer, String value, Number expected) {
-        NumberStringConverter converter = new NumberStringConverter(null, numericizer);
+    private void assertFromValue(String value, String normalizedValue, Number expected) {
+        NumberStringConverter converter = createConverter(normalizedValue, expected);
         Number actual = converter.fromString(value);
 
         MethodLink methodLink = Links.getMethod(typeLink, "fromString");
@@ -81,16 +85,16 @@ public class H3_1_Tests extends H3_Tests {
     @Order(12)
     @Test
     public void testFromValue() {
-        assertFromValue(Double::valueOf, null, null);
-        assertFromValue(Double::valueOf, "", null);
-        assertFromValue(Double::valueOf, " ", null);
-        assertFromValue(Double::valueOf, "1", 1.0);
-        assertFromValue(Double::valueOf, " 1 ", 1.0);
-        assertFromValue(Double::valueOf, "-", -1.0);
-        assertFromValue(Double::valueOf, "-1", -1.0);
-        assertFromValue(Double::valueOf, "1", 1.0);
-        assertFromValue(Long::valueOf, " 1 ", 1L);
-        assertFromValue(Long::valueOf, "-", -1L);
-        assertFromValue(Long::valueOf, "-1", -1L);
+        assertFromValue(null, null, null);
+        assertFromValue("", null, null);
+        assertFromValue(" ", null, null);
+        assertFromValue("1", "1", 1.0);
+        assertFromValue(" 1 ", "1", 1.0);
+        assertFromValue("-", "-1", -1.0);
+        assertFromValue("-1", "-1", -1.0);
+        assertFromValue("1", "1", 1.0);
+        assertFromValue(" 1 ", "1", 1L);
+        assertFromValue("-", "-1", -1L);
+        assertFromValue("-1", "-1", -1L);
     }
 }
