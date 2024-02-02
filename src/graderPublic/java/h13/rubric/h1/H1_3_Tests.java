@@ -94,20 +94,24 @@ public class H1_3_Tests extends H1_Tests {
             }
         };
         initNoise(parameters, noise);
+
         double x = parameters.get("x");
         double y = parameters.get("y");
+
         noise.compute(x, y);
+
         Context context = contextBuilder(methodLink, "testCorrectGradients")
             .add("gradients", TutorUtils.toString(parameters.get("gradients")))
             .add("x", x)
             .add("y", y)
             .build();
+
         Comparator<Point2D> cmp = Comparator.comparing(Point2D::getX).thenComparing(Point2D::getY);
         actual.sort(cmp);
         List<Point2D> expected = new ArrayList<>(List.of(parameters.get("expectedGradients")));
         expected.sort(cmp);
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Expected gradients %s, but got %s".formatted(expected, actual));
+            result -> "The gradients %s are incorrect".formatted(actual));
     }
 
     @DisplayName("Die Methode compute(double x, double y) berechnet die korrekten Interpolationen lx0 und lx1")
@@ -147,13 +151,14 @@ public class H1_3_Tests extends H1_Tests {
         initNoise(parameters, noise);
         double x = parameters.get("x");
         double y = parameters.get("y");
+        double expected = parameters.get("expectedResult");
         double actual = noise.compute(x, y);
+
         Context context = contextBuilder(methodLink, "testResult")
             .add("gradients", TutorUtils.toString(parameters.get("gradients")))
             .add("x", x)
             .add("y", y)
             .build();
-        double expected = parameters.get("expectedResult");
         TutorAssertions.assertEquals(expected, actual, context);
     }
 }

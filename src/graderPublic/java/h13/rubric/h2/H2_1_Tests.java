@@ -85,24 +85,23 @@ public class H2_1_Tests extends H2_Tests {
             .build();
 
         Assertions2.assertEquals(ImprovedPerlinNoise.PERMUTATION_SIZE * 2, p.length, context,
-            result -> "Expected permutation array of size %d but got %d"
-                .formatted(ImprovedPerlinNoise.PERMUTATION_SIZE * 2, p.length));
+            result -> "Permutation size is incorrect.");
 
         int[] first = Arrays.copyOf(p, ImprovedPerlinNoise.PERMUTATION_SIZE);
 
         for (int i = 0; i < ImprovedPerlinNoise.PERMUTATION_SIZE; i++) {
             Assertions2.assertEquals(i, first[i], context,
-                result -> "Expected first half to be sorted, but got %s".formatted(Arrays.toString(first)));
+                result -> "First half is not sorted.");
         }
         List<Integer> second = Arrays.stream(Arrays.copyOfRange(p, ImprovedPerlinNoise.PERMUTATION_SIZE, p.length))
             .boxed()
             .toList();
         Assertions2.assertTrue(Arrays.stream(first).boxed().toList().containsAll(second), context,
-            result -> "Second does not contain all elements from 0 to 255");
+            result -> "Second does not contain all elements from 0 to 255.");
         List<Integer> secondSorted = new ArrayList<>(second);
         secondSorted.sort(Comparator.naturalOrder());
         Assertions2.assertNotEquals(secondSorted, second, context,
-            result -> "Expected second half to not be sorted, got %s".formatted(second));
+            result -> "Second half is not shuffled.");
     }
 
     @DisplayName("Die Methode getGradient(int, int) gibt den korrekten Gradienten an der Koordinate (x, y) zurück.")
@@ -134,6 +133,6 @@ public class H2_1_Tests extends H2_Tests {
         Point2D expected = parameters.get("expected");
         Point2D actual = noise.getGradient(x, y);
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Expected gradient %s, but got %s".formatted(expected, actual));
+            result -> "The gradient g(%s, %s) is incorrect.".formatted(x, y));
     }
 }

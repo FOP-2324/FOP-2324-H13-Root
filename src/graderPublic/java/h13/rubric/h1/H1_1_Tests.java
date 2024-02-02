@@ -68,7 +68,7 @@ public class H1_1_Tests extends H1_Tests {
         double x = point.getX();
         double y = point.getY();
         PreCommentSupplier<ResultOfObject<Boolean>> comment =
-            result -> "The gradient (%s, %s) is not within the unit circle (Interval [-1, 1]).".formatted(x, y);
+            result -> "The gradient g(%s, %s) is not within the unit circle (Interval [-1, 1]).".formatted(x, y);
         Assertions2.assertTrue(x <= 1.0 && x >= -1.0, context, comment);
         Assertions2.assertTrue(y <= 1.0 && y >= -1.0, context, comment);
     }
@@ -112,6 +112,7 @@ public class H1_1_Tests extends H1_Tests {
             .add("height", height)
             .add("n", "width * height  = %s".formatted(n))
             .build();
+
         Point2D[] gradients = methodLink.invoke(noise, width, height);
         Assertions2.assertEquals(n, gradients.length, context, result -> "The array length is not correct.");
         for (Point2D gradient : gradients) {
@@ -129,7 +130,6 @@ public class H1_1_Tests extends H1_Tests {
         int height = parameters.get("height");
         int x = parameters.get("x");
         int y = parameters.get("y");
-        Point2D expected = parameters.get("expected");
 
         MethodLink methodLink = Links.getMethod(getTypeLink(), "createGradients");
         AbstractPerlinNoise noise = Mockito.mock(AbstractPerlinNoise.class, Answers.CALLS_REAL_METHODS);
@@ -140,14 +140,18 @@ public class H1_1_Tests extends H1_Tests {
         FieldLink heightLink = Links.getField(getTypeLink(), "height");
         heightLink.set(noise, height);
 
+        Point2D expected = parameters.get("expected");
+        Point2D actual = noise.getGradient(x, y);
+
         Context context = contextBuilder(methodLink, "testGetGradient")
             .add("gradients", TutorUtils.toString(gradients))
             .add("x", x)
             .add("y", "y")
             .add("Expected gradient", expected)
+            .add("Actual gradient", actual)
             .build();
-        Point2D actual = noise.getGradient(x, y);
+
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Expected gradient %s, but got %s".formatted(expected, actual));
+            result -> "The gradient g(%s, %s) is incorrect".formatted(x, y));
     }
 }

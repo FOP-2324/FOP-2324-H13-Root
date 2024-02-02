@@ -78,15 +78,16 @@ public class H1_2_Tests extends H1_Tests {
         double x2 = parameters.get("x2");
         double alpha = parameters.get("alpha");
         double expected = parameters.get("expectedInterpolate");
+        double actual = noise.interpolate(x1, x2, alpha);
 
         MethodLink methodLink = Links.getMethod(getTypeLink(), "interpolate");
         Context context = contextBuilder(methodLink, "testInterpolate")
             .add("x1", x1)
             .add("x2", x2)
             .add("alpha", alpha)
+            .add("Expected result", expected)
+            .add("Actual result", actual)
             .build();
-
-        double actual = noise.interpolate(x1, x2, alpha);
         TutorAssertions.assertEquals(expected, actual, context);
     }
 
@@ -94,13 +95,14 @@ public class H1_2_Tests extends H1_Tests {
     private void testFade(JsonParameterSet parameters) {
         double t = parameters.get("t");
         double expected = parameters.get("expectedFade");
+        double actual = noise.fade(t);
 
         MethodLink methodLink = Links.getMethod(getTypeLink(), "fade");
         Context context = contextBuilder(methodLink, "testFade")
             .add("t", t)
+            .add("Expected result", expected)
+            .add("Actual result", actual)
             .build();
-
-        double actual = noise.fade(t);
         TutorAssertions.assertEquals(expected, actual, context);
     }
 }

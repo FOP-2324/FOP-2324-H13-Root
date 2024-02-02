@@ -55,7 +55,7 @@ public class H3_1_Tests extends H3_Tests {
             .add("value", String.valueOf(value))
             .build();
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Expected %s, but got %s".formatted(expected, actual));
+            result -> "String representation of number %s is incorrect.".formatted(value));
     }
 
     @DisplayName("Die Methode toString(Number) gibt das korrekte Ergebnis zurück.")
@@ -78,7 +78,7 @@ public class H3_1_Tests extends H3_Tests {
             .add("value", String.valueOf(value))
             .build();
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Expected %s, but got %s".formatted(expected, actual));
+            result -> "Numeric representation of string %s is incorrect.".formatted(value));
     }
 
     @DisplayName("Die Methode fromString(String value) gibt das korrekte Ergebnis für einfache Eingaben zurück.")
