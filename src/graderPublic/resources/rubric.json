@@ -172,7 +172,7 @@
         "criteria": [
           {
             "order": 22,
-            "title": "Der Listener fügt bzw. entfernt ein Element aus dem Hbox und initialisiert den Listener korrekt.",
+            "title": "Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und initialisert ebenfalls die Sichtbarkeiten.",
             "class": "h13.rubric.h4.H4_3_Tests"
           }
         ]
