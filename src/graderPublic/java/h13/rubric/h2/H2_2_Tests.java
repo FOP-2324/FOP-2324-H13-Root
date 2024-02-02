@@ -43,7 +43,7 @@ public class H2_2_Tests extends H2_Tests {
     );
 
     @Override
-    protected Map<String, String> getContextInformation() {
+    public Map<String, String> getContextInformation() {
         return Map.ofEntries(
             Map.entry("x", "The x-coordinate of the gradient"),
             Map.entry("y", "The y-coordinate of the gradient"),
@@ -128,7 +128,7 @@ public class H2_2_Tests extends H2_Tests {
     @Order(10)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H2_2.json", customConverters = CONVERTERS_FIELD_NAME)
-    public void testResult(JsonParameterSet parameters) throws Throwable {
+    public void testResult(JsonParameterSet parameters) {
         PerlinNoise delegate = createNoise(parameters);
         FractalPerlinNoise noise = new FractalPerlinNoise(
             delegate,

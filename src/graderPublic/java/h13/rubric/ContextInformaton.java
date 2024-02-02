@@ -33,7 +33,7 @@ public class ContextInformaton implements Context.Builder<ContextInformaton> {
                 information.add(entry.getKey(), entry.getValue());
             }
         }
-        if (method.isAnnotationPresent(JsonParameterSetTest.class)) {
+        if (method != null && method.isAnnotationPresent(JsonParameterSetTest.class)) {
             information.add("Resource data path", method.getAnnotation(JsonParameterSetTest.class).value());
         }
         Context actual = delegate.build();

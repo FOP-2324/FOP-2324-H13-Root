@@ -45,7 +45,7 @@ public class H1_1_Tests extends H1_Tests {
     );
 
     @Override
-    protected Map<String, String> getContextInformation() {
+    public Map<String, String> getContextInformation() {
         return Map.ofEntries(
             Map.entry("Package", "The package of the tested method"),
             Map.entry("Type", "The class of the tested method"),

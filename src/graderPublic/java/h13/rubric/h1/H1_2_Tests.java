@@ -46,7 +46,7 @@ public class H1_2_Tests extends H1_Tests {
     }
 
     @Override
-    protected Map<String, String> getContextInformation() {
+    public Map<String, String> getContextInformation() {
         return Map.ofEntries(
             Map.entry("x1", "The first value to interpolate"),
             Map.entry("x2", "The second value to interpolate"),

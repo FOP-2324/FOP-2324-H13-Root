@@ -47,7 +47,7 @@ public class H2_1_Tests extends H2_Tests {
     );
 
     @Override
-    protected Map<String, String> getContextInformation() {
+    public Map<String, String> getContextInformation() {
         return Map.ofEntries(
             Map.entry("width", "The width of the noise domain"),
             Map.entry("height", "The height of the noise domain"),

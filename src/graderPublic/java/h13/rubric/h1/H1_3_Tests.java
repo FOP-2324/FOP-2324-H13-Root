@@ -56,7 +56,7 @@ public class H1_3_Tests extends H1_Tests {
     }
 
     @Override
-    protected Map<String, String> getContextInformation() {
+    public Map<String, String> getContextInformation() {
         return Map.ofEntries(
             Map.entry("x", "The x-coordinate of the computed value"),
             Map.entry("y", "The y-coordinate of the computed value"),
