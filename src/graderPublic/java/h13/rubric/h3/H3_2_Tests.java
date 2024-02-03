@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-@DisplayName("3.2 | Nummerfeld")
+@DisplayName("H3.2 | Nummerfeld")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 public class H3_2_Tests extends H3_Tests {

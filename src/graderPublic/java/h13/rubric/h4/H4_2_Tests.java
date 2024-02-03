@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@DisplayName("4.2 | Welche Parameter für welchen Algorithmus?")
+@DisplayName("H4.2 | Welche Parameter für welchen Algorithmus?")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
