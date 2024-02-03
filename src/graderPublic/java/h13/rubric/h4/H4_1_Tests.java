@@ -52,6 +52,7 @@ public class H4_1_Tests extends H4_Tests {
     @Order(16)
     @Test
     public void testListener() {
+        testAdd();
         testRemove();
     }
 

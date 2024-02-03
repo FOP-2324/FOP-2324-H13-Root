@@ -1,0 +1,141 @@
+package h13.rubric.h4;
+
+import h13.ui.layout.ChooserView;
+import h13.ui.layout.ParameterView;
+import h13.ui.layout.SettingsView;
+import h13.ui.layout.SettingsViewModel;
+import h13.util.Links;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.util.Pair;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.mockito.Mockito;
+import org.sourcegrade.jagr.api.rubric.TestForSubmission;
+import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
+import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
+import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
+import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
+import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+
+@DisplayName("H4.3 | Konfigurations - Ansicht")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestForSubmission
+public class H4_3_Tests extends H4_Tests {
+
+    private MethodLink methodLink;
+
+    @BeforeAll
+    public void globalSetup() {
+        methodLink = Links.getMethod(getTypeLink(), "initialize");
+    }
+
+    @Override
+    public TypeLink getTypeLink() {
+        return BasicTypeLink.of(SettingsView.class);
+    }
+
+    @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und initialisert ebenfalls die Sichtbarkeiten.")
+    @Order(22)
+    @Test
+    public void testView() {
+        Pair<Label, ChooserView> algorithms = new Pair<>(new Label("Algorithms"), new ChooserView(3, view -> {
+        }));
+        Pair<Label, ParameterView> parameters = new Pair<>(new Label("Parameters"), new ParameterView(view -> {
+        }));
+        VBox root = new VBox();
+        Map<String, Set<String>> visibilities = Map.of();
+        HBox buttonGroup = new HBox();
+        Button generate = new Button("Generate");
+        Button save = new Button("Save");
+
+        AtomicReference<Boolean> called = new AtomicReference<>(false);
+        SettingsViewModel settingsViewModel = new SettingsViewModel(Map.of(), Map.of()) {
+            @Override
+            public void addVisibilityListener(Map<String, Set<String>> configurations) {
+                if (configurations == visibilities) {
+                    called.set(true);
+                }
+            }
+        };
+
+        // Prepare view
+        SettingsView settingsView = Mockito.mock(SettingsView.class, Mockito.CALLS_REAL_METHODS);
+        FieldLink rootLink = Links.getField(getTypeLink().superType(), "root");
+        rootLink.set(settingsView, root);
+        FieldLink algorithmsLink = Links.getField(getTypeLink(), "algorithms");
+        algorithmsLink.set(settingsView, algorithms);
+        FieldLink parametersLink = Links.getField(getTypeLink(), "parameters");
+        parametersLink.set(settingsView, parameters);
+        FieldLink buttonGroupLink = Links.getField(getTypeLink(), "buttonGroup");
+        buttonGroupLink.set(settingsView, buttonGroup);
+        FieldLink generateLink = Links.getField(getTypeLink(), "generate");
+        generateLink.set(settingsView, generate);
+        FieldLink saveLink = Links.getField(getTypeLink(), "save");
+        saveLink.set(settingsView, save);
+        FieldLink viewModelLink = Links.getField(getTypeLink(), "viewModel");
+        viewModelLink.set(settingsView, settingsViewModel);
+        FieldLink visibilitiesLink = Links.getField(getTypeLink(), "visibilities");
+        visibilitiesLink.set(settingsView, visibilities);
+
+        // Test cases
+        settingsView.initialize();
+        Parent view = settingsView.getView();
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getKey()),
+            Assertions2.emptyContext(),
+            result -> "Algorithms label  is not added to the settings view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
+                algorithms.getKey()) < view.getChildrenUnmodifiable().indexOf(
+                parameters.getValue().getView()),
+            Assertions2.emptyContext(),
+            result -> "Algorithms label is not added before the algorithm view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getValue().getView()),
+            Assertions2.emptyContext(),
+            result -> "Algorithms view is not added to the settings view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(parameters.getKey()),
+            Assertions2.emptyContext(),
+            result -> "Parameter label is not added to the settings view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getKey()),
+            Assertions2.emptyContext(),
+            result -> "Algorithms label  is not added to the settings view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
+                parameters.getKey()) < view.getChildrenUnmodifiable().indexOf(
+                parameters.getValue().getView()),
+            Assertions2.emptyContext(),
+            result -> "Parameters label is not added before the parameters view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(parameters.getValue().getView()),
+            Assertions2.emptyContext(),
+            result -> "Parameter view is not added to the settings view.");
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
+                algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
+                parameters.getValue().getView()),
+            Assertions2.emptyContext(),
+            result -> "Algorithms view is not added before the parameter view.");
+
+        Assertions2.assertTrue(
+            buttonGroup.getChildren().stream().anyMatch(node -> node instanceof Button button && (button.getText().equals("Generate") || button.getText().equals("Save"))),
+            Assertions2.emptyContext(),
+            result -> "The button group does not contain the correct buttons."
+        );
+        Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
+                algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
+                buttonGroup),
+            Assertions2.emptyContext(),
+            result -> "Parameter view is not added before the button group.");
+        Assertions2.assertTrue(called.get(), Assertions2.emptyContext(),
+            result -> "The method addVisibilityListener was not called.");
+    }
+}
