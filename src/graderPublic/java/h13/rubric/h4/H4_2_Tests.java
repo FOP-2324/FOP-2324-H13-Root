@@ -40,9 +40,10 @@ public class H4_2_Tests extends H4_Tests {
         Map.entry("parameters", node -> JsonConverters.toList(node, JsonNode::asText)),
         Map.entry("configurations", node -> JsonConverters.toMap(node, Function.identity(),
             valueNode -> new LinkedHashSet<>(JsonConverters.toList(valueNode, JsonNode::asText)))),
-        Map.entry("visible", node -> JsonConverters.toMap(node, Function.identity(),
-            valueNode -> new LinkedHashSet<>(JsonConverters.toList(valueNode, JsonNode::asText))))
-    );
+        Map.entry("selections", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
+        Map.entry("active", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
+        Map.entry("disable", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText)))
+        );
 
 
     private MethodLink methodLink;
@@ -64,7 +65,9 @@ public class H4_2_Tests extends H4_Tests {
             Map.entry("parameters", "The parameters that can be visible."),
             Map.entry("configurations", "The configurations that specify which parameters are visible for "
                 + "which options."),
-            Map.entry("visible", "The expected visibility of the parameters for the algorithms.")
+            Map.entry("selections", "The selected algorithms."),
+            Map.entry("active", "The expected visibility of the parameters for the algorithms."),
+            Map.entry("disable", "The expected non visibility of the parameters for the algorithms.")
         );
     }
 
@@ -72,41 +75,51 @@ public class H4_2_Tests extends H4_Tests {
         Map<String, BooleanProperty> algorithms = parameterSet.<List<String>>get("algorithms").stream()
             .collect(Collectors.toMap(
                 Function.identity(),
-                s -> new SimpleBooleanProperty(null, s, false))
+                s -> new SimpleBooleanProperty(this, s, false))
             );
         Map<String, BooleanProperty> parameters = parameterSet.<List<String>>get("parameters").stream()
             .collect(Collectors.toMap(
                 Function.identity(),
-                s -> new SimpleBooleanProperty(null, s, false))
+                s -> new SimpleBooleanProperty(this, s, false))
             );
         SettingsViewModel viewModel = new SettingsViewModel(algorithms, parameters);
         Map<String, Set<String>> configurations = parameterSet.get("configurations");
         viewModel.addVisibilityListener(configurations);
-        Map<String, Set<String>> visible = parameterSet.get("visible");
-        algorithms.forEach((algorithm, selection) -> {
-            selection.set(true);
-            Set<String> actual = parameters.entrySet().stream()
-                .filter(entry -> entry.getValue().get())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-            Set<String> expected = visible.get(algorithm);
-            Context context = contextBuilder(methodLink, resource)
-                .add("Algorithms", algorithms.keySet())
-                .add("Parameters", parameters.keySet())
-                .add("Configurations", configurations)
-                .build();
-            Assertions2.assertEquals(expected, actual, context,
-                result -> "The visibility of the parameters for the algorithm (selected) %s are incorrect"
-                    .formatted(algorithm));
-            selection.set(false);
-            actual = parameters.entrySet().stream()
-                .filter(entry -> !entry.getValue().get())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-            Assertions2.assertEquals(parameters.keySet().removeAll(expected), actual, context,
-                result -> "The visibility of the parameters for the algorithm (selected) %s are incorrect"
-                    .formatted(algorithm));
-        });
+
+        // Test cases
+        Set<String> selections = parameterSet.get("selections");
+        Set<String> active = parameterSet.get("active");
+        Set<String> disable = parameterSet.get("disable");
+
+
+        algorithms.values().forEach(algorithm -> algorithm.set(false));
+        selections.forEach(algorithm -> algorithms.get(algorithm).set(true));
+
+        Context context = contextBuilder(methodLink, resource)
+            .add("Algorithms", algorithms.keySet())
+            .add("Parameters", parameters.keySet())
+            .add("Configurations", configurations)
+            .add("Selections", selections)
+            .build();
+
+        // Check active
+        // Negate since the properties defines disabled parameters
+        Set<String> actualActive = parameters.entrySet().stream()
+            .filter(entry -> !entry.getValue().get())
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toSet());
+        Assertions2.assertEquals(active, actualActive, context,
+            result -> "The visibility (active) of the parameters for the selected algorithms %s are incorrect"
+                .formatted(selections));
+
+        // Check disable
+        Set<String> actualDisable = parameters.entrySet().stream()
+            .filter(entry -> entry.getValue().get())
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toSet());
+        Assertions2.assertEquals(disable, actualDisable, context,
+            result -> "The visibility (disabled) of the parameters for the selected algorithms %s are incorrect"
+                .formatted(algorithms));
     }
 
     @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einen Parameter und einen "

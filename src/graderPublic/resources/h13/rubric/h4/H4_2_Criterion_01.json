@@ -1,0 +1,43 @@
+[
+  {
+    "algorithms": [
+      "AES"
+    ],
+    "parameters": [
+      "AES_128_CBC"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC"
+      ]
+    },
+    "selections": [
+      "AES"
+    ],
+    "active": [
+      "AES_128_CBC"
+    ],
+    "disable": [
+    ]
+  },
+  {
+    "algorithms": [
+      "AES"
+    ],
+    "parameters": [
+      "AES_128_CBC"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC"
+      ]
+    },
+    "selections": [
+    ],
+    "active": [
+    ],
+    "disable": [
+      "AES_128_CBC"
+    ]
+  }
+]
