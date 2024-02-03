@@ -48,7 +48,8 @@ public class H4_3_Tests extends H4_Tests {
         return BasicTypeLink.of(SettingsView.class);
     }
 
-    @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und initialisert ebenfalls die Sichtbarkeiten.")
+    @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und "
+        + "initialisert ebenfalls die Sichtbarkeiten.")
     @Order(22)
     @Test
     public void testView() {
@@ -126,7 +127,8 @@ public class H4_3_Tests extends H4_Tests {
             result -> "Algorithms view is not added before the parameter view.");
 
         Assertions2.assertTrue(
-            buttonGroup.getChildren().stream().anyMatch(node -> node instanceof Button button && (button.getText().equals("Generate") || button.getText().equals("Save"))),
+            buttonGroup.getChildren().stream().anyMatch(node -> node instanceof Button button
+                && (button.getText().equals("Generate") || button.getText().equals("Save"))),
             Assertions2.emptyContext(),
             result -> "The button group does not contain the correct buttons."
         );
