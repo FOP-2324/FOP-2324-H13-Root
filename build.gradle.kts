@@ -1,3 +1,6 @@
+import org.sourcegrade.jagr.launcher.env.Config
+import org.sourcegrade.jagr.launcher.env.Executor
+
 plugins {
     alias(libs.plugins.jagr)
     alias(libs.plugins.algomate)
@@ -42,6 +45,21 @@ javafx {
     modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
 }
 
+tasks {
+    test {
+        jvmArgs(
+            "-Djava.awt.headless=true",
+            "-Dtestfx.robot=glass",
+            "-Dtestfx.headless=true",
+            "-Dprism.order=sw",
+            "-Dprism.lcdtext=false",
+            "-Dprism.subpixeltext=false",
+            "-Dglass.win.uiScale=100%",
+            "-Dprism.text=t2k"
+        )
+    }
+}
+
 jagr {
     graders {
         val graderPublic by getting {
@@ -51,10 +69,12 @@ jagr {
                 implementation(libs.bundles.testfx)
             }
             config.set(
-                org.sourcegrade.jagr.launcher.env.Config(
-                    executor = org.sourcegrade.jagr.launcher.env.Executor(
+                Config(
+                    executor = Executor(
                         jvmArgs = listOf(
+                            "-Djava.awt.headless=true",
                             "-Dtestfx.robot=glass",
+                            "-Dtestfx.headless=true",
                             "-Dprism.order=sw",
                             "-Dprism.lcdtext=false",
                             "-Dprism.subpixeltext=false",

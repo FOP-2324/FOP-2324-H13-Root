@@ -63,9 +63,8 @@ public class H5_2_Tests extends H5_Tests {
     public void testButtons() throws TimeoutException {
         TutorSettingsView settings = new TutorSettingsView();
         PerlinNoise noise = Mockito.mock(PerlinNoise.class);
-        AtomicReference<PerlinNoise> noiseReference = new AtomicReference<>();
-        AtomicReference<Boolean> called = new AtomicReference<>(false);
-        List<Integer> area = new ArrayList<>();
+        AtomicReference<Pair<PerlinNoise, List<Integer>>> drawReference = new AtomicReference<>();
+        AtomicReference<Pair<Integer, Integer>> saveReference = new AtomicReference<>();
         TutorAlgorithmViewModel viewModel = new TutorAlgorithmViewModel() {
 
             @Override
@@ -80,12 +79,12 @@ public class H5_2_Tests extends H5_Tests {
 
             @Override
             public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
-                noiseReference.set(algorithm);
+                drawReference.set(new Pair<>(algorithm, List.of(x, y, w, h)));
             }
 
             @Override
             public void save(int width, int height) {
-                called.set(true);
+                saveReference.set(new Pair<>(width, height));
             }
         };
         TutorAlgorithmView algorithm = new TutorAlgorithmView(settings, (algorithms, parameters) -> viewModel,
@@ -102,10 +101,18 @@ public class H5_2_Tests extends H5_Tests {
         MethodLink methodLink = Links.getMethod(getTypeLink(), "initializeButtons");
         Context c = contextBuilder(methodLink, null)
             .build();
-        Assertions2.assertEquals(noiseReference.get(), noise, c, result -> "Incorrect algorithm sent to draw method");
+
+        Assertions2.assertNotNull(drawReference.get(), c, result -> "Draw method was not called");
+        Assertions2.assertEquals(noise, drawReference.get().getKey(), c,
+            result -> "Incorrect algorithm sent to draw method");
+        Assertions2.assertEquals(List.of(0, 0, (int) algorithm.getVisualization().getWidth(), (int) algorithm.getVisualization().getHeight()),
+            drawReference.get().getValue(), c, result -> "Incorrect area sent to draw method");
         robot.clickOn(settings.getSave());
-        
-        Assertions2.assertTrue(called.get(), c, result -> "Save method not called");
+
+        Canvas visualization = algorithm.getVisualization();
+        Assertions2.assertNotNull(saveReference.get(), c, result -> "Save method was not called");
+        Assertions2.assertEquals(new Pair<>((int) visualization.getWidth(), (int) visualization.getHeight()),
+            saveReference.get(), c, result -> "Incorrect size sent to save method");
     }
 
     @DisplayName("Die Höhe der Zeichenfläche ist abhängig von der Größe des GridPane's und dessen Padding.")
