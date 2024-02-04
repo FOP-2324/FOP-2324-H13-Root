@@ -32,28 +32,28 @@ import java.util.function.Function;
 @DisplayName("H2.1 | Permutationstabelle")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H2_1_Tests extends H2_Tests {
+public class H2_1_TestsPrivate extends H2_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
-        Map.entry("width", JsonNode::asInt),
-        Map.entry("height", JsonNode::asInt),
-        Map.entry("gradients", JsonConverters::toGradients),
-        Map.entry("permutation", JsonConverters::toPermutation),
-        Map.entry("x", JsonNode::asInt),
-        Map.entry("y", JsonNode::asInt),
-        Map.entry("expected", JsonConverters::toGradient)
+            Map.entry("width", JsonNode::asInt),
+            Map.entry("height", JsonNode::asInt),
+            Map.entry("gradients", JsonConverters::toGradients),
+            Map.entry("permutation", JsonConverters::toPermutation),
+            Map.entry("x", JsonNode::asInt),
+            Map.entry("y", JsonNode::asInt),
+            Map.entry("expected", JsonConverters::toGradient)
     );
 
     @Override
     public Map<String, String> getContextInformation() {
         return Map.ofEntries(
-            Map.entry("width", "The width of the noise domain"),
-            Map.entry("height", "The height of the noise domain"),
-            Map.entry("gradients", "The gradients of a noise domain"),
-            Map.entry("permutation", "The permutation of the improved algorithm"),
-            Map.entry("x", "The x-coordinate of the gradient"),
-            Map.entry("y", "The y-coordinate of the gradient"),
-            Map.entry("expected", "The expected result of the compute method")
+                Map.entry("width", "The width of the noise domain"),
+                Map.entry("height", "The height of the noise domain"),
+                Map.entry("gradients", "The gradients of a noise domain"),
+                Map.entry("permutation", "The permutation of the improved algorithm"),
+                Map.entry("x", "The x-coordinate of the gradient"),
+                Map.entry("y", "The y-coordinate of the gradient"),
+                Map.entry("expected", "The expected result of the compute method")
         );
     }
 
@@ -80,26 +80,26 @@ public class H2_1_Tests extends H2_Tests {
         int[] p = methodLink.invoke(noise, new Random(0));
 
         Context context = contextBuilder(methodLink, "testCreatePermutation")
-            .build();
+                .build();
 
         Assertions2.assertEquals(ImprovedPerlinNoise.PERMUTATION_SIZE * 2, p.length, context,
-            result -> "Permutation size is incorrect.");
+                result -> "Permutation size is incorrect.");
 
         int[] first = Arrays.copyOf(p, ImprovedPerlinNoise.PERMUTATION_SIZE);
 
         for (int i = 0; i < ImprovedPerlinNoise.PERMUTATION_SIZE; i++) {
             Assertions2.assertEquals(i, first[i], context,
-                result -> "First half is not sorted.");
+                    result -> "First half is not sorted.");
         }
         List<Integer> second = Arrays.stream(Arrays.copyOfRange(p, ImprovedPerlinNoise.PERMUTATION_SIZE, p.length))
-            .boxed()
-            .toList();
+                .boxed()
+                .toList();
         Assertions2.assertTrue(Arrays.stream(first).boxed().toList().containsAll(second), context,
-            result -> "Second does not contain all elements from 0 to 255.");
+                result -> "Second does not contain all elements from 0 to 255.");
         List<Integer> secondSorted = new ArrayList<>(second);
         secondSorted.sort(Comparator.naturalOrder());
         Assertions2.assertNotEquals(secondSorted, second, context,
-            result -> "Second half is not shuffled.");
+                result -> "Second half is not shuffled.");
     }
 
     @DisplayName("Die Methode getGradient(int, int) gibt den korrekten Gradienten an der Koordinate (x, y) zurück.")
@@ -120,17 +120,17 @@ public class H2_1_Tests extends H2_Tests {
         int y = parameters.get("y");
 
         Context context = contextBuilder(methodLink, "testGetGradient")
-            .add("width", noise.getWidth())
-            .add("height", noise.getHeight())
-            .add("gradients", TutorUtils.toString(gradients))
-            .add("p", Arrays.toString(permutation))
-            .add("x", x)
-            .add("y", y)
-            .build();
+                .add("width", noise.getWidth())
+                .add("height", noise.getHeight())
+                .add("gradients", TutorUtils.toString(gradients))
+                .add("p", Arrays.toString(permutation))
+                .add("x", x)
+                .add("y", y)
+                .build();
 
         Point2D expected = parameters.get("expected");
         Point2D actual = noise.getGradient(x, y);
         Assertions2.assertEquals(expected, actual, context,
-            result -> "The gradient g(%s, %s) is incorrect.".formatted(x, y));
+                result -> "The gradient g(%s, %s) is incorrect.".formatted(x, y));
     }
 }

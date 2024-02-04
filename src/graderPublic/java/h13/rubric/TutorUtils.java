@@ -9,17 +9,14 @@ import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import org.mockito.Mockito;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
-import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
-import javax.swing.ButtonGroup;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;

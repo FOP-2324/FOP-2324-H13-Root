@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
-public class H3_1_Tests extends H3_Tests {
+public class H3_1_TestsPrivate extends H3_Tests {
 
     TypeLink typeLink;
 
@@ -49,12 +49,12 @@ public class H3_1_Tests extends H3_Tests {
 
         List<TypeLink> parameterLinks = Stream.of(Number.class).<TypeLink>map(BasicTypeLink::of).toList();
         MethodLink methodLink = Links.getMethod(typeLink, "toString",
-            Matcher.of(method -> method.typeList().equals(parameterLinks)));
+                Matcher.of(method -> method.typeList().equals(parameterLinks)));
         Context context = contextBuilder(methodLink, null)
-            .add("value", String.valueOf(value))
-            .build();
+                .add("value", String.valueOf(value))
+                .build();
         Assertions2.assertEquals(expected, actual, context,
-            result -> "String representation of number %s is incorrect.".formatted(value));
+                result -> "String representation of number %s is incorrect.".formatted(value));
     }
 
     @DisplayName("Die Methode toString(Number) gibt das korrekte Ergebnis zurück.")
@@ -74,10 +74,10 @@ public class H3_1_Tests extends H3_Tests {
 
         MethodLink methodLink = Links.getMethod(typeLink, "fromString");
         Context context = contextBuilder(methodLink, null)
-            .add("value", String.valueOf(value))
-            .build();
+                .add("value", String.valueOf(value))
+                .build();
         Assertions2.assertEquals(expected, actual, context,
-            result -> "Numeric representation of string %s is incorrect.".formatted(value));
+                result -> "Numeric representation of string %s is incorrect.".formatted(value));
     }
 
     @DisplayName("Die Methode fromString(String value) gibt das korrekte Ergebnis für einfache Eingaben zurück.")

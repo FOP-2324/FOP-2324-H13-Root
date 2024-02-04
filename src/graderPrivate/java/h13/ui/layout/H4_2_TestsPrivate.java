@@ -32,17 +32,17 @@ import java.util.stream.Collectors;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
-public class H4_2_Tests extends H4_Tests {
+public class H4_2_TestsPrivate extends H4_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
-        Map.entry("algorithms", node -> JsonConverters.toList(node, JsonNode::asText)),
-        Map.entry("parameters", node -> JsonConverters.toList(node, JsonNode::asText)),
-        Map.entry("configurations", node -> JsonConverters.toMap(node, Function.identity(),
-            valueNode -> new LinkedHashSet<>(JsonConverters.toList(valueNode, JsonNode::asText)))),
-        Map.entry("selections", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
-        Map.entry("active", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
-        Map.entry("disable", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText)))
-        );
+            Map.entry("algorithms", node -> JsonConverters.toList(node, JsonNode::asText)),
+            Map.entry("parameters", node -> JsonConverters.toList(node, JsonNode::asText)),
+            Map.entry("configurations", node -> JsonConverters.toMap(node, Function.identity(),
+                    valueNode -> new LinkedHashSet<>(JsonConverters.toList(valueNode, JsonNode::asText)))),
+            Map.entry("selections", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
+            Map.entry("active", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText))),
+            Map.entry("disable", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText)))
+    );
 
     private MethodLink methodLink;
 
@@ -59,27 +59,27 @@ public class H4_2_Tests extends H4_Tests {
     @Override
     public Map<String, String> getContextInformation() {
         return Map.ofEntries(
-            Map.entry("algorithms", "The algorithms that can be selected."),
-            Map.entry("parameters", "The parameters that can be visible."),
-            Map.entry("configurations", "The configurations that specify which parameters are visible for "
-                + "which options."),
-            Map.entry("selections", "The selected algorithms."),
-            Map.entry("active", "The expected visibility of the parameters for the algorithms."),
-            Map.entry("disable", "The expected non visibility of the parameters for the algorithms.")
+                Map.entry("algorithms", "The algorithms that can be selected."),
+                Map.entry("parameters", "The parameters that can be visible."),
+                Map.entry("configurations", "The configurations that specify which parameters are visible for "
+                        + "which options."),
+                Map.entry("selections", "The selected algorithms."),
+                Map.entry("active", "The expected visibility of the parameters for the algorithms."),
+                Map.entry("disable", "The expected non visibility of the parameters for the algorithms.")
         );
     }
 
     private void assertVisibility(JsonParameterSet parameterSet, String resource) {
         Map<String, BooleanProperty> algorithms = parameterSet.<List<String>>get("algorithms").stream()
-            .collect(Collectors.toMap(
-                Function.identity(),
-                s -> new SimpleBooleanProperty(this, s, false))
-            );
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        s -> new SimpleBooleanProperty(this, s, false))
+                );
         Map<String, BooleanProperty> parameters = parameterSet.<List<String>>get("parameters").stream()
-            .collect(Collectors.toMap(
-                Function.identity(),
-                s -> new SimpleBooleanProperty(this, s, false))
-            );
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        s -> new SimpleBooleanProperty(this, s, false))
+                );
         SettingsViewModel viewModel = new SettingsViewModel(algorithms, parameters);
         Map<String, Set<String>> configurations = parameterSet.get("configurations");
         viewModel.addVisibilityListener(configurations);
@@ -94,52 +94,34 @@ public class H4_2_Tests extends H4_Tests {
         selections.forEach(algorithm -> algorithms.get(algorithm).set(true));
 
         Context context = contextBuilder(methodLink, resource)
-            .add("Algorithms", algorithms.keySet())
-            .add("Parameters", parameters.keySet())
-            .add("Configurations", configurations)
-            .add("Selections", selections)
-            .build();
+                .add("Algorithms", algorithms.keySet())
+                .add("Parameters", parameters.keySet())
+                .add("Configurations", configurations)
+                .add("Selections", selections)
+                .build();
 
         // Check active
         // Negate since the properties defines disabled parameters
         Set<String> actualActive = parameters.entrySet().stream()
-            .filter(entry -> !entry.getValue().get())
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toSet());
+                .filter(entry -> !entry.getValue().get())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
         Assertions2.assertEquals(active, actualActive, context,
-            result -> "The visibility (active) of the parameters for the selected algorithms %s are incorrect"
-                .formatted(selections));
+                result -> "The visibility (active) of the parameters for the selected algorithms %s are incorrect"
+                        .formatted(selections));
 
         // Check disable
         Set<String> actualDisable = parameters.entrySet().stream()
-            .filter(entry -> entry.getValue().get())
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toSet());
+                .filter(entry -> entry.getValue().get())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
         Assertions2.assertEquals(disable, actualDisable, context,
-            result -> "The visibility (disabled) of the parameters for the selected algorithms %s are incorrect"
-                .formatted(algorithms));
-    }
-
-    @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einen Parameter und einen "
-        + "Option zurück.")
-    @Order(17)
-    @ParameterizedTest
-    @JsonParameterSetTest(value = "H4_2_Criterion_01.json", customConverters = CONVERTERS_FIELD_NAME)
-    public void testSingleParameterAndOption(JsonParameterSet parameterSet) {
-        assertVisibility(parameterSet, "testSingleParameterAndOption");
-    }
-
-    @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einen Parameter und "
-        + "mehrere Optionen zurück.")
-    @Order(18)
-    @ParameterizedTest
-    @JsonParameterSetTest(value = "H4_2_Criterion_02.json", customConverters = CONVERTERS_FIELD_NAME)
-    public void testSingleParameterAndManyOption(JsonParameterSet parameterSet) {
-        assertVisibility(parameterSet, "testSingleParameterAndManyOption");
+                result -> "The visibility (disabled) of the parameters for the selected algorithms %s are incorrect"
+                        .formatted(algorithms));
     }
 
     @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für mehre Parameter und "
-        + "eine Option zurück.")
+            + "eine Option zurück.")
     @Order(19)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H4_2_Criterion_03.json", customConverters = CONVERTERS_FIELD_NAME)
@@ -148,7 +130,7 @@ public class H4_2_Tests extends H4_Tests {
     }
 
     @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einfache Abhängigkeiten "
-        + "zurück.")
+            + "zurück.")
     @Order(20)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H4_2_Criterion_04.json", customConverters = CONVERTERS_FIELD_NAME)
@@ -157,7 +139,7 @@ public class H4_2_Tests extends H4_Tests {
     }
 
     @DisplayName("Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für komplexe Abhängigkeiten "
-        + "zurück.")
+            + "zurück.")
     @Order(21)
     @ParameterizedTest
     @JsonParameterSetTest(value = "H4_2_Criterion_05.json", customConverters = CONVERTERS_FIELD_NAME)

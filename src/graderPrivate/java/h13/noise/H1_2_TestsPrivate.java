@@ -26,7 +26,7 @@ import java.util.function.Function;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class H1_2_Tests extends H1_Tests {
+public class H1_2_TestsPrivate extends H1_Tests {
 
     private SimplePerlinNoise noise;
 

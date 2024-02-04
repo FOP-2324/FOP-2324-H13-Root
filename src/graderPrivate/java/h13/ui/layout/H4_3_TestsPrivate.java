@@ -29,7 +29,7 @@ import java.util.Set;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
-public class H4_3_Tests extends H4_Tests {
+public class H4_3_TestsPrivate extends H4_Tests {
 
     private MethodLink methodLink;
 
@@ -44,7 +44,7 @@ public class H4_3_Tests extends H4_Tests {
     }
 
     @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und "
-        + "initialisert ebenfalls die Sichtbarkeiten.")
+            + "initialisert ebenfalls die Sichtbarkeiten.")
     @Order(22)
     @Test
     public void testView() {
@@ -61,61 +61,61 @@ public class H4_3_Tests extends H4_Tests {
 
         // Prepare view
         SettingsView settingsView = TutorUtils.createSettingsView(
-            root,
-            algorithms,
-            parameters,
-            buttonGroup,
-            generate,
-            save,
-            settingsViewModel,
-            Map.of()
+                root,
+                algorithms,
+                parameters,
+                buttonGroup,
+                generate,
+                save,
+                settingsViewModel,
+                Map.of()
         );
 
         // Test cases
         settingsView.initialize();
         Parent view = settingsView.getView();
         Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getKey()),
-            Assertions2.emptyContext(),
-            result -> "Algorithms label  is not added to the settings view.");
+                Assertions2.emptyContext(),
+                result -> "Algorithms label  is not added to the settings view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
-                algorithms.getKey()) < view.getChildrenUnmodifiable().indexOf(
-                parameters.getValue().getView()),
-            Assertions2.emptyContext(),
-            result -> "Algorithms label is not added before the algorithm view.");
+                        algorithms.getKey()) < view.getChildrenUnmodifiable().indexOf(
+                        parameters.getValue().getView()),
+                Assertions2.emptyContext(),
+                result -> "Algorithms label is not added before the algorithm view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getValue().getView()),
-            Assertions2.emptyContext(),
-            result -> "Algorithms view is not added to the settings view.");
+                Assertions2.emptyContext(),
+                result -> "Algorithms view is not added to the settings view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(parameters.getKey()),
-            Assertions2.emptyContext(),
-            result -> "Parameter label is not added to the settings view.");
+                Assertions2.emptyContext(),
+                result -> "Parameter label is not added to the settings view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(algorithms.getKey()),
-            Assertions2.emptyContext(),
-            result -> "Algorithms label  is not added to the settings view.");
+                Assertions2.emptyContext(),
+                result -> "Algorithms label  is not added to the settings view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
-                parameters.getKey()) < view.getChildrenUnmodifiable().indexOf(
-                parameters.getValue().getView()),
-            Assertions2.emptyContext(),
-            result -> "Parameters label is not added before the parameters view.");
+                        parameters.getKey()) < view.getChildrenUnmodifiable().indexOf(
+                        parameters.getValue().getView()),
+                Assertions2.emptyContext(),
+                result -> "Parameters label is not added before the parameters view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().contains(parameters.getValue().getView()),
-            Assertions2.emptyContext(),
-            result -> "Parameter view is not added to the settings view.");
+                Assertions2.emptyContext(),
+                result -> "Parameter view is not added to the settings view.");
         Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
-                algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
-                parameters.getValue().getView()),
-            Assertions2.emptyContext(),
-            result -> "Algorithms view is not added before the parameter view.");
+                        algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
+                        parameters.getValue().getView()),
+                Assertions2.emptyContext(),
+                result -> "Algorithms view is not added before the parameter view.");
 
         Assertions2.assertTrue(
-            buttonGroup.getChildren().stream().anyMatch(node -> node instanceof Button button
-                && (button.getText().equals("Generate") || button.getText().equals("Save"))),
-            Assertions2.emptyContext(),
-            result -> "The button group does not contain the correct buttons."
+                buttonGroup.getChildren().stream().anyMatch(node -> node instanceof Button button
+                        && (button.getText().equals("Generate") || button.getText().equals("Save"))),
+                Assertions2.emptyContext(),
+                result -> "The button group does not contain the correct buttons."
         );
         Assertions2.assertTrue(view.getChildrenUnmodifiable().indexOf(
-                algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
-                buttonGroup),
-            Assertions2.emptyContext(),
-            result -> "Parameter view is not added before the button group.");
+                        algorithms.getValue().getView()) < view.getChildrenUnmodifiable().indexOf(
+                        buttonGroup),
+                Assertions2.emptyContext(),
+                result -> "Parameter view is not added before the button group.");
         Mockito.verify(settingsViewModel, Mockito.times(1)).addVisibilityListener(visibilities);
     }
 }

@@ -31,7 +31,7 @@ import java.util.function.Function;
 @DisplayName("H1.1 | Gradienten")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H1_1_Tests extends H1_Tests {
+public class H1_1_TestsPublic extends H1_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
         Map.entry("width", JsonNode::asInt),

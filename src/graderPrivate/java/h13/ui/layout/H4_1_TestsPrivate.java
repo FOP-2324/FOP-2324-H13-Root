@@ -33,7 +33,7 @@ import java.util.stream.Stream;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
-public class H4_1_Tests extends H4_Tests {
+public class H4_1_TestsPrivate extends H4_Tests {
 
     private MethodLink methodLink;
 

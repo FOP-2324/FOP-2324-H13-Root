@@ -40,10 +40,9 @@
     "selections": [
     ],
     "active": [
-
     ],
     "disable": [
-        "AES_128_CBC",
+      "AES_128_CBC",
       "RSA_2048"
     ]
   }

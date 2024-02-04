@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @DisplayName("H3.2 | Nummerfeld")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H3_2_Tests extends H3_Tests {
+public class H3_2_TestsPublic extends H3_Tests {
 
     private static final Number NUMBER_VALUE = 69;
     private static final String TEXT_VALUE = NUMBER_VALUE.toString();

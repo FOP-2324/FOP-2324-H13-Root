@@ -35,7 +35,7 @@ import java.util.function.Function;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class H1_3_Tests extends H1_Tests {
+public class H1_3_TestsPublic extends H1_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
         Map.entry("x", JsonNode::asDouble),

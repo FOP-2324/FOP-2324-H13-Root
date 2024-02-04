@@ -18,7 +18,7 @@ public class TutorPerlinNoise extends AbstractPerlinNoise implements PerlinNoise
 
     @Override
     public double compute(double x, double y) {
-        return x * y% 2 == 0 ? 1 : -1;
+        return x * y % 2 == 0 ? 1 : -1;
     }
 
     @Override

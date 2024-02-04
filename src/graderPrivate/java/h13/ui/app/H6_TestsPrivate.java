@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 @DisplayName("H6 | App")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H6_Tests implements H13_Tests {
+public class H6_TestsPrivate implements H13_Tests {
 
     protected static final PackageLink PACKAGE_LINK = Links.getPackage(BASE_PACKAGE_LINK, "ui", "app");
 

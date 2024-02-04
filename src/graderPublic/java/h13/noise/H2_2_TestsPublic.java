@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 @DisplayName("H2.1 | Permutationstabelle")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H2_2_Tests extends H2_Tests {
+public class H2_2_TestsPublic extends H2_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.ofEntries(
         Map.entry("frequency", JsonNode::asDouble),

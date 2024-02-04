@@ -31,20 +31,16 @@ import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @DisplayName("5.2 | Zoom in, zoom out")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
-public class H5_2_Tests extends H5_Tests {
+public class H5_2_TestsPublic extends H5_Tests {
     @BeforeEach
     public void setup() throws TimeoutException {
         FxToolkit.registerPrimaryStage();
@@ -179,76 +175,6 @@ public class H5_2_Tests extends H5_Tests {
                 .build();
             TutorAssertions.assertEquals(pair.getRight(), visualization.getWidth(), context);
         });
-    }
-
-    @DisplayName("Falls sich die Größe der Zeichenfläche verändert, wird nur die neue noch nicht gezeichnete Fläche "
-        + "gezeichnet.")
-    @Order(29)
-    @Test
-    public void testDraw() {
-        List<List<Integer>> area = new ArrayList<>();
-        TutorAlgorithmViewModel viewModel = new TutorAlgorithmViewModel() {
-
-            @Override
-            protected @Nullable PerlinNoise getAlgorithm() {
-                return Mockito.mock(PerlinNoise.class);
-            }
-
-            @Override
-            public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
-                area.add(List.of(x, y, w, h));
-            }
-        };
-        TutorSettingsView settings = new TutorSettingsView();
-        TutorVBox layout = (TutorVBox) settings.getView();
-        TutorAlgorithmView algorithm = new TutorAlgorithmView(settings, (algorithms, parameters) -> viewModel, view -> {
-        }) {
-            @Override
-            public void initializeButtons() {
-
-            }
-        };
-        TutorBorderPane root = (TutorBorderPane) algorithm.getView();
-        root.setWidth(1000);
-        root.setHeight(1000);
-
-        // Format: {width, height} of the canvas and the expected area data (x, y, w, h)
-        List<Pair<Pair<Integer, Integer>, List<List<Integer>>>> data =
-            Stream.<Pair<Pair<Integer, Integer>, List<List<Integer>>>>of(
-                    new Pair<>(new Pair<>(100, 100), List.of()),
-                    new Pair<>(new Pair<>(1001, 100), List.of(List.of(1000, 0, 1001, 1000))),
-                    new Pair<>(new Pair<>(5112, 100), List.of(List.of(1000, 0, 5112, 1000))),
-                    new Pair<>(new Pair<>(100, 1001), List.of(List.of(0, 1000, 100, 1001))),
-                    new Pair<>(new Pair<>(100, 5112), List.of(List.of(0, 1000, 100, 5112))),
-                    new Pair<>(new Pair<>(3213, 5112), List.of(List.of(1000, 0, 3213, 1000),
-                        List.of(0, 1000, 3213, 5112)))
-                )
-                .map(pair -> new Pair<>(pair.getKey(), pair.getValue().stream()
-                    .<List<Integer>>map(ArrayList::new).collect(Collectors.toList())
-                ))
-                .toList();
-        Comparator<List<Integer>> comparator = Comparator.comparingInt((List<Integer> list) -> list.get(0))
-            .thenComparingInt(list -> list.get(1))
-            .thenComparingInt(list -> list.get(2))
-            .thenComparingInt(list -> list.get(3));
-        data.forEach(pair -> {
-            root.setWidth(1000);
-            root.setHeight(1000);
-            area.clear();
-            root.setWidth(pair.getKey().getKey());
-            root.setHeight(pair.getKey().getValue());
-
-            Context context = contextBuilder(Links.getMethod(getTypeLink(), "initializeButtons"), null)
-                .add("Initial width", root.getWidth())
-                .add("Initial height", root.getHeight())
-                .add("New width", pair.getKey().getKey())
-                .add("New height", pair.getKey().getValue())
-                .build();
-            area.sort(comparator);
-            pair.getValue().sort(comparator);
-            Assertions2.assertEquals(pair.getValue(), area, context, result -> "Incorrect drawing area");
-        });
-
     }
 
     private static class TutorBorderPane extends BorderPane {
