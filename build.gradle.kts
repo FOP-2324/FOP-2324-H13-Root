@@ -71,6 +71,8 @@ jagr {
             config.set(
                 Config(
                     executor = Executor(
+                        timeoutIndividual = 20000,
+                        timeoutTotal = 300000,
                         jvmArgs = listOf(
                             "-Djava.awt.headless=true",
                             "-Dtestfx.robot=glass",
