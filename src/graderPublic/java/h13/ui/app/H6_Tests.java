@@ -15,12 +15,11 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.testfx.api.FxToolkit;
@@ -41,13 +40,10 @@ import java.util.stream.Collectors;
 
 @DisplayName("H6 | App")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestForSubmission
 public class H6_Tests implements H13_Tests {
 
     protected static final PackageLink PACKAGE_LINK = Links.getPackage(BASE_PACKAGE_LINK, "ui", "app");
-
-    private static final double EPSILON = 1e-6;
 
     private Map<String, BooleanProperty> options;
 
@@ -55,8 +51,8 @@ public class H6_Tests implements H13_Tests {
 
     private PerlinNoiseViewModel viewModel;
 
-    @BeforeAll
-    public void globalSetup() throws TimeoutException {
+    @BeforeEach
+    public void setup() throws TimeoutException {
         FxToolkit.registerPrimaryStage();
         options = Arrays.stream(Algorithm.values())
             .map(algorithm -> Map.entry(

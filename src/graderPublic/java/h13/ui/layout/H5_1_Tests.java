@@ -1,10 +1,11 @@
 package h13.ui.layout;
 
 import h13.noise.PerlinNoise;
-import h13.rubric.TutorAlgorithmViewModel;
 import h13.rubric.TutorPerlinNoise;
 import h13.util.Links;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -26,6 +27,7 @@ import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleFunction;
@@ -154,6 +156,30 @@ public class H5_1_Tests extends H5_Tests {
                 Assertions2.assertEquals(expected, actual, context,
                     result -> "The color at position (%d, %d) is incorrect.".formatted(x1, y1));
             }
+        }
+    }
+
+    private static abstract class TutorAlgorithmViewModel extends AlgorithmViewModel {
+
+        public TutorAlgorithmViewModel(
+            Map<String, BooleanProperty> options,
+            Map<String, Property<Number>> parameters,
+            DoubleFunction<Color> colorMapper) {
+            super(options, parameters, colorMapper);
+        }
+
+        public TutorAlgorithmViewModel(DoubleFunction<Color> colorMapper) {
+            super(Map.of(), Map.of(), colorMapper);
+        }
+
+        @Override
+        public Image createImage(PerlinNoise algorithm, int x, int y, int w, int h) {
+            return super.createImage(algorithm, x, y, w, h);
+        }
+
+        @Override
+        public @Nullable PerlinNoise getLastAlgorithm() {
+            return super.getLastAlgorithm();
         }
     }
 }
