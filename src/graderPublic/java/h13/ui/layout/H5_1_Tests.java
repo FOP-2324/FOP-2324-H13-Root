@@ -1,9 +1,8 @@
-package h13.rubric.h5;
+package h13.ui.layout;
 
 import h13.noise.PerlinNoise;
 import h13.rubric.TutorAlgorithmViewModel;
 import h13.rubric.TutorPerlinNoise;
-import h13.ui.layout.AlgorithmViewModel;
 import h13.util.Links;
 import javafx.application.Platform;
 import javafx.scene.SnapshotParameters;

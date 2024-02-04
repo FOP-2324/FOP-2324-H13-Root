@@ -1,8 +1,7 @@
-package h13.rubric.h4;
+package h13.ui.layout;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h13.json.JsonConverters;
-import h13.ui.layout.SettingsViewModel;
 import h13.util.Links;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

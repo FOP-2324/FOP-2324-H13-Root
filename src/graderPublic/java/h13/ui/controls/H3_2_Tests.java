@@ -1,9 +1,5 @@
-package h13.rubric.h3;
+package h13.ui.controls;
 
-import h13.ui.controls.DoubleField;
-import h13.ui.controls.IntegerField;
-import h13.ui.controls.LongField;
-import h13.ui.controls.NumberField;
 import h13.util.Links;
 import javafx.util.StringConverter;
 import org.junit.jupiter.api.DisplayName;

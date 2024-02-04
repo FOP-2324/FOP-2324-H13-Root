@@ -1,7 +1,6 @@
-package h13.rubric.h1;
+package h13.noise;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import h13.noise.SimplePerlinNoise;
 import h13.rubric.TutorAssertions;
 import h13.util.Links;
 import org.junit.jupiter.api.BeforeAll;

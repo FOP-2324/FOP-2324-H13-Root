@@ -1,4 +1,4 @@
-package h13.rubric.h3;
+package h13.ui.controls;
 
 import h13.rubric.H13_Tests;
 import h13.util.Links;

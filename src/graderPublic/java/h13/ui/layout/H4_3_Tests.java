@@ -1,12 +1,7 @@
-package h13.rubric.h4;
+package h13.ui.layout;
 
 import h13.rubric.TutorUtils;
-import h13.ui.layout.ChooserView;
-import h13.ui.layout.ParameterView;
-import h13.ui.layout.SettingsView;
-import h13.ui.layout.SettingsViewModel;
 import h13.util.Links;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +19,6 @@ import org.mockito.Mockito;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
-import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 

@@ -1,4 +1,4 @@
-package h13.rubric.h1;
+package h13.noise;
 
 import h13.rubric.ContextInformaton;
 import h13.rubric.H13_Tests;
@@ -7,7 +7,7 @@ import org.tudalgo.algoutils.tutor.general.reflections.Link;
 import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
-public abstract class H1_Tests implements H13_Tests {
+public abstract class H2_Tests implements H13_Tests {
 
     protected static final PackageLink PACKAGE_LINK = Links.getPackage(BASE_PACKAGE_LINK, "noise");
 

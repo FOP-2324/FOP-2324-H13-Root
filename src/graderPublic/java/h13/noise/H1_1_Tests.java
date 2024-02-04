@@ -1,8 +1,7 @@
-package h13.rubric.h1;
+package h13.noise;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h13.json.JsonConverters;
-import h13.noise.AbstractPerlinNoise;
 import h13.rubric.TutorUtils;
 import h13.util.Links;
 import javafx.geometry.Point2D;

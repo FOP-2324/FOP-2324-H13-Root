@@ -1,6 +1,5 @@
-package h13.rubric.h4;
+package h13.ui.layout;
 
-import h13.ui.layout.ChooserView;
 import h13.util.Links;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
