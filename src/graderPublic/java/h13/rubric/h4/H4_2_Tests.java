@@ -45,7 +45,6 @@ public class H4_2_Tests extends H4_Tests {
         Map.entry("disable", node -> new LinkedHashSet<>(JsonConverters.toList(node, JsonNode::asText)))
         );
 
-
     private MethodLink methodLink;
 
     @BeforeAll

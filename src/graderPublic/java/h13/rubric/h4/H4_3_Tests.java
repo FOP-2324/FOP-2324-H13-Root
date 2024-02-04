@@ -5,6 +5,7 @@ import h13.ui.layout.ParameterView;
 import h13.ui.layout.SettingsView;
 import h13.ui.layout.SettingsViewModel;
 import h13.util.Links;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,7 +29,6 @@ import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 @DisplayName("H4.3 | Konfigurations - Ansicht")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -48,6 +48,19 @@ public class H4_3_Tests extends H4_Tests {
         return BasicTypeLink.of(SettingsView.class);
     }
 
+    private SettingsViewModel createViewModel(
+        Map<String, BooleanProperty> algorithms,
+        Map<String, BooleanProperty> parameters
+    ) {
+        SettingsViewModel settingsViewModel = Mockito.mock(SettingsViewModel.class);
+        TypeLink typeLink = Links.getType(getPackageLink(), SettingsViewModel.class);
+        FieldLink algorithmsLink = Links.getField(typeLink, "algorithms");
+        algorithmsLink.set(settingsViewModel, algorithms);
+        FieldLink parametersLink = Links.getField(typeLink, "parameters");
+        parametersLink.set(settingsViewModel, parameters);
+        return settingsViewModel;
+    }
+
     @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und "
         + "initialisert ebenfalls die Sichtbarkeiten.")
     @Order(22)
@@ -62,16 +75,7 @@ public class H4_3_Tests extends H4_Tests {
         HBox buttonGroup = new HBox();
         Button generate = new Button("Generate");
         Button save = new Button("Save");
-
-        AtomicReference<Boolean> called = new AtomicReference<>(false);
-        SettingsViewModel settingsViewModel = new SettingsViewModel(Map.of(), Map.of()) {
-            @Override
-            public void addVisibilityListener(Map<String, Set<String>> configurations) {
-                if (configurations == visibilities) {
-                    called.set(true);
-                }
-            }
-        };
+        SettingsViewModel settingsViewModel = createViewModel(Map.of(), Map.of());
 
         // Prepare view
         SettingsView settingsView = Mockito.mock(SettingsView.class, Mockito.CALLS_REAL_METHODS);
@@ -137,7 +141,6 @@ public class H4_3_Tests extends H4_Tests {
                 buttonGroup),
             Assertions2.emptyContext(),
             result -> "Parameter view is not added before the button group.");
-        Assertions2.assertTrue(called.get(), Assertions2.emptyContext(),
-            result -> "The method addVisibilityListener was not called.");
+        Mockito.verify(settingsViewModel, Mockito.times(1)).addVisibilityListener(visibilities);
     }
 }

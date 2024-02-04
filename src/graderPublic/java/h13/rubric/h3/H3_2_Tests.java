@@ -31,14 +31,14 @@ public class H3_2_Tests extends H3_Tests {
     private static final String TEXT_VALUE = NUMBER_VALUE.toString();
 
 
-    @SuppressWarnings("unchecked")
     private NumberField createNumberField() {
-        StringConverter<Number> converter = Mockito.mock(StringConverter.class);
-        Mockito.when(converter.fromString(TEXT_VALUE)).thenReturn(NUMBER_VALUE);
-        Mockito.when(converter.toString(NUMBER_VALUE)).thenReturn(TEXT_VALUE);
         return new NumberField(Pattern.compile("\\d+")) {
             @Override
+            @SuppressWarnings("unchecked")
             public StringConverter<Number> getConverter() {
+                StringConverter<Number> converter = Mockito.mock(StringConverter.class);
+                Mockito.when(converter.fromString(TEXT_VALUE)).thenReturn(NUMBER_VALUE);
+                Mockito.when(converter.toString(NUMBER_VALUE)).thenReturn(TEXT_VALUE);
                 return converter;
             }
         };
