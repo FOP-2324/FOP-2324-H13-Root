@@ -235,17 +235,17 @@
       {
         "order": 30,
         "title": "Falls der gleiche Algorithmus mit den gleichen Konfigurationen ausgewählt wird, wird kein neues Bild gezeichnet.",
-        "class": "h13.rubric.h6.H6_Tests"
+        "class": "h13.ui.app.H6_Tests"
       },
       {
         "order": 31,
         "title": "Die Methode getAlgorithm() liefert einen korrekten Algorithmus für einfache Eingaben zurück.",
-        "class": "h13.rubric.h6.H6_Tests"
+        "class": "h13.ui.app.H6_Tests"
       },
       {
         "order": 32,
         "title": "Die Methode getAlgorithm() liefert einen korrekten Algorithmus für komplexe Eingaben zurück.",
-        "class": "h13.rubric.h6.H6_Tests"
+        "class": "h13.ui.app.H6_Tests"
       }
     ]
   }

@@ -1,5 +1,6 @@
 package h13.rubric.h4;
 
+import h13.rubric.TutorUtils;
 import h13.ui.layout.ChooserView;
 import h13.ui.layout.ParameterView;
 import h13.ui.layout.SettingsView;
@@ -48,19 +49,6 @@ public class H4_3_Tests extends H4_Tests {
         return BasicTypeLink.of(SettingsView.class);
     }
 
-    private SettingsViewModel createViewModel(
-        Map<String, BooleanProperty> algorithms,
-        Map<String, BooleanProperty> parameters
-    ) {
-        SettingsViewModel settingsViewModel = Mockito.mock(SettingsViewModel.class);
-        TypeLink typeLink = Links.getType(getPackageLink(), SettingsViewModel.class);
-        FieldLink algorithmsLink = Links.getField(typeLink, "algorithms");
-        algorithmsLink.set(settingsViewModel, algorithms);
-        FieldLink parametersLink = Links.getField(typeLink, "parameters");
-        parametersLink.set(settingsViewModel, parameters);
-        return settingsViewModel;
-    }
-
     @DisplayName("Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und "
         + "initialisert ebenfalls die Sichtbarkeiten.")
     @Order(22)
@@ -75,26 +63,19 @@ public class H4_3_Tests extends H4_Tests {
         HBox buttonGroup = new HBox();
         Button generate = new Button("Generate");
         Button save = new Button("Save");
-        SettingsViewModel settingsViewModel = createViewModel(Map.of(), Map.of());
+        SettingsViewModel settingsViewModel = TutorUtils.createSettingsViewModel(Map.of(), Map.of());
 
         // Prepare view
-        SettingsView settingsView = Mockito.mock(SettingsView.class, Mockito.CALLS_REAL_METHODS);
-        FieldLink rootLink = Links.getField(getTypeLink().superType(), "root");
-        rootLink.set(settingsView, root);
-        FieldLink algorithmsLink = Links.getField(getTypeLink(), "algorithms");
-        algorithmsLink.set(settingsView, algorithms);
-        FieldLink parametersLink = Links.getField(getTypeLink(), "parameters");
-        parametersLink.set(settingsView, parameters);
-        FieldLink buttonGroupLink = Links.getField(getTypeLink(), "buttonGroup");
-        buttonGroupLink.set(settingsView, buttonGroup);
-        FieldLink generateLink = Links.getField(getTypeLink(), "generate");
-        generateLink.set(settingsView, generate);
-        FieldLink saveLink = Links.getField(getTypeLink(), "save");
-        saveLink.set(settingsView, save);
-        FieldLink viewModelLink = Links.getField(getTypeLink(), "viewModel");
-        viewModelLink.set(settingsView, settingsViewModel);
-        FieldLink visibilitiesLink = Links.getField(getTypeLink(), "visibilities");
-        visibilitiesLink.set(settingsView, visibilities);
+        SettingsView settingsView = TutorUtils.createSettingsView(
+            root,
+            algorithms,
+            parameters,
+            buttonGroup,
+            generate,
+            save,
+            settingsViewModel,
+            Map.of()
+        );
 
         // Test cases
         settingsView.initialize();

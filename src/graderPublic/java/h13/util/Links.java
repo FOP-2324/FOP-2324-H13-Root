@@ -32,15 +32,15 @@ public class Links {
     }
 
     @SafeVarargs
-    public static FieldLink getField(PackageLink packageLink, Class<?> clazz, String methodName, Matcher<FieldLink>... matchers) {
-        return getField(getType(packageLink, clazz), methodName, matchers);
+    public static FieldLink getField(PackageLink packageLink, Class<?> clazz, String fieldName, Matcher<FieldLink>... matchers) {
+        return getField(getType(packageLink, clazz), fieldName, matchers);
     }
 
     @SafeVarargs
-    public static FieldLink getField(TypeLink type, String methodName, Matcher<FieldLink>... matchers) {
+    public static FieldLink getField(TypeLink type, String fieldName, Matcher<FieldLink>... matchers) {
         return Assertions3.assertFieldExists(
             type,
-            Arrays.stream(matchers).reduce(STRING_MATCHER_FACTORY.matcher(methodName), Matcher::and)
+            Arrays.stream(matchers).reduce(STRING_MATCHER_FACTORY.matcher(fieldName), Matcher::and)
         );
     }
 
