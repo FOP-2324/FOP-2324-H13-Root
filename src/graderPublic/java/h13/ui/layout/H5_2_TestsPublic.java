@@ -96,6 +96,7 @@ public class H5_2_TestsPublic extends H5_Tests {
 
         MethodLink methodLink = Links.getMethod(getTypeLink(), "initializeButtons");
         Context c = contextBuilder(methodLink, null)
+            .add("Information", "Do not move your mouse while the test is running")
             .build();
 
         Assertions2.assertNotNull(drawReference.get(), c, result -> "Draw method was not called");
