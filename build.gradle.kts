@@ -1,3 +1,6 @@
+import org.sourcegrade.jagr.launcher.env.Config
+import org.sourcegrade.jagr.launcher.env.Executor
+
 plugins {
     alias(libs.plugins.jagr)
     alias(libs.plugins.algomate)
@@ -42,6 +45,21 @@ javafx {
     modules("javafx.controls", "javafx.graphics", "javafx.base", "javafx.swing")
 }
 
+tasks {
+    test {
+        jvmArgs(
+            "-Djava.awt.headless=true",
+            "-Dtestfx.robot=glass",
+            "-Dtestfx.headless=true",
+            "-Dprism.order=sw",
+            "-Dprism.lcdtext=false",
+            "-Dprism.subpixeltext=false",
+            "-Dglass.win.uiScale=100%",
+            "-Dprism.text=t2k"
+        )
+    }
+}
+
 jagr {
     graders {
         val graderPublic by getting {
@@ -50,11 +68,29 @@ jagr {
             configureDependencies {
                 implementation(libs.bundles.testfx)
             }
+            config.set(
+                Config(
+                    executor = Executor(
+                        timeoutIndividual = 20000,
+                        timeoutTotal = 300000,
+                        jvmArgs = listOf(
+                            "-Djava.awt.headless=true",
+                            "-Dtestfx.robot=glass",
+                            "-Dtestfx.headless=true",
+                            "-Dprism.order=sw",
+                            "-Dprism.lcdtext=false",
+                            "-Dprism.subpixeltext=false",
+                            "-Dglass.win.uiScale=100%",
+                            "-Dprism.text=t2k"
+                        )
+                    )
+                )
+            )
         }
         val graderPrivate by creating {
             parent(graderPublic)
             graderName.set("H13-Private")
-             rubricProviderName.set("h13.H13_RubricProviderPrivate")
+            rubricProviderName.set("h13.H13_RubricProviderPrivate")
         }
     }
 }

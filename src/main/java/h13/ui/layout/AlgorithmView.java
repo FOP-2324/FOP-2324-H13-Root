@@ -72,10 +72,10 @@ public class AlgorithmView extends AbstractView<AlgorithmView, BorderPane> imple
     protected void initializeButtons() {
         // TODO H5.2
         settings.getGenerate().setOnAction(event -> viewModel.draw(
-            viewModel.getAlgorithm(),
-            visualization.getGraphicsContext2D(),
-            0, 0,
-            (int) visualization.getWidth(), (int) visualization.getHeight())
+                viewModel.getAlgorithm(),
+                visualization.getGraphicsContext2D(),
+                0, 0,
+                (int) visualization.getWidth(), (int) visualization.getHeight())
         );
         settings.getSave().setOnAction(event -> viewModel.save(
             (int) visualization.getWidth(),

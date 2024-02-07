@@ -1,0 +1,252 @@
+[
+  {
+    "title": "H1 | Grundgerüst",
+    "tasks": [
+      {
+        "name": "H1.1 | Gradienten",
+        "criteria": [
+          {
+            "order": 1,
+            "title": "Die Methode createGradient() gibt einen Gradienten mit zufälligen Koordinaten im Einheitskreis zurück.",
+            "class": "h13.noise.H1_1_TestsPublic"
+          },
+          {
+            "order": 2,
+            "title": "Die Methode createGradients(int, int) gibt einen Array von Gradienten zurück.",
+            "class": "h13.noise.H1_1_TestsPublic"
+          },
+          {
+            "order": 3,
+            "title": "Die Methode getGradient(int, int) gibt den korrekten Gradienten an der Koordinate (x, y) zurück.",
+            "class": "h13.noise.H1_1_TestsPublic"
+          }
+        ]
+      },
+      {
+        "name": "H1.2 | Lineare Interpolation und Fading-Funktion",
+        "criteria": [
+          {
+            "order": 4,
+            "title": "Die Methoden interpolate(double, double, double) und fade(double) geben die korrekten Ergebnisse zurück.",
+            "class": "h13.noise.H1_2_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "H1.3 | Simpler Perlin-Noise Algorithmus",
+        "criteria": [
+          {
+            "order": 5,
+            "title": "Die Methode compute(double x, double y) verwendet für die Berechnung die korrekten Gradienten.",
+            "class": "h13.noise.H1_3_TestsPublic"
+          },
+          {
+            "order": 6,
+            "title": "Die Methode compute(double x, double y) berechnet die korrekten Interpolationen lx0 und lx1",
+            "class": "h13.noise.H1_3_TestsPublic"
+          },
+          {
+            "order": 7,
+            "title": "Die Methode compute(double x, double y) gibt einen korrekten Rauschwert zurück.",
+            "class": "h13.noise.H1_3_TestsPublic"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "H2 | Erweiterte Perlin-Noise Algorithmen",
+    "tasks": [
+      {
+        "name": "H2.1 | Permutationstabelle",
+        "criteria": [
+          {
+            "order": 8,
+            "title": "Die Methode createPermutation(Random seed) erstellt eine korrekte Permutationstabelle.",
+            "class": "h13.noise.H2_1_TestsPrivate"
+          },
+          {
+            "order": 9,
+            "title": "Die Methode getGradient(int, int) gibt den korrekten Gradienten an der Koordinate (x, y) zurück.",
+            "class": "h13.noise.H2_1_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "H2.2 | Fraktale",
+        "criteria": [
+          {
+            "order": 10,
+            "title": "Die Methoden compute(double, double) gibt den korrekten Rauschwert zurück.",
+            "class": "h13.noise.H2_2_TestsPublic"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "H3 | Controls",
+    "tasks": [
+      {
+        "name": "3.1 | Converter",
+        "criteria": [
+          {
+            "order": 11,
+            "title": "Die Methode toString(Number) gibt das korrekte Ergebnis zurück.",
+            "class": "h13.ui.controls.H3_1_TestsPrivate"
+          },
+          {
+            "order": 12,
+            "title": "Die Methode fromString(String value) gibt das korrekte Ergebnis für einfache Eingaben zurück.",
+            "class": "h13.ui.controls.H3_1_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "3.2 | Nummerfeld",
+        "criteria": [
+          {
+            "order": 13,
+            "title": "Der Textwert (String) des Nummernfeldes entspricht immer den numerischen Wert (Number).",
+            "class": "h13.ui.controls.H3_2_TestsPublic"
+          },
+          {
+            "order": 14,
+            "title": "Der numerische Wert (Number) des Nummernfeldes entspricht immer den Textwert (String).",
+            "class": "h13.ui.controls.H3_2_TestsPublic"
+          },
+          {
+            "order": 15,
+            "title": "Die Methode getConverter() in der Klasse IntegerField, LongField und DoubleField geben den jeweils korrekten Converter zurück.",
+            "class": "h13.ui.controls.H3_2_TestsPublic"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "H4 | Konfigurations-Menü",
+    "tasks": [
+      {
+        "name": "4.1 | Algorithmusauswahl",
+        "criteria": [
+          {
+            "order": 16,
+            "title": "Der Listener fügt bzw. entfernt ein Element aus dem GridPane korrekt.",
+            "class": "h13.ui.layout.H4_1_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "4.2 | Welche Parameter für welchen Algorithmus?",
+        "criteria": [
+          {
+            "order": 17,
+            "title": "Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einen Parameter und einen Option zurück.",
+            "class": "h13.ui.layout.H4_2_TestsPublic"
+          },
+          {
+            "order": 18,
+            "title": "Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einen Parameter und mehrere Optionen zurück.",
+            "class": "h13.ui.layout.H4_2_TestsPublic"
+          },
+          {
+            "order": 19,
+            "title": "Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für mehre Parameter und eine Option zurück.",
+            "class": "h13.ui.layout.H4_2_TestsPrivate"
+          },
+          {
+            "order": 20,
+            "title": "Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für einfache Abhängigkeiten zurück.",
+            "class": "h13.ui.layout.H4_2_TestsPrivate"
+          },
+          {
+            "order": 21,
+            "title": "Die Methode addVisibilityListener(Map) gibt das korrekte Ergebnis für komplexe Abhängigkeiten zurück.",
+            "class": "h13.ui.layout.H4_2_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "4.3 | Konfigurations - Ansicht",
+        "criteria": [
+          {
+            "order": 22,
+            "title": "Die Methode initialize() fügt die korrekten Elemente in die Konfigurationsansicht ein und initialisert ebenfalls die Sichtbarkeiten.",
+            "class": "h13.ui.layout.H4_3_TestsPrivate"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "H5 | Algorithmus-Ansicht",
+    "tasks": [
+      {
+        "name": "5.1 | P-I-C",
+        "criteria": [
+          {
+            "order": 23,
+            "title": "Die Methode createImage(PerlinNoise, int, int, int, int) erstellt ein korrektes Bild für einen gegebenen Perlin Noise Algorithmus.",
+            "class": "h13.ui.layout.H5_1_TestsPublic"
+          },
+          {
+            "order": 24,
+            "title": "Die Methode draw(PerlinNoise, GraphicsContext, int, int, int, int) speichert immer den zuletzt gezeichneten Perlin Noise Algorithmus.",
+            "class": "h13.ui.layout.H5_1_TestsPrivate"
+          },
+          {
+            "order": 25,
+            "title": "Die Methode draw(PerlinNoise, GraphicsContext, int, int, int, int) zeichnet ein Bild korrekt auf der Zeichenfläche für einen gegebenen Perlin Noise Algorithmus.",
+            "class": "h13.ui.layout.H5_1_TestsPrivate"
+          }
+        ]
+      },
+      {
+        "name": "5.2 | Zoom in, zoom out",
+        "criteria": [
+          {
+            "order": 26,
+            "title": "Wenn auf 'Generate' geklickt wird, wird der aktuell ausgewählte Perlin Noise Algorithmus mit seinen Konfigurationen gezeichnet und wenn auf save geklickt wird, wird das Bild auf der Festplatte gespeichert.",
+            "class": "h13.ui.layout.H5_2_TestsPublic"
+          },
+          {
+            "order": 27,
+            "title": "Die Höhe der Zeichenfläche ist abhängig von der Größe des GridPane's und dessen Padding.",
+            "class": "h13.ui.layout.H5_2_TestsPublic"
+          },
+          {
+            "order": 28,
+            "title": "Die Breite der Zeichenfläche ist abhängig von der Größe des GridPane's und der SettingsView.",
+            "class": "h13.ui.layout.H5_2_TestsPublic"
+          },
+          {
+            "order": 29,
+            "title": "Falls sich die Größe der Zeichenfläche verändert, wird nur die neue noch nicht gezeichnete Fläche gezeichnet.",
+            "class": "h13.ui.layout.H5_2_TestsPrivate"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "H6 | App",
+    "criteria": [
+      {
+        "order": 30,
+        "title": "Falls der gleiche Algorithmus mit den gleichen Konfigurationen ausgewählt wird, wird kein neues Bild gezeichnet.",
+        "class": "h13.ui.app.H6_TestsPrivate"
+      },
+      {
+        "order": 31,
+        "title": "Die Methode getAlgorithm() liefert einen korrekten Algorithmus für einfache Eingaben zurück.",
+        "class": "h13.ui.app.H6_TestsPrivate"
+      },
+      {
+        "order": 32,
+        "title": "Die Methode getAlgorithm() liefert einen korrekten Algorithmus für komplexe Eingaben zurück.",
+        "class": "h13.ui.app.H6_TestsPrivate"
+      }
+    ]
+  }
+]

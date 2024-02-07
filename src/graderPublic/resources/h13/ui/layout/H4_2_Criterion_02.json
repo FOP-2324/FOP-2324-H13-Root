@@ -1,0 +1,49 @@
+[
+  {
+    "algorithms": [
+      "AES"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "RSA_2048"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "RSA_2048"
+      ]
+    },
+    "selections": [
+      "AES"
+    ],
+    "active": [
+      "AES_128_CBC",
+      "RSA_2048"
+    ],
+    "disable": [
+    ]
+  },
+  {
+    "algorithms": [
+      "AES"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "RSA_2048"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "RSA_2048"
+      ]
+    },
+    "selections": [
+    ],
+    "active": [
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "RSA_2048"
+    ]
+  }
+]

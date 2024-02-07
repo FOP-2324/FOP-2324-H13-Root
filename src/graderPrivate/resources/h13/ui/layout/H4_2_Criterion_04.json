@@ -1,0 +1,319 @@
+[
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+      "AES"
+    ],
+    "active": [
+      "AES_128_CBC",
+      "AES_256_CBC"
+    ],
+    "disable": [
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ]
+  },
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+      "RSA"
+    ],
+    "active": [
+      "RSA_2048"
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ]
+  },
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+      "HMAC"
+    ],
+    "active": [
+      "HMAC_SHA256",
+      "HMAC_SHA512"
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "SHA256",
+      "SHA512"
+    ]
+  },
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+      "SHA"
+    ],
+    "active": [
+      "SHA256",
+      "SHA512",
+      "HMAC_SHA256",
+      "HMAC_SHA512"
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048"
+    ]
+  },
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+      "MD5"
+    ],
+    "active": [
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ]
+  },
+  {
+    "algorithms": [
+      "AES",
+      "RSA",
+      "HMAC",
+      "SHA",
+      "MD5"
+    ],
+    "parameters": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ],
+    "configurations": {
+      "AES": [
+        "AES_128_CBC",
+        "AES_256_CBC"
+      ],
+      "RSA": [
+        "RSA_2048"
+      ],
+      "HMAC": [
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "SHA": [
+        "SHA256",
+        "SHA512",
+        "HMAC_SHA256",
+        "HMAC_SHA512"
+      ],
+      "MD5": [
+      ]
+    },
+    "selections": [
+    ],
+    "active": [
+    ],
+    "disable": [
+      "AES_128_CBC",
+      "AES_256_CBC",
+      "RSA_2048",
+      "HMAC_SHA256",
+      "HMAC_SHA512",
+      "SHA256",
+      "SHA512"
+    ]
+  }
+]
