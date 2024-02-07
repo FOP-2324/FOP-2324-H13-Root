@@ -37,7 +37,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 
-@DisplayName("5.2 | Zoom in, zoom out")
+@DisplayName("H5.2 | Zoom in, zoom out")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 public class H5_2_TestsPublic extends H5_Tests {

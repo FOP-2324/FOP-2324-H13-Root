@@ -33,7 +33,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@DisplayName("5.2 | Zoom in, zoom out")
+@DisplayName("H5.2 | Zoom in, zoom out")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestForSubmission
 public class H5_2_TestsPrivate extends H5_Tests {
