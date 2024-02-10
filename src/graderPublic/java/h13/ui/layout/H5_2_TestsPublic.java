@@ -314,6 +314,4 @@ public class H5_2_TestsPublic extends H5_Tests {
             super.initializeSize();
         }
     }
-
-
 }
