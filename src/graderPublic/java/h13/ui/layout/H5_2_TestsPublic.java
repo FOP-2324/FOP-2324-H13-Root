@@ -51,16 +51,10 @@ public class H5_2_TestsPublic extends H5_Tests {
         return BasicTypeLink.of(AlgorithmView.class);
     }
 
-    @DisplayName("Wenn auf 'Generate' geklickt wird, wird der aktuell ausgewählte Perlin Noise Algorithmus mit "
-        + "seinen Konfigurationen gezeichnet und wenn auf save geklickt wird, wird das Bild auf der Festplatte "
-        + "gespeichert.")
-    @Order(26)
-    @Test
-    public void testButtons() throws TimeoutException {
+    private void testGenerate() throws TimeoutException {
         TutorSettingsView settings = new TutorSettingsView();
         PerlinNoise noise = Mockito.mock(PerlinNoise.class);
         AtomicReference<Pair<PerlinNoise, List<Integer>>> drawReference = new AtomicReference<>();
-        AtomicReference<Pair<Integer, Integer>> saveReference = new AtomicReference<>();
         TutorAlgorithmViewModel viewModel = new TutorAlgorithmViewModel() {
 
             @Override
@@ -77,15 +71,17 @@ public class H5_2_TestsPublic extends H5_Tests {
             public void draw(@Nullable PerlinNoise algorithm, GraphicsContext context, int x, int y, int w, int h) {
                 drawReference.set(new Pair<>(algorithm, List.of(x, y, w, h)));
             }
-
-            @Override
-            public void save(int width, int height) {
-                saveReference.set(new Pair<>(width, height));
-            }
         };
+
         TutorAlgorithmView algorithm = new TutorAlgorithmView(settings, (algorithms, parameters) -> viewModel,
             view -> {
-            });
+            }) {
+
+            @Override
+            protected void initializeSize() {
+
+            }
+        };
         TutorBorderPane root = (TutorBorderPane) algorithm.getView();
         FxRobot robot = new FxRobot();
         FxToolkit.setupStage(stage -> {
@@ -104,12 +100,71 @@ public class H5_2_TestsPublic extends H5_Tests {
             result -> "Incorrect algorithm sent to draw method");
         Assertions2.assertEquals(List.of(0, 0, (int) algorithm.getVisualization().getWidth(), (int) algorithm.getVisualization().getHeight()),
             drawReference.get().getValue(), c, result -> "Incorrect area sent to draw method");
-        robot.clickOn(settings.getSave());
+        FxToolkit.cleanupInput(robot);
+        FxToolkit.cleanupInput(this);
+        FxToolkit.cleanupStages();
+    }
+
+    private void testSave() throws TimeoutException {
+        TutorSettingsView settings = new TutorSettingsView();
+        PerlinNoise noise = Mockito.mock(PerlinNoise.class);
+        AtomicReference<Pair<Integer, Integer>> saveReference = new AtomicReference<>();
+        TutorAlgorithmViewModel viewModel = new TutorAlgorithmViewModel() {
+
+            @Override
+            protected @Nullable PerlinNoise getLastAlgorithm() {
+                return noise;
+            }
+
+            @Override
+            protected @Nullable PerlinNoise getAlgorithm() {
+                return noise;
+            }
+
+            @Override
+            public void save(int width, int height) {
+                saveReference.set(new Pair<>(width, height));
+            }
+        };
+
+        TutorAlgorithmView algorithm = new TutorAlgorithmView(settings, (algorithms, parameters) -> viewModel,
+            view -> {
+            }) {
+
+            @Override
+            protected void initializeSize() {
+            }
+        };
+        TutorBorderPane root = (TutorBorderPane) algorithm.getView();
+        FxRobot robot = new FxRobot();
+        FxToolkit.setupStage(stage -> {
+            stage.setScene(new Scene(root));
+        });
+        FxToolkit.showStage();
+        clickOn(settings.getSave());
+
+        MethodLink methodLink = Links.getMethod(getTypeLink(), "initializeButtons");
+        Context c = contextBuilder(methodLink, null)
+            .add("Information", "Do not move your mouse while the test is running")
+            .build();
 
         Canvas visualization = algorithm.getVisualization();
         Assertions2.assertNotNull(saveReference.get(), c, result -> "Save method was not called");
         Assertions2.assertEquals(new Pair<>((int) visualization.getWidth(), (int) visualization.getHeight()),
             saveReference.get(), c, result -> "Incorrect size sent to save method");
+        FxToolkit.cleanupInput(robot);
+        FxToolkit.cleanupInput(this);
+        FxToolkit.cleanupStages();
+    }
+
+    @DisplayName("Wenn auf 'Generate' geklickt wird, wird der aktuell ausgewählte Perlin Noise Algorithmus mit "
+        + "seinen Konfigurationen gezeichnet und wenn auf save geklickt wird, wird das Bild auf der Festplatte "
+        + "gespeichert.")
+    @Order(26)
+    @Test
+    public void testButtons() throws TimeoutException {
+        testGenerate();
+        testSave();
     }
 
     @DisplayName("Die Höhe der Zeichenfläche ist abhängig von der Größe des GridPane's und dessen Padding.")
